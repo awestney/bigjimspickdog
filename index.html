@@ -359,105 +359,6 @@
             background: linear-gradient(90deg, #ffcc00, #e60000);
         }
 
-        /* Merch Grid */
-        .merch-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.25rem;
-        }
-
-        .merch-item {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 1.25rem;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.2s, border-color 0.2s;
-        }
-
-        .merch-item:hover {
-            transform: translateY(-3px);
-            border-color: var(--accent-gold);
-        }
-
-        .merch-icon {
-            font-size: 3rem;
-            margin-bottom: 0.4rem;
-        }
-
-        .merch-title {
-            font-weight: 700;
-            font-size: 1rem;
-            margin-bottom: 0.25rem;
-            color: #fff;
-        }
-
-        .merch-desc {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: 0.75rem;
-        }
-
-        .buy-btn {
-            display: block;
-            width: 100%;
-            background: linear-gradient(135deg, var(--primary-red) 0%, #a00000 100%);
-            color: #fff !important;
-            padding: 0.65rem 0.5rem;
-            border-radius: 6px;
-            font-weight: 800;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
-            box-shadow: 0 0 10px rgba(230, 0, 0, 0.3);
-            transition: all 0.2s ease;
-        }
-
-        .buy-btn:hover {
-            background: linear-gradient(135deg, #ff1a1a 0%, var(--primary-red) 100%);
-            box-shadow: 0 0 18px rgba(230, 0, 0, 0.6);
-        }
-
-        .store-banner-cta {
-            margin-top: 1.5rem;
-            background: rgba(255, 204, 0, 0.08);
-            border: 1px solid var(--accent-gold);
-            border-radius: 10px;
-            padding: 1.25rem;
-            text-align: center;
-        }
-
-        .store-banner-cta h4 {
-            font-family: 'Teko', sans-serif;
-            font-size: 1.8rem;
-            color: var(--accent-gold);
-            line-height: 1;
-            margin-bottom: 0.25rem;
-        }
-
-        .store-banner-cta p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 0.75rem;
-        }
-
-        .main-store-btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #ffcc00 0%, #ff8800 100%);
-            color: #000 !important;
-            padding: 0.7rem 1.8rem;
-            border-radius: 25px;
-            font-weight: 800;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 0.95rem;
-            box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
-        }
-
         /* Redneck 101 Ad Banner */
         .ad-banner {
             background: linear-gradient(135deg, #2b1700 0%, #1a0c00 100%);
@@ -638,7 +539,7 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* MOBILE RESPONSIVE STYLES (No Hamburger Menu - All Items Visible) */
+        /* MOBILE RESPONSIVE STYLES */
         @media (max-width: 768px) {
             .nav-container {
                 flex-direction: column;
@@ -799,44 +700,27 @@
             <button class="ad-cta" onclick="openQuiz()">TAKE ELIGIBILITY QUIZ</button>
         </section>
 
-        <!-- Merch Section -->
+        <!-- Merch Section with Direct Spreadshop Embed -->
         <section id="merch" class="card">
             <h2 class="section-title">🧢 Official Pick Dog Merch</h2>
             
-            <div class="merch-grid">
-                <div class="merch-item">
-                    <div>
-                        <div class="merch-icon">🧢</div>
-                        <div class="merch-title">"GOD DAMN! WOO!" Trucker Hat</div>
-                        <div class="merch-desc">Official high-profile trucker cap featuring Big Jim's emblem.</div>
-                    </div>
-                    <a href="https://big-jims-pick-dog.myspreadshop.com/" target="_blank" class="buy-btn">BUY ON SPREADSHOP ➔</a>
-                </div>
-
-                <div class="merch-item">
-                    <div>
-                        <div class="merch-icon">👕</div>
-                        <div class="merch-title">"GOD DAMN!" Official Tee</div>
-                        <div class="merch-desc">Premium DTG printed heavy cotton shirt for maximum porch comfort.</div>
-                    </div>
-                    <a href="https://big-jims-pick-dog.myspreadshop.com/" target="_blank" class="buy-btn">BUY ON SPREADSHOP ➔</a>
-                </div>
-
-                <div class="merch-item">
-                    <div>
-                        <div class="merch-icon">🍺</div>
-                        <div class="merch-title">Unreliable Tips Can Cooler</div>
-                        <div class="merch-desc">Keeps your Michelob Ultra icy cold while you lock in parlays.</div>
-                    </div>
-                    <a href="https://big-jims-pick-dog.myspreadshop.com/" target="_blank" class="buy-btn">BUY ON SPREADSHOP ➔</a>
-                </div>
+            <!-- Embed Container for Spreadshop Products -->
+            <div id="myShop">
+                <p style="text-align: center; color: var(--text-muted); padding: 2rem 0;">
+                    Loading official Pick Dog merch...
+                </p>
             </div>
 
-            <div class="store-banner-cta">
-                <h4>🔥 WANT THE ENTIRE COLLECTION?</h4>
-                <p>Check out our full Spreadshop for hoodies, tank tops, stickers, and koozies!</p>
-                <a href="https://big-jims-pick-dog.myspreadshop.com/" target="_blank" class="main-store-btn">VISIT OFFICIAL SPREADSHOP STORE ➔</a>
-            </div>
+            <!-- Official Spreadshop Embed Script -->
+            <script>
+                var spread_shop_config = {
+                    shopName: 'big-jims-pick-dog',
+                    prefix: 'https://big-jims-pick-dog.myspreadshop.com',
+                    baseId: 'myShop',
+                    locale: 'en_US'
+                };
+            </script>
+            <script type="text/javascript" src="https://big-jims-pick-dog.myspreadshop.com/shopfiles/shopclient/shopclient.nocache.js"></script>
         </section>
 
     </div>
