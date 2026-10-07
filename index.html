@@ -24,6 +24,10 @@
             padding: 0;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
@@ -196,7 +200,11 @@
             box-shadow: 0 0 35px rgba(230, 0, 0, 0.8);
         }
 
-        /* Content Sections */
+        /* Content Sections Offset for Sticky Header */
+        section {
+            scroll-margin-top: 100px;
+        }
+
         .section-title {
             font-family: 'Teko', sans-serif;
             font-size: 2.2rem;
@@ -411,6 +419,7 @@
             gap: 1.25rem;
             margin-bottom: 2rem;
             box-shadow: 0 0 20px rgba(255, 136, 0, 0.2);
+            scroll-margin-top: 100px;
         }
 
         .ad-content h3 {
@@ -434,6 +443,140 @@
             text-decoration: none;
             text-transform: uppercase;
             white-space: nowrap;
+            cursor: pointer;
+            border: none;
+        }
+
+        .ad-cta:hover {
+            background: #ffaa00;
+        }
+
+        /* Quiz Modal Overlay */
+        .quiz-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .quiz-modal.active {
+            display: flex;
+        }
+
+        .quiz-card {
+            background: #14171f;
+            border: 2px solid #ff8800;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 580px;
+            padding: 1.5rem;
+            box-shadow: 0 0 35px rgba(255, 136, 0, 0.4);
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 204, 0, 0.2);
+            padding-bottom: 0.5rem;
+        }
+
+        .quiz-title {
+            font-family: 'Teko', sans-serif;
+            font-size: 2rem;
+            color: #ffcc00;
+            text-transform: uppercase;
+        }
+
+        .close-quiz {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .quiz-q {
+            margin-bottom: 1.25rem;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .quiz-q-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #fff;
+            margin-bottom: 0.6rem;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 0.5rem 0.75rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .quiz-option:hover {
+            border-color: #ff8800;
+            color: #fff;
+        }
+
+        .quiz-option input {
+            accent-color: #ff8800;
+        }
+
+        .quiz-submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ffcc00 0%, #ff8800 100%);
+            color: #000;
+            font-weight: 800;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .quiz-result {
+            display: none;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .quiz-result-title {
+            font-family: 'Teko', sans-serif;
+            font-size: 2.8rem;
+            line-height: 1;
+            margin-bottom: 0.5rem;
         }
 
         footer {
@@ -444,7 +587,7 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* MOBILE RESPONSIVE STYLES (No Hamburger Menu - All Items Visible) */
+        /* MOBILE RESPONSIVE STYLES */
         @media (max-width: 768px) {
             .nav-container {
                 flex-direction: column;
@@ -600,9 +743,9 @@
         <section id="redneck101" class="ad-banner">
             <div class="ad-content">
                 <h3>SPONSORED: HOW TO BE A REDNECK 101</h3>
-                <p>Master the art of porch sitting, lawnmower repair, and yelling at televised sports in 3 easy steps.</p>
+                <p>Take the eligibility exam to qualify for official porch sitting and lawnmower certification!</p>
             </div>
-            <a href="#" class="ad-cta" onclick="alert('Enrollment Complete! Step 1: Crack open a cold one. Happy Birthday James!'); return false;">ENROLL NOW</a>
+            <button class="ad-cta" onclick="openQuiz()">TAKE ELIGIBILITY QUIZ</button>
         </section>
 
         <!-- Merch Section -->
@@ -635,6 +778,30 @@
 
     </div>
 
+    <!-- Quiz Modal -->
+    <div class="quiz-modal" id="quizModal">
+        <div class="quiz-card">
+            <div class="quiz-header">
+                <div class="quiz-title">🤠 Redneck 101 Qualification Exam</div>
+                <button class="close-quiz" onclick="closeQuiz()">✕</button>
+            </div>
+
+            <form id="quizForm">
+                <div id="quizContainer"></div>
+                
+                <div id="quizActionArea">
+                    <button type="button" class="quiz-submit-btn" onclick="submitQuiz()">SUBMIT EXAM</button>
+                </div>
+
+                <div class="quiz-result" id="quizResult">
+                    <div class="quiz-result-title" id="resultTitle"></div>
+                    <p id="resultText" style="color: var(--text-muted); margin-bottom: 1.5rem;"></p>
+                    <button type="button" class="quiz-submit-btn" id="resultBtn"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <p>Big Jim's Pick Dog is a satirical birthday website created for James.</p>
@@ -643,6 +810,204 @@
 
     <!-- Interactive Scripts -->
     <script>
+        // Master Question Bank for Redneck 101
+        const questionBank = [
+            {
+                q: "1. You make eye contact with a Sam's Club employee while looking at bulk protein powder. What do you do?",
+                options: [
+                    { text: "A) Look down at your phone and walk away quietly", correct: false },
+                    { text: "B) Unprovoked, bring up your calf muscle workout routine and flex for them", correct: true },
+                    { text: "C) Ask them for nutritional information", correct: false }
+                ]
+            },
+            {
+                q: "2. What is the official process for acquiring a high-performance muscle tank top?",
+                options: [
+                    { text: "A) Buy a designer athletic tank top at the mall", correct: false },
+                    { text: "B) Take a regular t-shirt and aggressively hack the sleeves off with kitchen scissors", correct: true },
+                    { text: "C) Order a custom compression shirt online", correct: false }
+                ]
+            },
+            {
+                q: "3. What is the proper technique for 'secretly' vaping in a crowded setting?",
+                options: [
+                    { text: "A) Walk outside to the designated smoking area", correct: false },
+                    { text: "B) Cup your hand over your face and exhale a massive fog cloud while pretending you coughed", correct: true },
+                    { text: "C) Keep it in your pocket until you get home", correct: false }
+                ]
+            },
+            {
+                q: "4. Per Colin Stough's 'White Trash', what happens when you go to jail on Sunday when you were supposed to be at church?",
+                options: [
+                    { text: "A) You express deep regret and promise to change your ways", correct: false },
+                    { text: "B) You get let out on Monday, show up a little late to work, and tell them 'you can kiss my ass'", correct: true },
+                    { text: "C) You stay inside and read the owner's manual", correct: false }
+                ]
+            },
+            {
+                q: "5. When you aren't drinking an icy cold Michelob Ultra, what is the mandatory non-alcoholic beverage of choice?",
+                options: [
+                    { text: "A) Lipton Citrus Iced Green Tea", correct: true },
+                    { text: "B) Warm sparkling mineral water with lemon", correct: false },
+                    { text: "C) Unsweetened almond milk", correct: false }
+                ]
+            },
+            {
+                q: "6. How do you determine your official Saturday College Football lock of the day?",
+                options: [
+                    { text: "A) Analyze 5-year defensive yards-per-game statistical models", correct: false },
+                    { text: "B) Wake up, feel it in your marrow, and place a 4-leg parlay based on helmet design", correct: true },
+                    { text: "C) Consult an expert Vegas handicapper", correct: false }
+                ]
+            },
+            {
+                q: "7. What is the proper protocol when dinner is ready?",
+                options: [
+                    { text: "A) Carefully set the dining table with cloth napkins", correct: false },
+                    { text: "B) Do not take food to the table — eat at the kitchen side and stuff your face like you haven't eaten in 3 days without stopping to breathe", correct: true },
+                    { text: "C) Wait until everyone else is seated before taking a bite", correct: false }
+                ]
+            },
+            {
+                q: "8. What is the primary qualification for getting a new tattoo?",
+                options: [
+                    { text: "A) Planning the design with an artist for 3 years", correct: false },
+                    { text: "B) Spontaneously getting a hilarious satire tattoo on a whim", correct: true },
+                    { text: "C) Making sure it complies with your office dress code", correct: false }
+                ]
+            },
+            {
+                q: "9. How do you properly cut off a shirt to maximize airflow and gains?",
+                options: [
+                    { text: "A) Cut neatly 1 inch from the seam", correct: false },
+                    { text: "B) Slice the entire side out down to the waistline so it's essentially a bib", correct: true },
+                    { text: "C) Leave the sleeves on", correct: false }
+                ]
+            },
+            {
+                q: "10. What is the acceptable reaction when your buddy talks bad about your parlay behind your back?",
+                options: [
+                    { text: "A) Write them a polite letter of grievance", correct: false },
+                    { text: "B) Tell them 'they can kiss my ass', put on a smile, and double down anyway", correct: true },
+                    { text: "C) Apologize and cash out your bet early", correct: false }
+                ]
+            },
+            {
+                q: "11. It's 2:00 AM and you crashed out in bed due to too much alcohol. What do you do now?",
+                options: [
+                    { text: "A) Sleep peacefully until your 6:00 AM alarm", correct: false },
+                    { text: "B) Stand up, sleepwalk, and pee in the most inappropriate place you can find", correct: true },
+                    { text: "C) Drink a glass of water and stretch", correct: false }
+                ]
+            },
+            {
+                q: "12. It's Saturday in Knoxville and Tennessee (UT) is playing. What is the strategy?",
+                options: [
+                    { text: "A) Sing Rocky Top at maximum volume, slam a drink, and bet the OVER regardless of the line", correct: true },
+                    { text: "B) Quietly watch the game on mute while studying the playbook", correct: false },
+                    { text: "C) Root for the visiting team", correct: false }
+                ]
+            }
+        ];
+
+        let currentActiveQuestions = [];
+
+        function openQuiz() {
+            document.getElementById('quizModal').classList.add('active');
+            renderRandomQuiz();
+        }
+
+        function closeQuiz() {
+            document.getElementById('quizModal').classList.remove('active');
+        }
+
+        function renderRandomQuiz() {
+            // Pick 5 random questions from the pool
+            let shuffled = [...questionBank].sort(() => 0.5 - Math.random());
+            currentActiveQuestions = shuffled.slice(0, 5);
+
+            let container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+
+            currentActiveQuestions.forEach((qObj, qIdx) => {
+                let qDiv = document.createElement('div');
+                qDiv.className = 'quiz-q';
+
+                let title = document.createElement('div');
+                title.className = 'quiz-q-title';
+                title.textContent = `${qIdx + 1}. ${qObj.q.replace(/^\d+\.\s*/, '')}`;
+                qDiv.appendChild(title);
+
+                let optionsDiv = document.createElement('div');
+                optionsDiv.className = 'quiz-options';
+
+                // Shuffle options for each question
+                let shuffledOptions = [...qObj.options].sort(() => 0.5 - Math.random());
+
+                shuffledOptions.forEach((opt) => {
+                    let label = document.createElement('label');
+                    label.className = 'quiz-option';
+                    
+                    let input = document.createElement('input');
+                    input.type = 'radio';
+                    input.name = `q_${qIdx}`;
+                    input.value = opt.correct ? 'correct' : 'wrong';
+
+                    label.appendChild(input);
+                    label.appendChild(document.createTextNode(` ${opt.text}`));
+                    optionsDiv.appendChild(label);
+                });
+
+                qDiv.appendChild(optionsDiv);
+                container.appendChild(qDiv);
+            });
+
+            document.getElementById('quizContainer').style.display = 'block';
+            document.getElementById('quizActionArea').style.display = 'block';
+            document.getElementById('quizResult').style.display = 'none';
+        }
+
+        function submitQuiz() {
+            let form = document.getElementById('quizForm');
+            let correctCount = 0;
+
+            for (let i = 0; i < currentActiveQuestions.length; i++) {
+                let selected = form.querySelector(`input[name="q_${i}"]:checked`);
+                if (selected && selected.value === 'correct') {
+                    correctCount++;
+                }
+            }
+
+            let scorePercent = (correctCount / currentActiveQuestions.length) * 100;
+
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('quizActionArea').style.display = 'none';
+
+            let resultDiv = document.getElementById('quizResult');
+            let resultTitle = document.getElementById('resultTitle');
+            let resultText = document.getElementById('resultText');
+            let resultBtn = document.getElementById('resultBtn');
+
+            resultDiv.style.display = 'block';
+
+            if (scorePercent >= 80) {
+                resultTitle.textContent = "🎉 PASSED! " + scorePercent + "%";
+                resultTitle.style.color = "#00ff66";
+                resultText.textContent = "OFFICIAL DIPLOMA ISSUED! You exhibit 100% Big Jim energy. Happy Birthday James!";
+                resultBtn.textContent = "CLAIM DIPLOMA";
+                resultBtn.onclick = function() {
+                    alert("🎓 REDNECK 101 DIPLOMA GRANTED TO JAMES!\n\nCertified by Big Jim's Pick Dog.");
+                    closeQuiz();
+                };
+            } else {
+                resultTitle.textContent = "❌ FAILED! " + scorePercent + "%";
+                resultTitle.style.color = "#e60000";
+                resultText.textContent = "Score too low! You need at least 80% to enroll in Redneck 101. Crack a Lipton Citrus Iced Green Tea and try again!";
+                resultBtn.textContent = "TRY AGAIN (NEW QUESTIONS)";
+                resultBtn.onclick = renderRandomQuiz;
+            }
+        }
+
         // Soundboard Controls
         function playAudio(sources, fallbackSpeech, btnElement) {
             animateEqualizer(btnElement);
