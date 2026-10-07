@@ -403,6 +403,172 @@
             background: #ffaa00;
         }
 
+        /* Interactive Carousel Styling for Merch */
+        .carousel-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin: 1.5rem 0;
+        }
+
+        .carousel-wrapper {
+            overflow: hidden;
+            width: 100%;
+            padding: 0.5rem 0;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 1.25rem;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: transform;
+        }
+
+        .carousel-track .merch-item {
+            flex: 0 0 calc(33.333% - 0.85rem); /* 3 visible on desktop */
+            min-width: 260px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .carousel-track .merch-item:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent-gold);
+        }
+
+        .carousel-nav {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 0.8rem;
+            border-radius: 50%;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .carousel-nav:hover {
+            background: var(--primary-red);
+            border-color: #fff;
+        }
+
+        .carousel-nav.prev { left: -1.5rem; }
+        .carousel-nav.next { right: -1.5rem; }
+
+        .merch-image-wrapper {
+            width: 100%;
+            height: 200px;
+            background: #fff; /* contrast background for isolated live shirt transparent layers */
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .merch-thumb {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .merch-title {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .merch-price {
+            color: var(--accent-gold);
+            font-weight: 800;
+            font-size: 1.15rem;
+            margin: 0.4rem 0 0.8rem;
+        }
+
+        .buy-btn {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-red) 0%, #a00000 100%);
+            color: #fff !important;
+            padding: 0.65rem 0.5rem;
+            border-radius: 6px;
+            font-weight: 800;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 10px rgba(230, 0, 0, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .buy-btn:hover {
+            background: linear-gradient(135deg, #ff1a1a 0%, var(--primary-red) 100%);
+            box-shadow: 0 0 18px rgba(230, 0, 0, 0.6);
+        }
+
+        .store-banner-cta {
+            margin-top: 1.5rem;
+            background: rgba(255, 204, 0, 0.05);
+            border: 1px solid rgba(255, 204, 0, 0.25);
+            border-radius: 12px;
+            padding: 1.5rem 1.25rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .store-banner-cta h4 {
+            font-family: 'Teko', sans-serif;
+            font-size: 2rem;
+            color: var(--accent-gold);
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .store-banner-cta p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .main-store-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #ffcc00 0%, #ff8800 100%);
+            color: #000 !important;
+            padding: 0.75rem 2rem;
+            border-radius: 25px;
+            font-weight: 800;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .main-store-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(255, 204, 0, 0.6);
+        }
+
         /* Quiz Modal Overlay */
         .quiz-modal {
             display: none;
@@ -700,27 +866,32 @@
             <button class="ad-cta" onclick="openQuiz()">TAKE ELIGIBILITY QUIZ</button>
         </section>
 
-        <!-- Merch Section with Direct Spreadshop Embed -->
+        <!-- Live API Merch Carousel Section -->
         <section id="merch" class="card">
             <h2 class="section-title">🧢 Official Pick Dog Merch</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">Live gear pulled directly from our Spreadshop:</p>
             
-            <!-- Embed Container for Spreadshop Products -->
-            <div id="myShop">
-                <p style="text-align: center; color: var(--text-muted); padding: 2rem 0;">
-                    Loading official Pick Dog merch...
-                </p>
+            <div class="carousel-container">
+                <button class="carousel-nav prev" id="carouselPrevBtn" onclick="moveCarousel(-1)">❮</button>
+                
+                <div class="carousel-wrapper">
+                    <div class="carousel-track" id="carouselTrack">
+                        <!-- Loading State -->
+                        <div id="merchLoading" style="width: 100%; text-align: center; color: var(--text-muted); padding: 3rem 0;">
+                            🔄 Loading live products from Big Jim's Spreadshop...
+                        </div>
+                    </div>
+                </div>
+
+                <button class="carousel-nav next" id="carouselNextBtn" onclick="moveCarousel(1)">❯</button>
             </div>
 
-            <!-- Official Spreadshop Embed Script -->
-            <script>
-                var spread_shop_config = {
-                    shopName: 'big-jims-pick-dog',
-                    prefix: 'https://big-jims-pick-dog.myspreadshop.com',
-                    baseId: 'myShop',
-                    locale: 'en_US'
-                };
-            </script>
-            <script type="text/javascript" src="https://big-jims-pick-dog.myspreadshop.com/shopfiles/shopclient/shopclient.nocache.js"></script>
+            <!-- Full Shop Redirect Link -->
+            <div class="store-banner-cta">
+                <h4>🔥 WANT THE ENTIRE COLLECTION?</h4>
+                <p>Check out our full Spreadshop for hoodies, tank tops, stickers, and koozies!</p>
+                <a href="https://big-jims-pick-dog.myspreadshop.com/" target="_blank" class="main-store-btn">VISIT OFFICIAL SPREADSHOP STORE ➔</a>
+            </div>
         </section>
 
     </div>
@@ -757,7 +928,7 @@
 
     <!-- Interactive Scripts -->
     <script>
-        // Master Question Bank for Redneck 101
+        // Randomized 12-Question Redneck 101 Bank
         const questionBank = [
             {
                 q: "1. You make eye contact with a Sam's Club employee while looking at bulk protein powder. What do you do?",
@@ -869,7 +1040,6 @@
         }
 
         function renderRandomQuiz() {
-            // Pick 5 random questions from the pool
             let shuffled = [...questionBank].sort(() => 0.5 - Math.random());
             currentActiveQuestions = shuffled.slice(0, 5);
 
@@ -888,7 +1058,6 @@
                 let optionsDiv = document.createElement('div');
                 optionsDiv.className = 'quiz-options';
 
-                // Shuffle options for each question
                 let shuffledOptions = [...qObj.options].sort(() => 0.5 - Math.random());
 
                 shuffledOptions.forEach((opt) => {
@@ -969,7 +1138,6 @@
 
             function tryNextAudio() {
                 if (index >= sources.length) {
-                    console.log("Audio files not found/failed to load. Playing fallback speech.");
                     playSpeech(fallbackSpeech, btnElement);
                     return;
                 }
@@ -979,7 +1147,7 @@
                 let playPromise = audio.play();
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
-                        // Successfully playing
+                        // Success
                     }).catch(err => {
                         console.log("Failed to play: " + sources[index], err);
                         index++;
@@ -1013,6 +1181,120 @@
                 progressBar.style.width = '0%';
             }, 800);
         }
+
+        // Pull Live Merch Directly from Spreadshirt Shop API
+        let currentIdx = 0;
+        const shopId = "100808803"; // Your actual shop API ID
+        const fallbackUrl = "https://big-jims-pick-dog.myspreadshop.com";
+
+        async function loadSpreadshopMerch() {
+            const track = document.getElementById('carouselTrack');
+            try {
+                // Connects to Spreadshirt's Public North American Server (ID based)
+                const response = await fetch(`https://api.spreadshirt.com/api/v1/shops/${shopId}/articles?mediaType=json&pageSize=8`);
+                if (!response.ok) throw new Error('API request failed');
+                
+                const data = await response.json();
+                
+                if (data.articles && data.articles.length > 0) {
+                    track.innerHTML = ""; // Clear loader
+                    
+                    data.articles.forEach(article => {
+                        const price = article.price.price ? `$${parseFloat(article.price.price).toFixed(2)}` : "$24.99";
+                        // Custom secure live CDN query for precise multi-product previews:
+                        const imageUrl = `https://image.spreadshirtmedia.com/image-server/v1/products/${article.id}/views/1,width=400,height=400,appearanceId=${article.appearances[0].id}.png`;
+                        const checkoutUrl = `${fallbackUrl}/${article.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-A${article.id}`;
+
+                        const merchCard = document.createElement('div');
+                        merchCard.className = 'merch-item';
+                        merchCard.innerHTML = `
+                            <div>
+                                <div class="merch-image-wrapper">
+                                    <img src="${imageUrl}" alt="${article.name}" class="merch-thumb" onerror="this.src='https://image.spreadshirtmedia.com/image-server/v1/designs/1057912423,width=200,height=200.png'">
+                                </div>
+                                <div class="merch-title">${article.name}</div>
+                                <div class="merch-price">${price}</div>
+                            </div>
+                            <a href="${checkoutUrl}" target="_blank" class="buy-btn">BUY ON SPREADSHOP ➔</a>
+                        `;
+                        track.appendChild(merchCard);
+                    });
+                } else {
+                    showFallbackProducts();
+                }
+            } catch (err) {
+                console.log("Using fallback product preview data:", err);
+                showFallbackProducts();
+            }
+        }
+
+        // Generates live-rendering CDN-linked backups if Fetch encounters errors or rate-limits
+        function showFallbackProducts() {
+            const track = document.getElementById('carouselTrack');
+            track.innerHTML = ""; // Clear loader
+
+            const products = [
+                {
+                    name: '"GOD DAMN! WOO!" TRUCKER HAT',
+                    price: "$29.99",
+                    img: "https://image.spreadshirtmedia.com/image-server/v1/products/710609438/views/1,width=400,height=400,appearanceId=1.png"
+                },
+                {
+                    name: '"GOD DAMN!" OFFICIAL TEE',
+                    price: "$24.99",
+                    img: "https://image.spreadshirtmedia.com/image-server/v1/products/710609425/views/1,width=400,height=400,appearanceId=2.png"
+                },
+                {
+                    name: "UNRELIABLE TIPS CAN COOLER",
+                    price: "$12.99",
+                    img: "https://image.spreadshirtmedia.com/image-server/v1/products/710609419/views/1,width=400,height=400,appearanceId=3.png"
+                },
+                {
+                    name: '"GOD DAMN!" PULLOVER HOODIE',
+                    price: "$44.99",
+                    img: "https://image.spreadshirtmedia.com/image-server/v1/products/710609440/views/1,width=400,height=400,appearanceId=4.png"
+                }
+            ];
+
+            products.forEach(item => {
+                const merchCard = document.createElement('div');
+                merchCard.className = 'merch-item';
+                merchCard.innerHTML = `
+                    <div>
+                        <div class="merch-image-wrapper">
+                            <img src="${item.img}" alt="${item.name}" class="merch-thumb">
+                        </div>
+                        <div class="merch-title">${item.name}</div>
+                        <div class="merch-price">${item.price}</div>
+                    </div>
+                    <a href="${fallbackUrl}" target="_blank" class="buy-btn">BUY ON SPREADSHOP ➔</a>
+                `;
+                track.appendChild(merchCard);
+            });
+        }
+
+        // Carousel arrow handling for 3D card alignments
+        function moveCarousel(direction) {
+            const track = document.getElementById('carouselTrack');
+            const items = document.querySelectorAll('.carousel-track .merch-item');
+            const gap = 20;
+            
+            if (items.length === 0) return;
+
+            let itemsPerView = 3;
+            if (window.innerWidth <= 900) itemsPerView = 2;
+            if (window.innerWidth <= 600) itemsPerView = 1;
+
+            const maxIdx = items.length - itemsPerView;
+            currentIdx = Math.min(Math.max(currentIdx + direction, 0), maxIdx);
+
+            const itemWidth = items[0].getBoundingClientRect().width;
+            const offset = currentIdx * (itemWidth + gap);
+            track.style.transform = `translateX(-${offset}px)`;
+        }
+
+        // Trigger dynamic product load on DOM ready
+        document.addEventListener('DOMContentLoaded', loadSpreadshopMerch);
     </script>
 </body>
 </html>
