@@ -587,7 +587,7 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* MOBILE RESPONSIVE STYLES */
+        /* MOBILE RESPONSIVE STYLES (No Hamburger Menu - All Items Visible) */
         @media (max-width: 768px) {
             .nav-container {
                 flex-direction: column;
@@ -994,10 +994,12 @@
                 resultTitle.textContent = "🎉 PASSED! " + scorePercent + "%";
                 resultTitle.style.color = "#00ff66";
                 resultText.textContent = "OFFICIAL DIPLOMA ISSUED! You exhibit 100% Big Jim energy. Happy Birthday James!";
-                resultBtn.textContent = "CLAIM DIPLOMA";
+                resultBtn.textContent = "📥 CLAIM & DOWNLOAD OFFICIAL DIPLOMA";
                 resultBtn.onclick = function() {
-                    alert("🎓 REDNECK 101 DIPLOMA GRANTED TO JAMES!\n\nCertified by Big Jim's Pick Dog.");
-                    closeQuiz();
+                    let link = document.createElement('a');
+                    link.href = 'diploma.png';
+                    link.download = 'James_Official_Redneck_101_Diploma.png';
+                    link.click();
                 };
             } else {
                 resultTitle.textContent = "❌ FAILED! " + scorePercent + "%";
