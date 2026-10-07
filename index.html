@@ -1,625 +1,638 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Big Jim's Pick Dog | GOD DAMN! WOOO!</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
+    <title>Big Jim's Pick Dog — Unreliable Betting Tips & High Energy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #0b0c10;
+            --card-bg: rgba(26, 29, 36, 0.75);
+            --primary-red: #e60000;
+            --accent-gold: #ffcc00;
+            --text-main: #ffffff;
+            --text-muted: #a0a5b1;
+            --border-glow: rgba(230, 0, 0, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
             font-family: 'Inter', sans-serif;
-            background-color: #0b0c10;
-            color: #f1f5f9;
+            line-height: 1.5;
             overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(230, 0, 0, 0.15) 0%, transparent 60%),
+                radial-gradient(circle at 80% 50%, rgba(255, 204, 0, 0.05) 0%, transparent 50%);
         }
-        .font-oswald {
-            font-family: 'Oswald', sans-serif;
+
+        /* Top Navigation Bar */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(11, 12, 16, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
-        /* Custom Neon Glows & Glassmorphism */
-        .glass-card {
-            background: rgba(18, 22, 29, 0.75);
-            backdrop-filter: blur(14px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
         }
-        .red-glow {
-            box-shadow: 0 0 30px rgba(230, 0, 0, 0.4);
+
+        .logo-text {
+            font-family: 'Teko', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
         }
-        .red-glow-hover:hover {
-            box-shadow: 0 0 35px rgba(230, 0, 0, 0.6);
-            border-color: rgba(230, 0, 0, 0.6);
+
+        .logo-text span {
+            color: var(--primary-red);
         }
-        .gold-glow {
-            box-shadow: 0 0 30px rgba(255, 204, 0, 0.3);
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            align-items: center;
         }
-        .text-gradient-red {
-            background: linear-gradient(135deg, #ff3333 0%, #e60000 50%, #990000 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .text-gradient-gold {
-            background: linear-gradient(135deg, #ffe066 0%, #ffcc00 50%, #cc9900 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+
+        nav a:hover {
+            color: var(--accent-gold);
         }
-        /* Soundwave animation for active soundboard buttons */
-        @keyframes soundBar {
-            0%, 100% { height: 4px; }
-            50% { height: 20px; }
+
+        .nav-ad-btn {
+            background: linear-gradient(135deg, #ffcc00 0%, #ff8800 100%);
+            color: #000 !important;
+            padding: 0.4rem 0.9rem;
+            border-radius: 6px;
+            font-weight: 800 !important;
+            box-shadow: 0 0 12px rgba(255, 204, 0, 0.3);
         }
-        .sound-bar {
-            width: 3px;
-            background-color: #ffcc00;
-            border-radius: 2px;
+
+        .nav-ad-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 18px rgba(255, 204, 0, 0.5);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 2rem 0 3rem;
+            position: relative;
+        }
+
+        /* Seamless Badge Logo Integration */
+        .logo-wrapper {
+            position: relative;
             display: inline-block;
+            margin-bottom: 1.5rem;
         }
-        .playing .sound-bar:nth-child(1) { animation: soundBar 0.4s infinite ease-in-out; }
-        .playing .sound-bar:nth-child(2) { animation: soundBar 0.3s infinite ease-in-out 0.1s; }
-        .playing .sound-bar:nth-child(3) { animation: soundBar 0.5s infinite ease-in-out 0.2s; }
-        .playing .sound-bar:nth-child(4) { animation: soundBar 0.35s infinite ease-in-out 0.05s; }
+
+        .logo-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(230, 0, 0, 0.35) 0%, rgba(255, 204, 0, 0.1) 40%, transparent 70%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero-logo {
+            position: relative;
+            z-index: 2;
+            width: 300px;
+            max-width: 85vw;
+            height: auto;
+            /* No shape mask or clipping, allowing natural sticker edges & lightning to sit over the background */
+            filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.7));
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .hero-logo:hover {
+            transform: scale(1.04) rotate(1deg);
+        }
+
+        .hero-title {
+            font-family: 'Teko', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 700;
+            line-height: 0.95;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-main);
+            text-shadow: 0 0 20px rgba(230, 0, 0, 0.4);
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--accent-gold);
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Lock CTA Button */
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: linear-gradient(135deg, var(--primary-red) 0%, #a00000 100%);
+            color: #fff;
+            padding: 1rem 2.5rem;
+            font-size: 1.25rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 25px rgba(230, 0, 0, 0.5);
+            transition: all 0.25s ease;
+            text-decoration: none;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 35px rgba(230, 0, 0, 0.8);
+        }
+
+        /* Content Sections */
+        .section-title {
+            font-family: 'Teko', sans-serif;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(230, 0, 0, 0.5), transparent);
+        }
+
+        /* Cards Layout */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-red), var(--accent-gold));
+        }
+
+        /* Soundboard Grid */
+        .soundboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        .sound-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.25rem 1rem;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .sound-btn:hover {
+            background: rgba(230, 0, 0, 0.15);
+            border-color: var(--primary-red);
+            transform: translateY(-2px);
+        }
+
+        .sound-btn:active {
+            transform: translateY(0);
+        }
+
+        .sound-btn .icon {
+            font-size: 1.75rem;
+        }
+
+        .sound-btn .label {
+            font-family: 'Teko', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Sound Equalizer Animation Bar */
+        .eq-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 0.25rem;
+            position: relative;
+        }
+
+        .eq-progress {
+            width: 0%;
+            height: 100%;
+            background: var(--accent-gold);
+            transition: width 0.1s linear;
+        }
+
+        /* Betting Tips Card */
+        .pick-card {
+            background: rgba(15, 17, 23, 0.8);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .pick-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .pick-tag {
+            background: var(--primary-red);
+            color: #fff;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .pick-title {
+            font-family: 'Teko', sans-serif;
+            font-size: 2rem;
+            line-height: 1;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .pick-quote {
+            font-style: italic;
+            color: var(--text-muted);
+            margin: 0.5rem 0 1rem;
+            font-size: 1.05rem;
+        }
+
+        .confidence-meter {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .confidence-fill {
+            width: 98%;
+            height: 100%;
+            background: linear-gradient(90deg, #ffcc00, #e60000);
+        }
+
+        /* Merch Grid */
+        .merch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .merch-item {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .merch-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .merch-title {
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .merch-price {
+            color: var(--accent-gold);
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .buy-btn {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            padding: 0.6rem;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .buy-btn:hover {
+            background: var(--primary-red);
+        }
+
+        /* Redneck 101 Ad Banner */
+        .ad-banner {
+            background: linear-gradient(135deg, #2b1700 0%, #1a0c00 100%);
+            border: 2px dashed #ff8800;
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 0 20px rgba(255, 136, 0, 0.2);
+        }
+
+        .ad-content h3 {
+            font-family: 'Teko', sans-serif;
+            font-size: 2.5rem;
+            color: #ffcc00;
+            line-height: 1;
+        }
+
+        .ad-content p {
+            color: #d1b89d;
+            font-size: 0.95rem;
+        }
+
+        .ad-cta {
+            background: #ff8800;
+            color: #000;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 800;
+            text-decoration: none;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 3rem; }
+            .nav-container { flex-direction: column; gap: 1rem; }
+            .ad-banner { flex-direction: column; text-align: center; }
+        }
     </style>
 </head>
-<body class="selection:bg-red-600 selection:text-white">
+<body>
 
-    <!-- Top Navigation Bar -->
-    <nav class="sticky top-0 z-50 glass-card border-b border-slate-800/80 px-4 lg:px-8 py-3 transition-all duration-300">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <a href="#" class="flex items-center gap-3 group">
-                <img src="logo.png" alt="Big Jim's Pick Dog" class="w-10 h-10 rounded-full border border-red-600/60 shadow-md shadow-red-900/50 group-hover:scale-105 transition-transform" onerror="this.src='https://placehold.co/100x100/1e293b/ef4444?text=JIM'">
-                <span class="font-oswald text-xl tracking-wider font-bold text-white group-hover:text-red-500 transition-colors">BIG JIM'S <span class="text-red-500">PICK DOG</span></span>
+    <!-- Navigation Bar -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo-text">BIG JIM'S <span>PICK DOG</span></a>
+            <nav>
+                <ul>
+                    <li><a href="#tips">Betting Tips</a></li>
+                    <li><a href="#soundboard">Soundboard</a></li>
+                    <li><a href="#merch">Merch</a></li>
+                    <li><a href="#redneck101" class="nav-ad-btn">Redneck 101</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="logo-wrapper">
+                <img src="logo.png" alt="Big Jim's Pick Dog Logo" class="hero-logo" id="mainLogo">
+            </div>
+            <h1 class="hero-title">BIG JIM'S PICK DOG</h1>
+            <p class="hero-subtitle">"GOD DAMN! WOOO!" — Unreliable Betting Tips & High Energy</p>
+            
+            <a href="#tips" class="cta-btn">
+                <span>🔒 GET TODAY'S LOCKS</span>
             </a>
+        </section>
 
-            <!-- Desktop Menu Links -->
-            <div class="hidden md:flex items-center gap-7 font-medium text-sm tracking-wide">
-                <a href="#tips" class="text-slate-300 hover:text-red-500 transition-colors flex items-center gap-2">
-                    <i class="fa-solid fa-chart-line text-xs text-red-500"></i> Betting Tips
-                </a>
-                <a href="#soundboard" class="text-slate-300 hover:text-red-500 transition-colors flex items-center gap-2">
-                    <i class="fa-solid fa-bullhorn text-xs text-red-500"></i> Soundboard
-                </a>
-                <a href="#merch" class="text-slate-300 hover:text-red-500 transition-colors flex items-center gap-2">
-                    <i class="fa-solid fa-shirt text-xs text-red-500"></i> Merch
-                </a>
-                <a href="#redneck101" class="bg-gradient-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white text-xs font-bold px-3.5 py-1.5 rounded-full shadow-lg shadow-red-900/40 flex items-center gap-2 animate-pulse hover:animate-none transition-all">
-                    <i class="fa-solid fa-hat-cowboy"></i> REDNECK 101
-                </a>
-                <!-- Cart Button -->
-                <button onclick="toggleCartModal()" class="relative text-slate-300 hover:text-white transition-colors p-2">
-                    <i class="fa-solid fa-cart-shopping text-lg"></i>
-                    <span id="cartBadge" class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center hidden">0</span>
-                </button>
-            </div>
-
-            <!-- Mobile Menu Button -->
-            <button onclick="toggleMobileMenu()" class="md:hidden text-slate-300 hover:text-white text-xl p-2">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-        </div>
-
-        <!-- Mobile Menu Dropdown -->
-        <div id="mobileMenu" class="hidden md:hidden glass-card mt-3 rounded-2xl p-4 flex flex-col gap-3 text-center border border-red-900/40 shadow-2xl">
-            <a href="#tips" onclick="toggleMobileMenu()" class="text-slate-200 py-2 hover:text-red-500">Betting Tips</a>
-            <a href="#soundboard" onclick="toggleMobileMenu()" class="text-slate-200 py-2 hover:text-red-500">Soundboard</a>
-            <a href="#merch" onclick="toggleMobileMenu()" class="text-slate-200 py-2 hover:text-red-500">Merch Store</a>
-            <a href="#redneck101" onclick="toggleMobileMenu()" class="bg-gradient-to-r from-amber-600 to-red-600 text-white font-bold py-2 rounded-xl text-xs tracking-wider">REDNECK 101 MASTERCLASS</a>
-            <button onclick="toggleMobileMenu(); toggleCartModal();" class="text-amber-400 font-bold py-2 border-t border-slate-800">
-                <i class="fa-solid fa-cart-shopping mr-2"></i> View Cart (<span id="mobileCartCount">0</span>)
-            </button>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="relative py-16 lg:py-24 px-4 overflow-hidden">
-        <!-- Background Ambient Glow Effects -->
-        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-red-600/20 rounded-full blur-[150px] pointer-events-none"></div>
-        <div class="absolute top-1/3 left-1/3 w-[350px] h-[350px] bg-amber-500/10 rounded-full blur-[130px] pointer-events-none"></div>
-
-        <div class="max-w-4xl mx-auto text-center relative z-10 flex flex-col items-center">
+        <!-- Soundboard Section -->
+        <section id="soundboard" class="card">
+            <h2 class="section-title">🔊 Big Jim Soundboard</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">Press to activate Big Jim's highest frequency audio clips:</p>
             
-            <!-- Seamless Embedded Circular Logo -->
-            <div class="relative group mb-8">
-                <div class="absolute -inset-2 bg-gradient-to-r from-red-600 via-amber-500 to-red-600 rounded-full blur-2xl opacity-70 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
-                <div class="relative w-60 h-60 sm:w-72 sm:h-72 rounded-full glass-card p-2 flex items-center justify-center border-2 border-red-500/60 shadow-2xl overflow-hidden bg-slate-950/80">
-                    <img src="logo.png" alt="Big Jim's Pick Dog Patch Logo" class="w-full h-full object-contain rounded-full transform group-hover:scale-105 transition-transform duration-500 filter drop-shadow-[0_0_15px_rgba(230,0,0,0.5)]" onerror="this.src='https://placehold.co/300x300/0f172a/ef4444?text=BIG+JIM'">
-                </div>
-            </div>
-
-            <!-- Hero Headline -->
-            <span class="bg-red-950/80 text-red-400 border border-red-800/60 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest mb-4 inline-block">
-                🔥 THE DOG IS OUT OF THE KENNEL
-            </span>
-            <h1 class="font-oswald text-5xl sm:text-6xl md:text-7xl font-black tracking-tight text-white uppercase mb-3 leading-none">
-                BIG JIM'S <span class="text-gradient-red">PICK DOG</span>
-            </h1>
-            <p class="text-amber-400 font-semibold tracking-wide text-lg sm:text-xl md:text-2xl uppercase mb-8 max-w-2xl font-oswald">
-                "GOD DAMN! WOOO!" — Unreliable Betting Tips & High Energy Commentary
-            </p>
-
-            <!-- Hero CTAs -->
-            <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                <button onclick="revealTodaysLocksModal()" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-oswald text-xl font-bold px-8 py-4 rounded-2xl shadow-xl shadow-red-900/50 red-glow transition-all transform hover:-translate-y-1 active:translate-y-0 flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-lock text-amber-400"></i> REVEAL TODAY'S LOCKS
-                </button>
-                <a href="#soundboard" class="glass-card hover:bg-slate-800/80 text-slate-200 font-oswald text-xl font-bold px-8 py-4 rounded-2xl border border-slate-700 transition-all flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-volume-high text-red-500"></i> REDKEY SOUNDBOARD
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Betting Tips Section -->
-    <section id="tips" class="py-16 px-4 max-w-7xl mx-auto">
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 border-b border-slate-800 pb-4">
-            <div>
-                <span class="text-red-500 font-bold text-xs tracking-widest uppercase">100% Guaranteed to be Pure Guesses</span>
-                <h2 class="font-oswald text-3xl sm:text-4xl font-bold text-white uppercase mt-1">
-                    <i class="fa-solid fa-fire text-red-500 mr-2"></i> Jim's Locks of the Day
-                </h2>
-            </div>
-            <p class="text-slate-400 text-sm mt-2 md:mt-0">Updated 5 minutes ago based on Jim's 3 AM gut feeling.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Card 1 -->
-            <div class="glass-card rounded-2xl p-6 border-slate-800 red-glow-hover transition-all duration-300 relative overflow-hidden flex flex-col justify-between">
-                <div>
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-slate-400 text-xs font-bold uppercase tracking-wider">NFL FOOTBALL</span>
-                        <span class="bg-red-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-md uppercase">MAX BET LOCK</span>
-                    </div>
-                    <h3 class="font-oswald text-2xl font-bold text-white mb-2">CHIEFS MONEYLINE</h3>
-                    <p class="text-slate-300 text-sm mb-6">"They got ref bias and Patrick Mahomes. I felt it in my marrow right after my second energy drink."</p>
-                </div>
-                <div>
-                    <div class="space-y-2 border-t border-slate-800 pt-4">
-                        <div class="flex justify-between text-xs font-bold">
-                            <span class="text-amber-400">JIM'S CONFIDENCE</span>
-                            <span class="text-red-500">110% OVERCONFIDENT</span>
-                        </div>
-                        <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden">
-                            <div class="bg-red-600 h-full w-[95%]"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="glass-card rounded-2xl p-6 border-slate-800 red-glow-hover transition-all duration-300 relative overflow-hidden flex flex-col justify-between">
-                <div>
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-slate-400 text-xs font-bold uppercase tracking-wider">NBA BASKETBALL</span>
-                        <span class="bg-amber-500 text-slate-950 text-[10px] font-bold px-2.5 py-0.5 rounded-md uppercase">GUT CHECK</span>
-                    </div>
-                    <h3 class="font-oswald text-2xl font-bold text-white mb-2">UNDERDOG PARLAY</h3>
-                    <p class="text-slate-300 text-sm mb-4">"LeBron wore a cool hat walking through the tunnel. Smashing the spread right now. WOOOO!"</p>
-                </div>
-                <div>
-                    <div class="space-y-2 border-t border-slate-800 pt-4">
-                        <div class="flex justify-between text-xs font-bold">
-                            <span class="text-amber-400">TV YELLING INTENSITY</span>
-                            <span class="text-amber-400">RED KEY LEVEL 9</span>
-                        </div>
-                        <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden">
-                            <div class="bg-amber-500 h-full w-[80%]"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="glass-card rounded-2xl p-6 border-slate-800 red-glow-hover transition-all duration-300 relative overflow-hidden flex flex-col justify-between">
-                <div>
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-slate-400 text-xs font-bold uppercase tracking-wider">12-LEG DEGEN SPECIAL</span>
-                        <span class="bg-purple-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-md uppercase">2 AM LOCK</span>
-                    </div>
-                    <h3 class="font-oswald text-2xl font-bold text-white mb-2">PARLAY OF THE CENTURY</h3>
-                    <p class="text-slate-300 text-sm mb-4">"Combines table tennis, darts, and college hockey. Pays out $2.4 Million if it hits!"</p>
-                </div>
-                <div>
-                    <div class="space-y-2 border-t border-slate-800 pt-4">
-                        <div class="flex justify-between text-xs font-bold">
-                            <span class="text-amber-400">WIN PROBABILITY</span>
-                            <span class="text-slate-400">0.0001%</span>
-                        </div>
-                        <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden">
-                            <div class="bg-purple-600 h-full w-[5%]"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Interactive Soundboard Section -->
-    <section id="soundboard" class="py-16 px-4 max-w-5xl mx-auto text-center">
-        <div class="mb-10">
-            <span class="text-red-500 font-bold text-xs tracking-widest uppercase">Instant Red Key Audio</span>
-            <h2 class="font-oswald text-4xl font-bold text-white uppercase mt-1">
-                <i class="fa-solid fa-volume-high text-red-500 mr-2"></i> The Big Jim Soundboard
-            </h2>
-            <p class="text-slate-400 text-sm mt-2">Click any sound pad to play Jim's iconic yelling sounds!</p>
-        </div>
-
-        <div class="glass-card p-6 sm:p-8 rounded-3xl border-red-900/40 shadow-2xl relative">
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                <!-- Sound Pad 1 -->
-                <button id="pad1" onclick="playVoiceClip('GOD DAMN! 🔴', 'pad1')" class="bg-gradient-to-b from-red-600 to-red-800 hover:from-red-500 hover:to-red-700 text-white font-oswald text-2xl font-bold py-8 px-4 rounded-2xl shadow-lg shadow-red-950/80 transform active:scale-95 transition-all flex flex-col items-center justify-center gap-3 border border-red-400/30 relative">
-                    <i class="fa-solid fa-circle text-xs text-red-200"></i>
-                    <span>GOD DAMN!</span>
-                    <div class="sound-bars hidden gap-1 items-end h-5 mt-1">
-                        <span class="sound-bar"></span><span class="sound-bar"></span><span class="sound-bar"></span><span class="sound-bar"></span>
-                    </div>
+            <div class="soundboard-grid">
+                <button class="sound-btn" onclick="playAudio('goddamn.m4a', 'God damn!', this)">
+                    <span class="icon">🔴</span>
+                    <span class="label">GOD DAMN!</span>
+                    <div class="eq-bar"><div class="eq-progress"></div></div>
                 </button>
 
-                <!-- Sound Pad 2 -->
-                <button id="pad2" onclick="playVoiceClip('WOOOO! 📣', 'pad2')" class="bg-gradient-to-b from-amber-500 to-amber-700 hover:from-amber-400 hover:to-amber-600 text-slate-950 font-oswald text-2xl font-bold py-8 px-4 rounded-2xl shadow-lg shadow-amber-950/80 transform active:scale-95 transition-all flex flex-col items-center justify-center gap-3 border border-amber-300/30 relative">
-                    <i class="fa-solid fa-bullhorn text-sm"></i>
-                    <span>WOOOO!</span>
-                    <div class="sound-bars hidden gap-1 items-end h-5 mt-1">
-                        <span class="sound-bar"></span><span class="sound-bar"></span><span class="sound-bar"></span><span class="sound-bar"></span>
-                    </div>
+                <button class="sound-btn" onclick="playAudio('wooo.m4a', 'Woooo!', this)">
+                    <span class="icon">📣</span>
+                    <span class="label">WOOOO!</span>
+                    <div class="eq-bar"><div class="eq-progress"></div></div>
                 </button>
 
-                <!-- Sound Pad 3 -->
-                <button id="pad3" onclick="playVoiceClip('THAT\'S A LOCK! 🔒', 'pad3')" class="bg-gradient-to-b from-slate-800 to-slate-900 hover:from-slate-700 hover:to-slate-800 text-white font-oswald text-2xl font-bold py-8 px-4 rounded-2xl shadow-lg transform active:scale-95 transition-all flex flex-col items-center justify-center gap-3 border border-slate-700 relative">
-                    <i class="fa-solid fa-lock text-sm text-red-500"></i>
-                    <span>THAT'S A LOCK!</span>
-                    <div class="sound-bars hidden gap-1 items-end h-5 mt-1">
-                        <span class="sound-bar"></span><span class="sound-bar"></span><span class="sound-bar"></span><span class="sound-bar"></span>
-                    </div>
+                <button class="sound-btn" onclick="playSpeech('Lock it in! Double down right now!', this)">
+                    <span class="icon">🔒</span>
+                    <span class="label">LOCK IT IN!</span>
+                    <div class="eq-bar"><div class="eq-progress"></div></div>
                 </button>
 
-                <!-- Sound Pad 4 -->
-                <button id="pad4" onclick="playVoiceClip('DOUBLE DOWN! 💸', 'pad4')" class="bg-gradient-to-b from-slate-800 to-slate-900 hover:from-slate-700 hover:to-slate-800 text-white font-oswald text-2xl font-bold py-8 px-4 rounded-2xl shadow-lg transform active:scale-95 transition-all flex flex-col items-center justify-center gap-3 border border-slate-700 relative">
-                    <i class="fa-solid fa-money-bill-wave text-sm text-amber-500"></i>
-                    <span>DOUBLE DOWN!</span>
-                    <div class="sound-bars hidden gap-1 items-end h-5 mt-1">
-                        <span class="sound-bar"></span><span class="sound-bar"></span><span class="sound-bar"></span><span class="sound-bar"></span>
-                    </div>
+                <button class="sound-btn" onclick="playSpeech('Trust me bro, this is a sure thing!', this)">
+                    <span class="icon">💸</span>
+                    <span class="label">TRUST ME BRO</span>
+                    <div class="eq-bar"><div class="eq-progress"></div></div>
                 </button>
             </div>
+        </section>
 
-            <!-- Audio Output Visualizer -->
-            <div id="audioToast" class="mt-6 hidden text-amber-400 font-oswald text-xl tracking-wider animate-pulse">
-                🔊 NOW PLAYING: <span id="toastText" class="text-white"></span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Redneck 101 Advert Banner -->
-    <section id="redneck101" class="py-12 px-4 max-w-7xl mx-auto">
-        <div class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-red-950 via-slate-900 to-amber-950 border-2 border-amber-500/40 p-8 md:p-12 shadow-2xl">
-            <div class="absolute -right-8 -bottom-8 text-slate-800/20 text-9xl font-black select-none pointer-events-none">
-                <i class="fa-solid fa-hat-cowboy"></i>
-            </div>
-
-            <div class="relative z-10 max-w-3xl">
-                <div class="inline-flex items-center gap-2 bg-amber-500 text-slate-950 font-black text-xs px-3 py-1 rounded-md uppercase tracking-wider mb-4">
-                    <i class="fa-solid fa-rectangle-ad"></i> SPONSORED MASTERCLASS
-                </div>
-                <h2 class="font-oswald text-4xl md:text-5xl font-black text-white uppercase mb-3 tracking-wide">
-                    HOW TO BE A REDNECK 101 <span class="text-amber-400">— BY BIG JIM</span>
-                </h2>
-                <p class="text-slate-300 text-base md:text-lg mb-6 leading-relaxed">
-                    Are your sports bets failing because you aren't yelling loud enough at your TV? Learn Big Jim's 3-step television shouting methodology to achieve optimal Red Key performance:
-                </p>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 text-sm">
-                    <div class="bg-slate-950/80 p-4 rounded-xl border border-amber-500/20">
-                        <div class="text-amber-400 font-bold mb-1"><i class="fa-solid fa-compress mr-1"></i> STEP 1: THE LEAN</div>
-                        <p class="text-slate-400 text-xs">Stand 12 inches from the 65-inch television screen with hands firm on knees.</p>
-                    </div>
-                    <div class="bg-slate-950/80 p-4 rounded-xl border border-amber-500/20">
-                        <div class="text-amber-400 font-bold mb-1"><i class="fa-solid fa-lungs mr-1"></i> STEP 2: LUNG FULL</div>
-                        <p class="text-slate-400 text-xs">Inhale deeply until facial skin tone achieves full crimson red key status.</p>
-                    </div>
-                    <div class="bg-slate-950/80 p-4 rounded-xl border border-amber-500/20">
-                        <div class="text-amber-400 font-bold mb-1"><i class="fa-solid fa-bullhorn mr-1"></i> STEP 3: UNLEASH</div>
-                        <p class="text-slate-400 text-xs">Scream "GOD DAMN! WOOO!" loud enough to wake up neighbors 4 miles away.</p>
-                    </div>
-                </div>
-
-                <button onclick="alert('🎓 CONGRATULATIONS! You passed Redneck 101. You are officially certified by Big Jim.')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-oswald text-lg font-bold px-8 py-3.5 rounded-xl shadow-lg transition-all transform hover:scale-105">
-                    CLAIM FREE DIPLOMA
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Merch Store Section -->
-    <section id="merch" class="py-16 px-4 max-w-7xl mx-auto">
-        <div class="mb-10 border-b border-slate-800 pb-4 flex justify-between items-end">
-            <div>
-                <span class="text-red-500 font-bold text-xs tracking-widest uppercase">Official Pick Dog Wear</span>
-                <h2 class="font-oswald text-4xl font-bold text-white uppercase mt-1">
-                    <i class="fa-solid fa-bag-shopping text-red-500 mr-2"></i> Merch Store
-                </h2>
-            </div>
-            <button onclick="toggleCartModal()" class="text-amber-400 hover:text-amber-300 font-bold text-sm flex items-center gap-2">
-                <i class="fa-solid fa-cart-shopping"></i> View Cart
-            </button>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            <!-- Product 1 -->
-            <div class="glass-card rounded-2xl p-5 border-slate-800 hover:border-red-600/50 transition-all group flex flex-col justify-between">
-                <div>
-                    <div class="w-full h-56 bg-slate-950 rounded-xl mb-4 flex items-center justify-center relative overflow-hidden border border-slate-800">
-                        <i class="fa-solid fa-hat-cowboy text-7xl text-slate-700 group-hover:scale-110 group-hover:text-red-500 transition-all duration-300"></i>
-                        <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">BESTSELLER</span>
-                    </div>
-                    <h3 class="font-oswald text-2xl font-bold text-white">GOD DAMN! YELLING CAP</h3>
-                    <p class="text-slate-400 text-xs mt-1 mb-4">Official mesh-back trucker cap built to amplify shouting resonance by 40%.</p>
-                </div>
-                <div class="flex items-center justify-between border-t border-slate-800/80 pt-4">
-                    <span class="text-amber-400 font-bold text-xl">$29.99</span>
-                    <button onclick="addToCart('GOD DAMN! Yelling Cap', 29.99)" class="bg-red-600 hover:bg-red-500 text-white text-xs font-bold px-4 py-2.5 rounded-lg transition-colors flex items-center gap-2">
-                        <i class="fa-solid fa-cart-plus"></i> ADD TO CART
-                    </button>
-                </div>
-            </div>
-
-            <!-- Product 2 -->
-            <div class="glass-card rounded-2xl p-5 border-slate-800 hover:border-red-600/50 transition-all group flex flex-col justify-between">
-                <div>
-                    <div class="w-full h-56 bg-slate-950 rounded-xl mb-4 flex items-center justify-center relative overflow-hidden border border-slate-800">
-                        <i class="fa-solid fa-hand-point-up text-7xl text-slate-700 group-hover:scale-110 group-hover:text-amber-500 transition-all duration-300"></i>
-                    </div>
-                    <h3 class="font-oswald text-2xl font-bold text-white">PICK DOG FOAM FINGER</h3>
-                    <p class="text-slate-400 text-xs mt-1 mb-4">Giant foam finger pointing directly at Jim's lock of the day.</p>
-                </div>
-                <div class="flex items-center justify-between border-t border-slate-800/80 pt-4">
-                    <span class="text-amber-400 font-bold text-xl">$14.99</span>
-                    <button onclick="addToCart('Pick Dog Foam Finger', 14.99)" class="bg-red-600 hover:bg-red-500 text-white text-xs font-bold px-4 py-2.5 rounded-lg transition-colors flex items-center gap-2">
-                        <i class="fa-solid fa-cart-plus"></i> ADD TO CART
-                    </button>
-                </div>
-            </div>
-
-            <!-- Product 3 -->
-            <div class="glass-card rounded-2xl p-5 border-slate-800 hover:border-red-600/50 transition-all group flex flex-col justify-between">
-                <div>
-                    <div class="w-full h-56 bg-slate-950 rounded-xl mb-4 flex items-center justify-center relative overflow-hidden border border-slate-800">
-                        <i class="fa-solid fa-shirt text-7xl text-slate-700 group-hover:scale-110 group-hover:text-red-500 transition-all duration-300"></i>
-                    </div>
-                    <h3 class="font-oswald text-2xl font-bold text-white">REDNECK 101 TANK TOP</h3>
-                    <p class="text-slate-400 text-xs mt-1 mb-4">Heavy-duty sleeveless shirt designed for maximum arm movement during game wins.</p>
-                </div>
-                <div class="flex items-center justify-between border-t border-slate-800/80 pt-4">
-                    <span class="text-amber-400 font-bold text-xl">$24.99</span>
-                    <button onclick="addToCart('Redneck 101 Tank Top', 24.99)" class="bg-red-600 hover:bg-red-500 text-white text-xs font-bold px-4 py-2.5 rounded-lg transition-colors flex items-center gap-2">
-                        <i class="fa-solid fa-cart-plus"></i> ADD TO CART
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- VIP Parody Section -->
-    <section class="py-16 px-4 max-w-4xl mx-auto">
-        <div class="glass-card rounded-3xl p-8 sm:p-12 border-2 border-amber-500/50 gold-glow relative overflow-hidden text-center">
-            <div class="inline-block bg-amber-500 text-slate-950 font-black text-xs px-4 py-1.5 rounded-full uppercase tracking-widest mb-4">
-                💎 VIP MEMBERSHIP 💎
-            </div>
+        <!-- Betting Tips Section -->
+        <section id="tips" class="card">
+            <h2 class="section-title">📊 Today's Unfiltered Picks</h2>
             
-            <h2 class="font-oswald text-4xl sm:text-5xl font-black text-white uppercase">THE DIAMOND DOG CLUB</h2>
+            <div class="pick-card">
+                <div class="pick-header">
+                    <span class="pick-title">CHIEFS MONEYLINE</span>
+                    <span class="pick-tag">MAX BET LOCK</span>
+                </div>
+                <p class="pick-quote">"They got ref bias and Patrick Mahomes. I felt it in my marrow right after my second Michelob Ultra."</p>
+                <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--accent-gold); font-weight: 700;">
+                    <span>JIM'S CONFIDENCE</span>
+                    <span>110% OVERCONFIDENT</span>
+                </div>
+                <div class="confidence-meter">
+                    <div class="confidence-fill"></div>
+                </div>
+            </div>
+
+            <div class="pick-card" style="border-color: rgba(255, 204, 0, 0.3);">
+                <div class="pick-header">
+                    <span class="pick-title">OVER 54.5 TOTAL POINTS</span>
+                    <span class="pick-tag" style="background: #ffcc00; color: #000;">DEGEN PARLAY</span>
+                </div>
+                <p class="pick-quote">"Defense is a myth invented by guys who don't like fun. Take the over and go celebrate."</p>
+                <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--accent-gold); font-weight: 700;">
+                    <span>JIM'S CONFIDENCE</span>
+                    <span>99.9% VIBES</span>
+                </div>
+                <div class="confidence-meter">
+                    <div class="confidence-fill" style="width: 85%;"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Redneck 101 Advertisement Banner -->
+        <section id="redneck101" class="ad-banner">
+            <div class="ad-content">
+                <h3>SPONSORED: HOW TO BE A REDNECK 101</h3>
+                <p>Master the art of porch sitting, lawnmower repair, and yelling at televised sports in 3 easy steps.</p>
+            </div>
+            <a href="#" class="ad-cta" onclick="alert('Enrollment Complete! Step 1: Crack open a cold one. Happy Birthday James!'); return false;">ENROLL NOW</a>
+        </section>
+
+        <!-- Merch Section -->
+        <section id="merch" class="card">
+            <h2 class="section-title">🧢 Official Pick Dog Merch</h2>
             
-            <div class="my-6 flex items-center justify-center gap-3">
-                <span class="text-slate-500 line-through text-xl font-bold">$9,999/MONTH</span>
-                <span class="text-gradient-gold font-oswald text-4xl sm:text-5xl font-black">FREE FOR BIRTHDAYS!</span>
+            <div class="merch-grid">
+                <div class="merch-item">
+                    <div class="merch-icon">🧢</div>
+                    <div class="merch-title">"GOD DAMN!" Trucker Hat</div>
+                    <div class="merch-price">$29.99</div>
+                    <button class="buy-btn" onclick="alert('Added to cart! (Just kidding, Happy Birthday James!)')">Add to Cart</button>
+                </div>
+
+                <div class="merch-item">
+                    <div class="merch-icon">👕</div>
+                    <div class="merch-title">Pick Dog Official Tee</div>
+                    <div class="merch-price">$34.99</div>
+                    <button class="buy-btn" onclick="alert('Added to cart! (Just kidding, Happy Birthday James!)')">Add to Cart</button>
+                </div>
+
+                <div class="merch-item">
+                    <div class="merch-icon">🍺</div>
+                    <div class="merch-title">Unreliable Tips Can Cooler</div>
+                    <div class="merch-price">$12.99</div>
+                    <button class="buy-btn" onclick="alert('Added to cart! (Just kidding, Happy Birthday James!)')">Add to Cart</button>
+                </div>
             </div>
+        </section>
 
-            <ul class="max-w-md mx-auto text-left text-slate-300 space-y-3 mb-8 text-sm sm:text-base">
-                <li class="flex items-center gap-3">
-                    <i class="fa-solid fa-circle-check text-amber-400"></i> Direct access to Jim's absolute gut feelings
-                </li>
-                <li class="flex items-center gap-3">
-                    <i class="fa-solid fa-circle-check text-amber-400"></i> 2 AM text messages that just say "Trust me bro"
-                </li>
-                <li class="flex items-center gap-3">
-                    <i class="fa-solid fa-circle-check text-amber-400"></i> 0% win guarantee, 100% yelling guarantee
-                </li>
-                <li class="flex items-center gap-3">
-                    <i class="fa-solid fa-circle-check text-amber-400"></i> One (1) virtual 'WOOOO!'
-                </li>
-            </ul>
+    </div>
 
-            <button onclick="claimVipMembership()" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-oswald text-2xl font-black px-10 py-4 rounded-2xl shadow-xl shadow-amber-950/80 transition-all transform hover:scale-105">
-                CLAIM FREE MEMBERSHIP
-            </button>
-        </div>
-    </section>
-
-    <!-- Footer Disclaimer -->
-    <footer class="border-t border-slate-900 py-12 px-4 text-center text-slate-500 text-xs">
-        <div class="max-w-4xl mx-auto space-y-4">
-            <div class="flex justify-center items-center gap-2 font-oswald text-lg text-slate-400">
-                <span>BIGJIMSPICKDOG.COM</span>
-            </div>
-            <p class="leading-relaxed max-w-2xl mx-auto">
-                Disclaimer: Big Jim is not a financial advisor, a licensed bookie, or particularly accurate at picking sports. He just yells very loudly. All content on bigjimspickdog.com is intended purely as a birthday satire website for entertainment and laughs.
-            </p>
-            <p class="text-amber-500 font-semibold text-sm">
-                🎂 Happy Birthday James! From your crew.
-            </p>
-        </div>
+    <!-- Footer -->
+    <footer>
+        <p>Big Jim's Pick Dog is a satirical birthday website created for James.</p>
+        <p style="margin-top: 0.5rem; opacity: 0.6;">No real gambling advice is provided. Bet responsibly or don't bet at all! © 2026</p>
     </footer>
 
-    <!-- Today's Locks Modal -->
-    <div id="locksModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-        <div class="glass-card max-w-md w-full rounded-3xl p-6 border border-red-600/50 text-center relative shadow-2xl">
-            <button onclick="closeLocksModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="text-red-500 text-5xl mb-3"><i class="fa-solid fa-lock"></i></div>
-            <h3 class="font-oswald text-3xl font-bold text-white uppercase mb-2">JIM'S TOP SECRET LOCK</h3>
-            <p class="text-amber-400 font-bold mb-4 font-oswald text-xl">"GOD DAMN! WOOO!"</p>
-            <div class="bg-slate-950 p-4 rounded-xl text-left text-sm text-slate-300 space-y-2 border border-slate-800 mb-6">
-                <p><strong>Pick:</strong> Whatever game is currently on TV 5 minutes before kickoff.</p>
-                <p><strong>Strategy:</strong> Double down after every loss.</p>
-                <p><strong>Odds:</strong> Unclear, but high energy.</p>
-            </div>
-            <button onclick="closeLocksModal()" class="w-full bg-red-600 hover:bg-red-500 text-white font-oswald text-lg font-bold py-3 rounded-xl">
-                LOCK IT IN
-            </button>
-        </div>
-    </div>
-
-    <!-- Shopping Cart Modal -->
-    <div id="cartModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-        <div class="glass-card max-w-md w-full rounded-3xl p-6 border border-slate-700 text-left relative shadow-2xl">
-            <button onclick="toggleCartModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <h3 class="font-oswald text-2xl font-bold text-white uppercase mb-4 flex items-center gap-2">
-                <i class="fa-solid fa-cart-shopping text-red-500"></i> Your Shopping Cart
-            </h3>
-            
-            <div id="cartItemsList" class="space-y-3 max-h-60 overflow-y-auto mb-4 text-sm text-slate-300 border-t border-b border-slate-800 py-3">
-                <p class="text-slate-500 italic text-center">Your cart is empty.</p>
-            </div>
-
-            <div class="flex justify-between items-center text-lg font-bold mb-6">
-                <span class="text-slate-400">Total (Birthday Discount applied):</span>
-                <span id="cartTotal" class="text-amber-400 font-oswald text-2xl">$0.00</span>
-            </div>
-
-            <button onclick="checkoutCart()" class="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-oswald text-lg font-bold py-3 rounded-xl shadow-lg">
-                CHECKOUT (BIRTHDAY FREE)
-            </button>
-        </div>
-    </div>
-
+    <!-- Audio Control Script -->
     <script>
-        // Shopping Cart State
-        let cart = [];
-
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('hidden');
-        }
-
-        function revealTodaysLocksModal() {
-            document.getElementById('locksModal').classList.remove('hidden');
-        }
-
-        function closeLocksModal() {
-            document.getElementById('locksModal').classList.add('hidden');
-        }
-
-        function playVoiceClip(phrase, padId) {
-            const toast = document.getElementById('audioToast');
-            const toastText = document.getElementById('toastText');
+        function playAudio(filename, fallbackSpeech, btnElement) {
+            animateEqualizer(btnElement);
             
-            // Highlight sound pad visual bars
-            const pad = document.getElementById(padId);
-            const bars = pad.querySelector('.sound-bars');
+            let audio = new Audio(filename);
+            audio.play().catch(error => {
+                console.log("Custom audio file not found/blocked. Using speech fallback:", error);
+                playSpeech(fallbackSpeech, btnElement);
+            });
+        }
+
+        function playSpeech(text, btnElement) {
+            animateEqualizer(btnElement);
             
-            // Reset all pads
-            document.querySelectorAll('.sound-bars').forEach(b => b.classList.add('hidden'));
-            document.querySelectorAll('.sound-bars').forEach(b => b.classList.remove('flex'));
-
-            if (bars) {
-                bars.classList.remove('hidden');
-                bars.classList.add('flex', 'playing');
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                let utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 1.1;
+                utterance.pitch = 1.2;
+                window.speechSynthesis.speak(utterance);
             }
+        }
 
-            toastText.textContent = phrase;
-            toast.classList.remove('hidden');
+        function animateEqualizer(btnElement) {
+            if (!btnElement) return;
+            let progressBar = btnElement.querySelector('.eq-progress');
+            if (!progressBar) return;
 
-            // Web Audio API Synth Bleep for sound feedback
-            try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(440, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.3);
-                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.3);
-            } catch(e) {
-                console.log('Audio Context ready');
-            }
-
+            progressBar.style.width = '100%';
             setTimeout(() => {
-                toast.classList.add('hidden');
-                if (bars) {
-                    bars.classList.add('hidden');
-                    bars.classList.remove('flex', 'playing');
-                }
-            }, 1800);
-        }
-
-        function addToCart(title, price) {
-            cart.push({ title, price });
-            updateCartUI();
-            
-            // Simple toast notification
-            const notification = document.createElement('div');
-            notification.className = 'fixed bottom-5 right-5 bg-red-600 text-white font-oswald text-base px-5 py-3 rounded-xl shadow-2xl z-50 flex items-center gap-2 border border-red-400/50 animate-bounce';
-            notification.innerHTML = `<i class="fa-solid fa-circle-check"></i> Added ${title} to cart!`;
-            document.body.appendChild(notification);
-            
-            setTimeout(() => notification.remove(), 2500);
-        }
-
-        function updateCartUI() {
-            const badge = document.getElementById('cartBadge');
-            const mobileCount = document.getElementById('mobileCartCount');
-            const list = document.getElementById('cartItemsList');
-            const total = document.getElementById('cartTotal');
-
-            if (cart.length > 0) {
-                badge.textContent = cart.length;
-                badge.classList.remove('hidden');
-                mobileCount.textContent = cart.length;
-
-                list.innerHTML = cart.map((item, index) => `
-                    <div class="flex justify-between items-center py-1 border-b border-slate-800">
-                        <span>${item.title}</span>
-                        <span class="text-amber-400 font-bold">$${item.price.toFixed(2)}</span>
-                    </div>
-                `).join('');
-
-                const sum = cart.reduce((acc, item) => acc + item.price, 0);
-                total.textContent = `$${sum.toFixed(2)} ($0.00 Birthday Special)`;
-            } else {
-                badge.classList.add('hidden');
-                mobileCount.textContent = '0';
-                list.innerHTML = `<p class="text-slate-500 italic text-center">Your cart is empty.</p>`;
-                total.textContent = '$0.00';
-            }
-        }
-
-        function toggleCartModal() {
-            document.getElementById('cartModal').classList.toggle('hidden');
-        }
-
-        function checkoutCart() {
-            if (cart.length === 0) {
-                alert('Your cart is empty! Add some Pick Dog merch first.');
-                return;
-            }
-            alert('🎉 BIRTHDAY SPECIAL EXCLUSIVE: Everything in your cart is 100% FREE for James!');
-            cart = [];
-            updateCartUI();
-            toggleCartModal();
-        }
-
-        function claimVipMembership() {
-            alert('💎 CONGRATULATIONS JAMES!\n\nYou are now lifetime President of the Diamond Dog Club! (Total Billed: $0.00)');
+                progressBar.style.width = '0%';
+            }, 800);
         }
     </script>
 </body>
