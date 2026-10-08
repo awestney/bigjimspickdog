@@ -523,7 +523,7 @@
         .merch-image-wrapper {
             width: 100%;
             height: 200px;
-            background: #fff; /* contrast background for isolated live shirt transparent layers */
+            background: #fff;
             border-radius: 8px;
             overflow: hidden;
             display: flex;
@@ -874,7 +874,7 @@
 
         <!-- Daily Betting Tips Section -->
         <section id="tips" class="card">
-            <div class="live-banner" id="currentDateBanner">🔴 LIVE TODAY'S BOARDS — Wed, Oct 7, 2026</div>
+            <div class="live-banner" id="currentDateBanner">🔴 LIVE TODAY'S BOARDS — Thu, Oct 8, 2026</div>
             <h2 class="section-title" style="margin-top: 0.2rem;">📊 Big Jim's Unreliable Parlays & Locks</h2>
             <p id="scheduleNoticeText" style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;">
                 Warning: Daily picks generated dynamically based on real-time sport scheduling. Do not take these seriously!
@@ -897,7 +897,7 @@
             <button class="ad-cta" onclick="openQuiz()">TAKE ELIGIBILITY QUIZ</button>
         </section>
 
-        <!-- Direct CDN Merch Carousel Section -->
+        <!-- Sleek Custom Merch Carousel (Powered by Shop Feed Engine) -->
         <section id="merch" class="card">
             <h2 class="section-title">🧢 Official Pick Dog Merch</h2>
             <p style="color: var(--text-muted); margin-bottom: 1rem;">Direct gear pulled live from our Spreadshop:</p>
@@ -907,7 +907,7 @@
                 
                 <div class="carousel-wrapper">
                     <div class="carousel-track" id="carouselTrack">
-                        <!-- Initial Loading Text Placeholder -->
+                        <!-- Loading State -->
                         <div id="merchLoading" style="width: 100%; text-align: center; color: var(--text-muted); padding: 3rem 0;">
                             🔄 Loading live products from Big Jim's Spreadshop...
                         </div>
@@ -1213,50 +1213,292 @@
             }, 800);
         }
 
-        // Pull Live Merch Directly from Spreadshirt CDN using direct design generation
-        let currentIdx = 0;
-        const fallbackUrl = "https://big-jims-pick-dog.myspreadshop.com";
+        // Live Dynamic Sports Matchup Database blending exact facts with Big Jim dramatic picks
+        const sportsLibrary = {
+            // Monday
+            1: [
+                { 
+                    league: "NFL (MNF)", 
+                    teams: "Buffalo Bills at Los Angeles Rams (7:15 PM)", 
+                    odds: "Bills -3.5", 
+                    tag: "MONDAY NIGHT MAIN EVENT", 
+                    comment: "The Bills are taking over SoFi Stadium! Josh Allen isn't just going to cover the -3.5 spread, he's going to hurdle two linebackers and throw 10 touchdowns in the first quarter alone! Lay the points and bet the mortgage on Buffalo!" 
+                },
+                { 
+                    league: "NCAAF", 
+                    teams: "Week 7 Lookahead: #8 Tennessee Volunteers at Arkansas Razorbacks", 
+                    odds: "Vols -16.5", 
+                    tag: "LOOKING AHEAD TO SATURDAY", 
+                    comment: "No college games tonight so we are locking in Saturday early. Tennessee travels to Fayetteville and Nico Iamaleava is going to unleash 80-yard bombs on every single drive. Buy the points and lock in the Vols now!" 
+                }
+            ],
+            // Tuesday
+            2: [
+                { 
+                    league: "NCAAF (C-USA)", 
+                    teams: "Middle Tennessee Blue Raiders at Western Kentucky Hilltoppers (7:00 PM - CBSSN)", 
+                    odds: "WKU -7.5", 
+                    tag: "TUESDAY NIGHT EXTRAVAGANZA", 
+                    comment: "Tuesday night C-USA rivalry action at Houchens Industries Stadium! WKU is laying 7.5 points, but their offense is going to score 70 points by halftime. Middle Tennessee won't even get a single first down. Smash Western Kentucky!" 
+                },
+                { 
+                    league: "NFL", 
+                    teams: "Lookahead: Dallas Cowboys vs Tampa Bay Buccaneers (TNF)", 
+                    odds: "Cowboys -3.0", 
+                    tag: "PRIME TIME FUTURES LOCK", 
+                    comment: "Dry Tuesday for NFL so Big Jim is cooking Thursday early. Dak Prescott in prime time at AT&T Stadium is an automatic cash print. The Cowboys win by 40 points easy!" 
+                }
+            ],
+            // Wednesday
+            3: [
+                { 
+                    league: "NCAAF (C-USA)", 
+                    teams: "Jacksonville State Gamecocks at Kennesaw State Owls (7:00 PM - CBSSN)", 
+                    odds: "Jacksonville St -14.0", 
+                    tag: "WEDNESDAY MIDWEEK LOCK", 
+                    comment: "Jacksonville State is laying 14 points at Fifth Third Stadium and it's a steal! Their QB is going to throw 10 touchdowns in the 1st quarter and run for 300 yards himself. Kennesaw State stands zero chance. Lock it in!" 
+                },
+                { 
+                    league: "NCAAF (C-USA)", 
+                    teams: "New Mexico State Aggies at FIU Panthers (7:30 PM - ESPN2)", 
+                    odds: "New Mexico St +7.5", 
+                    tag: "PITBULL STADIUM NIGHTCAP", 
+                    comment: "They are playing at Pitbull Stadium in Miami! Mr. Worldwide is in the building, which means New Mexico State gets 7.5 free points and scores on every single possession. Take the points and celebrate!" 
+                }
+            ],
+            // Thursday
+            4: [
+                { 
+                    league: "NFL (TNF)", 
+                    teams: "Tampa Bay Buccaneers at Dallas Cowboys (7:15 PM - Prime Video)", 
+                    odds: "Cowboys -3.0", 
+                    tag: "THURSDAY NIGHT FOOTBALL LOCK", 
+                    comment: "Live at AT&T Stadium in Arlington! Tampa Bay can't handle the noise. The Cowboys' defense is going to record 12 sacks and return two pick-sixes in the first 10 minutes. Lay the 3 points!" 
+                },
+                { 
+                    league: "NCAAF", 
+                    teams: "South Florida Bulls at UTSA Roadrunners (7:30 PM - ESPN)", 
+                    odds: "UTSA -4.0", 
+                    tag: "ALAMODOME SHOOTOUT", 
+                    comment: "AAC action in San Antonio! The Alamodome will be deafening. UTSA is going to put up 60 points on USF's secondary. Lay the 4 points with absolute 100% marrow confidence!" 
+                }
+            ],
+            // Friday
+            5: [
+                { 
+                    league: "NCAAF", 
+                    teams: "Sam Houston Bearkats at Liberty Flames (7:00 PM - ESPNU)", 
+                    odds: "Liberty -6.5", 
+                    tag: "FRIDAY NIGHT SLAM", 
+                    comment: "Live at Williams Stadium in Lynchburg! Liberty's offense is going to drop 50 unanswered points before Sam Houston even completes a pass. Easy Friday night cash!" 
+                },
+                { 
+                    league: "NCAAF", 
+                    teams: "Florida State Seminoles at Louisville Cardinals (7:00 PM - ESPN)", 
+                    odds: "Louisville -3.5", 
+                    tag: "ACC FRIDAY SHOWDOWN", 
+                    comment: "L&N Federal Credit Union Stadium is going to be rocking! Louisville's defense is going to intercept every single pass thrown tonight. Lay the small spread with total overconfidence!" 
+                }
+            ],
+            // Saturday (Massive NCAAF Day)
+            6: [
+                { 
+                    league: "NCAAF", 
+                    teams: "#1 Texas Longhorns vs Oklahoma Sooners (3:30 PM - ABC)", 
+                    odds: "Texas -8.5", 
+                    tag: "RED RIVER RIVALRY MASSACRE", 
+                    comment: "Live at the Cotton Bowl in Dallas! Texas is ranked #1 in the country and they're going to score on all 14 drives today. Oklahoma won't even cross midfield. Lay the 8.5 points and double down!" 
+                },
+                { 
+                    league: "NCAAF", 
+                    teams: "Georgia Bulldogs at Alabama Crimson Tide (7:30 PM - ABC)", 
+                    odds: "Georgia -2.5", 
+                    tag: "SATURDAY NIGHT BLOCKBUSTER", 
+                    comment: "Bryant-Denny Stadium in Tuscaloosa! Georgia's front seven is going to shut down everything Alabama tries. Georgia wins by 30 points minimum. Put the house on the Bulldogs!" 
+                },
+                { 
+                    league: "NCAAF", 
+                    teams: "South Carolina Gamecocks at #16 Florida Gators (12:45 PM - SECN)", 
+                    odds: "Florida -6.5", 
+                    tag: "SEC SWAMP BATTLE", 
+                    comment: "Ben Hill Griffin Stadium in Gainesville! The Swamp is going to swallow South Carolina whole. Florida's running game will average 15 yards per carry today. Lay the points!" 
+                }
+            ],
+            // Sunday (Massive NFL Day)
+            0: [
+                { 
+                    league: "NFL", 
+                    teams: "Philadelphia Eagles vs Jacksonville Jaguars in London (8:30 AM - NFLN)", 
+                    odds: "Eagles -4.5", 
+                    tag: "LONDON MORNING LOCK", 
+                    comment: "Northumberland Development Project Stadium in London! The Eagles crossed the Atlantic to dominate. Saquon Barkley is going to rush for 250 yards before lunch time. Lay the 4.5 points!" 
+                },
+                { 
+                    league: "NFL", 
+                    teams: "Houston Texans at Tennessee Titans (1:00 PM - CBS)", 
+                    odds: "Texans -2.5", 
+                    tag: "NISSAN STADIUM SHOWDOWN", 
+                    comment: "Live in Nashville! CJ Stroud is going to throw 6 touchdown passes in the first half alone. Tennessee can't stop this air attack. Lay the tiny spread and celebrate!" 
+                },
+                { 
+                    league: "NFL", 
+                    teams: "Chicago Bears at Green Bay Packers (1:00 PM - FOX)", 
+                    odds: "Packers -3.5", 
+                    tag: "LAMBEAU FIELD CLASSIC", 
+                    comment: "Lambeau Field in Green Bay! The Packers at home against Chicago is a guaranteed cash printer. Green Bay's defense will force 5 turnovers today. Lay the 3.5 points!" 
+                }
+            ]
+        };
 
-        function loadSpreadshopMerch() {
-            const track = document.getElementById('carouselTrack');
-            track.innerHTML = ""; // Clear loader
+        const fallbackGames = [
+            { 
+                league: "NFL Weekend Slate Preview", 
+                teams: "Buffalo Bills at Los Angeles Rams", 
+                odds: "Bills -3.5", 
+                tag: "LOOKING AHEAD TO WEEKEND", 
+                comment: "No games on the board today, so Big Jim is looking ahead to the massive clash at SoFi Stadium! Josh Allen is going to run over three defenders on his way to 10 touchdowns. Lay the points early!" 
+            },
+            { 
+                league: "NCAAF", 
+                teams: "#1 Texas Longhorns vs Oklahoma Sooners at the Cotton Bowl", 
+                odds: "Texas -8.5", 
+                tag: "RED RIVER LOOKAHEAD", 
+                comment: "No games today, so I'm already counting down to Saturday at the Cotton Bowl! Texas is ranked #1 and will score on every drive. Lock in the Longhorns right now, brother!" 
+            }
+        ];
+
+        function generateLiveDayBets() {
+            const today = new Date();
+            const fullDateString = today.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
             
-            // Explicit array mapped to Spreadshirt's permanent product image configurations
+            document.getElementById("currentDateBanner").innerText = `🔴 LIVE TODAY'S BOARDS — ${fullDateString}`;
+
+            const dayOfWeek = today.getDay(); // 0 (Sun) to 6 (Sat)
+            const picksContainer = document.getElementById("dynamicPicksContainer");
+            picksContainer.innerHTML = ""; // Clear loader
+
+            let matchups = sportsLibrary[dayOfWeek] || [];
+
+            if (matchups.length === 0) {
+                matchups = fallbackGames;
+                document.getElementById("scheduleNoticeText").innerText = "No game schedules today! Big Jim is looking ahead to the next upcoming matchups:";
+            } else {
+                document.getElementById("scheduleNoticeText").innerText = "Game schedules actively tracking live. Unreliable, high-energy betting recommendations on today's/upcoming games:";
+            }
+
+            matchups.forEach((match, idx) => {
+                const card = document.createElement("div");
+                card.className = `pick-card ${idx === 0 ? "premium" : ""}`;
+                
+                const seedVal = today.getDate() + idx;
+                const confidence = 85 + ((seedVal * 13) % 15);
+
+                card.innerHTML = `
+                    <div class="pick-header">
+                        <span class="pick-title">${match.league}: ${match.teams}</span>
+                        <span class="pick-odds">${match.odds}</span>
+                        <span class="pick-tag ${idx === 1 ? "parlay" : idx === 2 ? "live-highlight" : ""}">${match.tag}</span>
+                    </div>
+                    <p class="pick-quote">"${match.comment}"</p>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--accent-gold); font-weight: 700;">
+                        <span>BIG JIM'S OVERCONFIDENT RATING</span>
+                        <span>${confidence}% VIBES & ZERO FILM</span>
+                    </div>
+                    <div class="confidence-meter">
+                        <div class="confidence-fill" style="width: ${confidence}%"></div>
+                    </div>
+                `;
+                picksContainer.appendChild(card);
+            });
+        }
+
+        // Parse shop feed to build dynamic carousel cards
+        let currentIdx = 0;
+        const shopUrl = "https://big-jims-pick-dog.myspreadshop.com";
+
+        async function loadSpreadshopFeed() {
+            const track = document.getElementById('carouselTrack');
+            try {
+                // Fetch public shop RSS feed via cors proxy
+                const rssApiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(shopUrl + '/rss')}`;
+                const res = await fetch(rssApiUrl);
+                const data = await res.json();
+
+                if (data.status === 'ok' && data.items && data.items.length > 0) {
+                    track.innerHTML = ""; // Clear loader
+                    
+                    data.items.forEach(item => {
+                        let imgUrl = item.thumbnail || item.enclosure?.link;
+                        if (!imgUrl && item.content) {
+                            const imgMatch = item.content.match(/src=["'](.*?)["']/);
+                            if (imgMatch) imgUrl = imgMatch[1];
+                        }
+                        if (!imgUrl) {
+                            imgUrl = "https://image.spreadshirtmedia.com/image-server/v1/products/710609425/views/1,width=400,height=400,appearanceId=2.png";
+                        }
+
+                        const merchCard = document.createElement('div');
+                        merchCard.className = 'merch-item';
+                        merchCard.innerHTML = `
+                            <div>
+                                <div class="merch-image-wrapper">
+                                    <img src="${imgUrl}" alt="${item.title}" class="merch-thumb" onerror="this.src='https://image.spreadshirtmedia.com/image-server/v1/products/710609425/views/1,width=400,height=400,appearanceId=2.png'">
+                                </div>
+                                <div class="merch-title">${item.title}</div>
+                                <div class="merch-price">$24.99</div>
+                            </div>
+                            <a href="${item.link || shopUrl}" target="_blank" class="buy-btn">BUY ON SPREADSHOP ➔</a>
+                        `;
+                        track.appendChild(merchCard);
+                    });
+                } else {
+                    showCDNMerchFallback();
+                }
+            } catch (e) {
+                console.log("RSS Feed fetch failed, running CDN fallback:", e);
+                showCDNMerchFallback();
+            }
+        }
+
+        // High-res CDN fallback guarantee so products always render visually
+        function showCDNMerchFallback() {
+            const track = document.getElementById('carouselTrack');
+            track.innerHTML = "";
+
             const liveProducts = [
                 {
                     name: '"GOD DAMN! WOO!" TRUCKER HAT',
                     price: "$29.99",
                     img: "https://image.spreadshirtmedia.com/image-server/v1/products/710609438/views/1,width=400,height=400,appearanceId=1.png",
-                    link: `${fallbackUrl}/god+damn+woo+big+jims+pick+dog+men+s+classic+trucker+cap-A69696969`
+                    link: `${shopUrl}/god+damn+woo+big+jims+pick+dog+men+s+classic+trucker+cap-A69696969`
                 },
                 {
                     name: '"GOD DAMN!" OFFICIAL TEE',
                     price: "$24.99",
                     img: "https://image.spreadshirtmedia.com/image-server/v1/products/710609425/views/1,width=400,height=400,appearanceId=2.png",
-                    link: `${fallbackUrl}/god+damn+woo+big+jims+pick+dog+men+s+t+shirt-A69696968`
+                    link: `${shopUrl}/god+damn+woo+big+jims+pick+dog+men+s+t+shirt-A69696968`
                 },
                 {
                     name: "UNRELIABLE TIPS CAN COOLER",
                     price: "$12.99",
                     img: "https://image.spreadshirtmedia.com/image-server/v1/products/710609419/views/1,width=400,height=400,appearanceId=3.png",
-                    link: `${fallbackUrl}/god+damn+woo+big+jims+pick+dog+beverage+cooler-A69696967`
+                    link: `${shopUrl}/god+damn+woo+big+jims+pick+dog+beverage+cooler-A69696967`
                 },
                 {
                     name: '"GOD DAMN!" PULLOVER HOODIE',
                     price: "$44.99",
                     img: "https://image.spreadshirtmedia.com/image-server/v1/products/710609440/views/1,width=400,height=400,appearanceId=4.png",
-                    link: `${fallbackUrl}/god+damn+woo+big+jims+pick+dog+unisex+heavyweight+hoodie-A69696966`
+                    link: `${shopUrl}/god+damn+woo+big+jims+pick+dog+unisex+heavyweight+hoodie-A69696966`
                 }
             ];
 
             liveProducts.forEach(item => {
                 const merchCard = document.createElement('div');
                 merchCard.className = 'merch-item';
-                
                 merchCard.innerHTML = `
                     <div>
                         <div class="merch-image-wrapper">
-                            <img src="${item.img}" alt="${item.name}" class="merch-thumb" onerror="this.src='https://image.spreadshirtmedia.com/image-server/v1/designs/1057912423,width=200,height=200.png'">
+                            <img src="${item.img}" alt="${item.name}" class="merch-thumb">
                         </div>
                         <div class="merch-title">${item.name}</div>
                         <div class="merch-price">${item.price}</div>
@@ -1267,7 +1509,6 @@
             });
         }
 
-        // Carousel arrow handling for 3D card alignments
         function moveCarousel(direction) {
             const track = document.getElementById('carouselTrack');
             const items = document.querySelectorAll('.carousel-track .merch-item');
@@ -1287,106 +1528,9 @@
             track.style.transform = `translateX(-${offset}px)`;
         }
 
-        // Live Dynamic Sports Matchup Database for 2026 NFL/NCAAF Seasons
-        const sportsLibrary = {
-            // Monday
-            1: [
-                { league: "NFL (MNF)", teams: "Bills at Rams", odds: "Bills -3.5", tag: "MONDAY NIGHT MAIN EVENT", comment: "The Bills are heading out west. Josh Allen is going to run over three defenders on the way to the endzone. Don't worry about the Rams' pass rush, Josh has got this. Put the mortgage on Buffalo!" },
-                { league: "NCAAF", teams: "Upcoming Weekend Slate Sneak Peak", odds: "Tennessee vs Alabama", tag: "LOOKING AHEAD", comment: "No college games tonight so I'm already looking forward to Saturday. Tennessee is playing Alabama and Knoxville is going to be absolutely rocking. I can already hear Rocky Top. Locking this in early, buy points on the Vols!" }
-            ],
-            // Tuesday
-            2: [
-                { league: "NCAAF", teams: "Middle Tennessee at Western Kentucky", odds: "WKU -7.5", tag: "TUESDAY NIGHT EXTRAVAGANZA", comment: "C-USA Midweek Action! This is where champions are made, on a Tuesday in October. WKU has the better offense by a mile. Take the Hilltoppers, they're going to put on a show under the lights!" },
-                { league: "NFL", teams: "Weekend Lookahead", odds: "Chiefs vs Bills", tag: "FUTURES LOCK", comment: "Dry Tuesday for the NFL but Big Jim is already cooking. Lookahead to the weekend, Chiefs ML. Mahomes in prime time is a cheat code. Get your money down now before the line moves!" }
-            ],
-            // Wednesday
-            3: [
-                { league: "NCAAF", teams: "Jacksonville St at Kennesaw St", odds: "Jacksonville St -14", tag: "WEDNESDAY MIDWEEK CHAOS", comment: "Weekday Conference USA action is back! Jacksonville State is going to run all over Kennesaw State. They'll probably put up 40 by halftime. No defense on a Wednesday night, smash the over!" },
-                { league: "NCAAF", teams: "New Mexico St at FIU", odds: "New Mexico St +7.5", tag: "PITBULL STADIUM NIGHTCAP", comment: "They are playing at 'Pitbull Stadium' in Miami! That means it's Mr. Worldwide night. This is going to be a messy, hilarious game. New Mexico State covers the points in a chaotic finish!" }
-            ],
-            // Thursday
-            4: [
-                { league: "NFL (TNF)", teams: "Buccaneers at Cowboys", odds: "Cowboys -3", tag: "THURSDAY NIGHT FOOTBALL LOCK", comment: "The Buccaneers go into Dallas. Dak Prescott under the prime time lights at home? Yeah, the Cowboys are going to cover the 3 points easy. They have the stadium advantage. Double down!" },
-                { league: "NCAAF", teams: "South Florida at UTSA", odds: "UTSA -4", tag: "THURSDAY NIGHT LIGHTS", comment: "AAC clash at the Alamodome! Roadrunners at home is always a wild scene. UTSA is going to bring the noise and USF won't be able to hear their snaps. Lay the points with UTSA!" }
-            ],
-            // Friday
-            5: [
-                { league: "NCAAF", teams: "Sam Houston vs Liberty", odds: "Liberty -6.5", tag: "FRIDAY NIGHT SLAM", comment: "Friday night lights! Liberty has been looking sharp all season and they're going to make a statement here. Sam Houston's defense is going to get worn down by the fourth quarter. Lay the points!" },
-                { league: "NCAAF", teams: "South Alabama at Arkansas St", odds: "Arkansas St +3.5", tag: "UNDERDOG ALERT", comment: "SBC showdown! Arkansas State at home getting points is a gift from the gambling gods. Arkansas State covers this easily, maybe even wins outright. Grab the points!" }
-            ],
-            // Saturday (Massive NCAAF Day)
-            6: [
-                { league: "NCAAF", teams: "Florida at #8 Tennessee", odds: "Vols -16.5", tag: "SATURDAY NIGHT FEVER", comment: "It is Saturday in Knoxville! Rocky Top is going to be deafening, I have already been singing it all morning. Tennessee is going to destroy the Gators. Take the Vols and bet the OVER regardless!" },
-                { league: "NCAAF", teams: "Stephen F. Austin at Lamar", odds: "Lamar -3.5", tag: "LIVE SATURDAY HIGHLIGHT", comment: "Deep FCS cuts on a Saturday afternoon! Lamar has been tough at home andStephen F. Austin is traveling a long way. Lamar covers the small spread, trust my marrow on this one!" },
-                { league: "NCAAF", teams: "Navy at #10 Notre Dame", odds: "Notre Dame -13.5", tag: "MID-DAY MASSACRE", comment: "Navy's triple option is always tough, but Notre Dame's defense has the size to shut it down. Fighting Irish get up early and never look back. Buy points, lay the big number!" }
-            ],
-            // Sunday (Massive NFL Day)
-            0: [
-                { league: "NFL", teams: "Giants at Commanders", odds: "Commanders -4.5", tag: "NFC EAST CLASH", comment: "Commander-in-chief! Washington's offense is clicking on all cylinders and the Giants are struggling to find identity. Giants' defense will keep it close for a half, but Commanders pull away late!" },
-                { league: "NFL", teams: "Houston Texans at Tennessee Titans", odds: "Texans -2.5", tag: "SUNDAY AFTERNOON BATTLE", comment: "Texans are the better team, period. CJ Stroud is going to slice up the Titans' secondary. Lay the tiny spread, this is as close to a lock as you get on a Sunday!" },
-                { league: "NFL", teams: "Indianapolis Colts at Pittsburgh Steelers", odds: "Steelers -3", tag: "DEFENSIVE GRIND", comment: "Steelers at home is a tough ask for anyone. That defense is going to be in Richardson's face all afternoon, forcing turnovers. Pittsburgh wins the physical battle and covers the 3!" }
-            ]
-        };
-
-        const fallbackGames = [
-            { league: "NFL Weekend Slate Preview", teams: "Chiefs vs Bills", odds: "Chiefs -1.5", tag: "LOOKING AHEAD TO WEEKEND", comment: "No games on the board today, so Big Jim is looking ahead to the massive Sunday clash! Patrick Mahomes in prime time is a cheat code. Trust the vibes, grab the Chiefs ML before the line shifts!" },
-            { league: "NCAAF", teams: "Tennessee vs Alabama", odds: "Vols +3.5", tag: "BIG SATURDAY LOOKAHEAD", comment: "No games today, so I'm already counting down to Saturday. Rocky Top is going to be deafening. Vols as home dogs? You better take those points and make the easy money, brother!" }
-        ];
-
-        function generateLiveDayBets() {
-            const today = new Date();
-            // Optional check to enforce simulated/satirical focus (Oct 7 2026 target in this scenario)
-            const fullDateString = today.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
-            
-            // Set date display banner dynamically
-            document.getElementById("currentDateBanner").innerText = `🔴 LIVE TODAY'S BOARDS — ${fullDateString}`;
-
-            const dayOfWeek = today.getDay(); // 0 (Sun) to 6 (Sat)
-            const picksContainer = document.getElementById("dynamicPicksContainer");
-            picksContainer.innerHTML = ""; // Clear loader
-
-            // Load day-specific game array
-            let matchups = sportsLibrary[dayOfWeek] || [];
-
-            if (matchups.length === 0) {
-                // Dry Day failsafe
-                matchups = fallbackGames;
-                document.getElementById("scheduleNoticeText").innerText = "No game schedules today! Big Jim is looking ahead to the next upcoming matchups:";
-            } else {
-                document.getElementById("scheduleNoticeText").innerText = "Game schedules actively tracking live. Unreliable, high-energy betting recommendations on today's/upcoming games:";
-            }
-
-            matchups.forEach((match, idx) => {
-                const card = document.createElement("div");
-                card.className = `pick-card ${idx === 0 ? "premium" : ""}`;
-                
-                // Slightly deterministic but random odds generation for flavor
-                const seedVal = today.getDate() + idx;
-                const confidence = 82 + ((seedVal * 13) % 18); // 82 to 99%
-
-                card.innerHTML = `
-                    <div class="pick-header">
-                        <span class="pick-title">${match.league}: ${match.teams}</span>
-                        <span class="pick-odds">${match.odds}</span>
-                        <span class="pick-tag ${idx === 1 ? "parlay" : idx === 2 ? "live-highlight" : ""}">${match.tag}</span>
-                    </div>
-                    <p class="pick-quote">"${match.comment}"</p>
-                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--accent-gold); font-weight: 700;">
-                        <span>BIG JIM'S CONFIDENCE</span>
-                        <span>${confidence}% VIBES & CHANCE</span>
-                    </div>
-                    <div class="confidence-meter">
-                        <div class="confidence-fill" style="width: ${confidence}%"></div>
-                    </div>
-                `;
-                picksContainer.appendChild(card);
-            });
-        }
-
-        // Trigger dynamic product load on DOM ready
         document.addEventListener('DOMContentLoaded', () => {
-            loadSpreadshopMerch();
-            generateLiveDayBets(); // Start scheduler algorithm
+            generateLiveDayBets();
+            loadSpreadshopFeed();
         });
     </script>
 </body>
