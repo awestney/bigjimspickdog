@@ -326,7 +326,7 @@
             transition: width 0.1s linear;
         }
 
-        /* Betting Tips Card */
+        /* Betting Tips Card & Parlay Slip Styling */
         .pick-card {
             background: rgba(15, 17, 23, 0.8);
             border: 1px solid var(--border-glow);
@@ -383,14 +383,42 @@
             color: var(--accent-gold);
             font-weight: 800;
             font-family: 'Teko', sans-serif;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             letter-spacing: 0.5px;
+        }
+
+        .parlay-legs-list {
+            list-style: none;
+            margin: 0.75rem 0 1rem 0;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+        }
+
+        .parlay-legs-list li {
+            font-size: 0.9rem;
+            color: #fff;
+            font-weight: 600;
+            padding: 0.35rem 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .parlay-legs-list li:last-child {
+            border-bottom: none;
+        }
+
+        .parlay-legs-list li span.leg-icon {
+            color: var(--accent-gold);
         }
 
         .pick-quote {
             font-style: italic;
             color: var(--text-muted);
-            margin: 0.5rem 0 1rem;
+            margin: 0.75rem 0 1rem;
             font-size: 0.95rem;
             border-left: 2px solid var(--primary-red);
             padding-left: 0.75rem;
@@ -451,172 +479,6 @@
 
         .ad-cta:hover {
             background: #ffaa00;
-        }
-
-        /* Interactive Carousel Styling for Merch */
-        .carousel-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            width: 100%;
-            margin: 1.5rem 0;
-        }
-
-        .carousel-wrapper {
-            overflow: hidden;
-            width: 100%;
-            padding: 0.5rem 0;
-        }
-
-        .carousel-track {
-            display: flex;
-            gap: 1.25rem;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            will-change: transform;
-        }
-
-        .carousel-track .merch-item {
-            flex: 0 0 calc(33.333% - 0.85rem); /* 3 visible on desktop */
-            min-width: 260px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 1.25rem;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.2s, border-color 0.2s;
-        }
-
-        .carousel-track .merch-item:hover {
-            transform: translateY(-3px);
-            border-color: var(--accent-gold);
-        }
-
-        .carousel-nav {
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff;
-            font-size: 1.25rem;
-            cursor: pointer;
-            padding: 0.8rem;
-            border-radius: 50%;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .carousel-nav:hover {
-            background: var(--primary-red);
-            border-color: #fff;
-        }
-
-        .carousel-nav.prev { left: -1.5rem; }
-        .carousel-nav.next { right: -1.5rem; }
-
-        .merch-image-wrapper {
-            width: 100%;
-            height: 200px;
-            background: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .merch-thumb {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            transition: transform 0.3s ease;
-        }
-
-        .merch-title {
-            font-weight: 700;
-            font-size: 1.05rem;
-            margin-bottom: 0.25rem;
-            color: #fff;
-            text-transform: uppercase;
-        }
-
-        .merch-price {
-            color: var(--accent-gold);
-            font-weight: 800;
-            font-size: 1.15rem;
-            margin: 0.4rem 0 0.8rem;
-        }
-
-        .buy-btn {
-            display: block;
-            width: 100%;
-            background: linear-gradient(135deg, var(--primary-red) 0%, #a00000 100%);
-            color: #fff !important;
-            padding: 0.65rem 0.5rem;
-            border-radius: 6px;
-            font-weight: 800;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
-            box-shadow: 0 0 10px rgba(230, 0, 0, 0.3);
-            transition: all 0.2s ease;
-        }
-
-        .buy-btn:hover {
-            background: linear-gradient(135deg, #ff1a1a 0%, var(--primary-red) 100%);
-            box-shadow: 0 0 18px rgba(230, 0, 0, 0.6);
-        }
-
-        .store-banner-cta {
-            margin-top: 1.5rem;
-            background: rgba(255, 204, 0, 0.05);
-            border: 1px solid rgba(255, 204, 0, 0.25);
-            border-radius: 12px;
-            padding: 1.5rem 1.25rem;
-            text-align: center;
-            position: relative;
-        }
-
-        .store-banner-cta h4 {
-            font-family: 'Teko', sans-serif;
-            font-size: 2rem;
-            color: var(--accent-gold);
-            line-height: 1;
-            margin-bottom: 0.25rem;
-        }
-
-        .store-banner-cta p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-        }
-
-        .main-store-btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #ffcc00 0%, #ff8800 100%);
-            color: #000 !important;
-            padding: 0.75rem 2rem;
-            border-radius: 25px;
-            font-weight: 800;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 0.95rem;
-            box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .main-store-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 25px rgba(255, 204, 0, 0.6);
         }
 
         /* Quiz Modal Overlay */
@@ -874,10 +736,10 @@
 
         <!-- Daily Betting Tips Section -->
         <section id="tips" class="card">
-            <div class="live-banner" id="currentDateBanner">🔴 LIVE TODAY'S BOARDS — Thu, Oct 8, 2026</div>
+            <div class="live-banner" id="currentDateBanner">🔴 LIVE TODAY'S PARLAY SLIPS — Oct 2026</div>
             <h2 class="section-title" style="margin-top: 0.2rem;">📊 Big Jim's Unreliable Parlays & Locks</h2>
             <p id="scheduleNoticeText" style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;">
-                Warning: Daily picks generated dynamically based on real-time sport scheduling. Do not take these seriously!
+                Warning: Daily multi-leg parlay slips generated dynamically based on real-time sport scheduling. Do not take these seriously!
             </p>
             
             <!-- Dynamic Picks Render Insertion Spot -->
@@ -897,32 +759,27 @@
             <button class="ad-cta" onclick="openQuiz()">TAKE ELIGIBILITY QUIZ</button>
         </section>
 
-        <!-- Sleek Custom Merch Carousel (Powered by Shop Feed Engine) -->
+        <!-- Option A: Live Official Spreadshop Container -->
         <section id="merch" class="card">
             <h2 class="section-title">🧢 Official Pick Dog Merch</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1rem;">Direct gear pulled live from our Spreadshop:</p>
             
-            <div class="carousel-container">
-                <button class="carousel-nav prev" id="carouselPrevBtn" onclick="moveCarousel(-1)">❮</button>
-                
-                <div class="carousel-wrapper">
-                    <div class="carousel-track" id="carouselTrack">
-                        <!-- Loading State -->
-                        <div id="merchLoading" style="width: 100%; text-align: center; color: var(--text-muted); padding: 3rem 0;">
-                            🔄 Loading live products from Big Jim's Spreadshop...
-                        </div>
-                    </div>
-                </div>
-
-                <button class="carousel-nav next" id="carouselNextBtn" onclick="moveCarousel(1)">❯</button>
+            <!-- Spreadshop Mount Point -->
+            <div id="myShop">
+                <p style="text-align: center; color: var(--text-muted); padding: 2rem 0;">
+                    🔄 Loading official Big Jim's Pick Dog gear...
+                </p>
             </div>
 
-            <!-- Full Shop Redirect Link -->
-            <div class="store-banner-cta">
-                <h4>🔥 WANT THE ENTIRE COLLECTION?</h4>
-                <p>Check out our full Spreadshop for hoodies, tank tops, stickers, and koozies!</p>
-                <a href="https://big-jims-pick-dog.myspreadshop.com/" target="_blank" class="main-store-btn">VISIT OFFICIAL SPREADSHOP STORE ➔</a>
-            </div>
+            <!-- Official Spreadshop Widget Script -->
+            <script>
+                var spread_shop_config = {
+                    shopName: 'big-jims-pick-dog',
+                    prefix: 'https://big-jims-pick-dog.myspreadshop.com',
+                    baseId: 'myShop',
+                    locale: 'en_US'
+                };
+            </script>
+            <script type="text/javascript" src="https://big-jims-pick-dog.myspreadshop.com/shopfiles/shopclient/shopclient.nocache.js"></script>
         </section>
 
     </div>
@@ -1213,39 +1070,59 @@
             }, 800);
         }
 
-        // Live Dynamic Sports Matchup Database blending exact facts with Big Jim dramatic picks
-        const sportsLibrary = {
+        // Live Dynamic Multi-Leg Parlay Database blending exact facts with Big Jim dramatic picks
+        const parlaySportsLibrary = {
             // Monday
             1: [
                 { 
                     league: "NFL (MNF)", 
-                    teams: "Buffalo Bills at Los Angeles Rams (7:15 PM)", 
-                    odds: "Bills -3.5", 
-                    tag: "MONDAY NIGHT MAIN EVENT", 
-                    comment: "The Bills are taking over SoFi Stadium! Josh Allen isn't just going to cover the -3.5 spread, he's going to hurdle two linebackers and throw 10 touchdowns in the first quarter alone! Lay the points and bet the mortgage on Buffalo!" 
+                    title: "MONDAY NIGHT SOFI MEGA-PARLAY", 
+                    odds: "+1450 PARLAY", 
+                    tag: "3-LEG MEGA LOCK", 
+                    legs: [
+                        "Buffalo Bills -3.5 Spread vs Los Angeles Rams",
+                        "Josh Allen 4+ Passing TDs in 1st Quarter",
+                        "Over 52.5 Total Points (7:15 PM - ESPN)"
+                    ],
+                    comment: "The Bills are taking over SoFi Stadium tonight! Josh Allen isn't just covering the spread, he's going to hurdle two linebackers and throw 10 touchdowns in the first quarter alone! Lay the points and put the mortgage on Buffalo!" 
                 },
                 { 
-                    league: "NCAAF", 
-                    teams: "Week 7 Lookahead: #8 Tennessee Volunteers at Arkansas Razorbacks", 
-                    odds: "Vols -16.5", 
-                    tag: "LOOKING AHEAD TO SATURDAY", 
-                    comment: "No college games tonight so we are locking in Saturday early. Tennessee travels to Fayetteville and Nico Iamaleava is going to unleash 80-yard bombs on every single drive. Buy the points and lock in the Vols now!" 
+                    league: "NCAAF LOOKAHEAD", 
+                    title: "SATURDAY SEC SECURED PARLAY", 
+                    odds: "+850 PARLAY", 
+                    tag: "EARLY LOCK", 
+                    legs: [
+                        "#8 Tennessee Volunteers -16.5 vs Arkansas",
+                        "Nico Iamaleava 300+ Passing Yards & 3 TDs",
+                        "Game Total OVER 61.5 Points"
+                    ],
+                    comment: "No college games tonight so we are locking in Saturday early. Tennessee travels to Fayetteville and Nico is unleashing 80-yard bombs on every single drive. Buy the points and lock in the Vols now!" 
                 }
             ],
             // Tuesday
             2: [
                 { 
                     league: "NCAAF (C-USA)", 
-                    teams: "Middle Tennessee Blue Raiders at Western Kentucky Hilltoppers (7:00 PM - CBSSN)", 
-                    odds: "WKU -7.5", 
-                    tag: "TUESDAY NIGHT EXTRAVAGANZA", 
+                    title: "TUESDAY NIGHT LIGHTS 3-LEG SLIP", 
+                    odds: "+920 PARLAY", 
+                    tag: "MIDWEEK PARLAY", 
+                    legs: [
+                        "Western Kentucky -7.5 vs Middle Tennessee",
+                        "WKU Team Total OVER 42.5 Points",
+                        "Game Total OVER 64.5 (7:00 PM - CBSSN)"
+                    ],
                     comment: "Tuesday night C-USA rivalry action at Houchens Industries Stadium! WKU is laying 7.5 points, but their offense is going to score 70 points by halftime. Middle Tennessee won't even get a single first down. Smash Western Kentucky!" 
                 },
                 { 
-                    league: "NFL", 
-                    teams: "Lookahead: Dallas Cowboys vs Tampa Bay Buccaneers (TNF)", 
-                    odds: "Cowboys -3.0", 
-                    tag: "PRIME TIME FUTURES LOCK", 
+                    league: "NFL LOOKAHEAD", 
+                    title: "THURSDAY NIGHT PRIME TIME PARLAY", 
+                    odds: "+1100 PARLAY", 
+                    tag: "TNF FUTURES", 
+                    legs: [
+                        "Dallas Cowboys -3.0 vs Tampa Bay Buccaneers",
+                        "Dak Prescott 300+ Passing Yards",
+                        "Cowboys Defense 5+ Sacks"
+                    ],
                     comment: "Dry Tuesday for NFL so Big Jim is cooking Thursday early. Dak Prescott in prime time at AT&T Stadium is an automatic cash print. The Cowboys win by 40 points easy!" 
                 }
             ],
@@ -1253,16 +1130,27 @@
             3: [
                 { 
                     league: "NCAAF (C-USA)", 
-                    teams: "Jacksonville State Gamecocks at Kennesaw State Owls (7:00 PM - CBSSN)", 
-                    odds: "Jacksonville St -14.0", 
-                    tag: "WEDNESDAY MIDWEEK LOCK", 
+                    title: "WEDNESDAY MIDWEEK CHAOS 4-LEG PARLAY", 
+                    odds: "+1800 PARLAY", 
+                    tag: "4-LEG CHAOS SLIP", 
+                    legs: [
+                        "Jacksonville State -14.0 Spread at Kennesaw State",
+                        "Jacksonville State QB 10+ TDs in 1st Quarter",
+                        "Jacksonville State QB 300+ Rushing Yards",
+                        "Game Total OVER 58.5 Points (7:00 PM - CBSSN)"
+                    ],
                     comment: "Jacksonville State is laying 14 points at Fifth Third Stadium and it's a steal! Their QB is going to throw 10 touchdowns in the 1st quarter and run for 300 yards himself. Kennesaw State stands zero chance. Lock it in!" 
                 },
                 { 
                     league: "NCAAF (C-USA)", 
-                    teams: "New Mexico State Aggies at FIU Panthers (7:30 PM - ESPN2)", 
-                    odds: "New Mexico St +7.5", 
-                    tag: "PITBULL STADIUM NIGHTCAP", 
+                    title: "PITBULL STADIUM MR. WORLDWIDE PARLAY", 
+                    odds: "+750 PARLAY", 
+                    tag: "NIGHTCAP SLIP", 
+                    legs: [
+                        "New Mexico State +7.5 Cover Spread at FIU",
+                        "New Mexico State Moneyline Outright Win",
+                        "Game Total OVER 54.5 (7:30 PM - ESPN2)"
+                    ],
                     comment: "They are playing at Pitbull Stadium in Miami! Mr. Worldwide is in the building, which means New Mexico State gets 7.5 free points and scores on every single possession. Take the points and celebrate!" 
                 }
             ],
@@ -1270,16 +1158,26 @@
             4: [
                 { 
                     league: "NFL (TNF)", 
-                    teams: "Tampa Bay Buccaneers at Dallas Cowboys (7:15 PM - Prime Video)", 
-                    odds: "Cowboys -3.0", 
-                    tag: "THURSDAY NIGHT FOOTBALL LOCK", 
+                    title: "THURSDAY NIGHT AT&T STADIUM PARLAY", 
+                    odds: "+1250 PARLAY", 
+                    tag: "3-LEG TNF LOCK", 
+                    legs: [
+                        "Dallas Cowboys -3.0 Spread vs Buccaneers",
+                        "Cowboys Defense 12+ Sacks & 2 Pick-Sixes in First 10 Minutes",
+                        "Game Total OVER 48.5 (7:15 PM - Prime Video)"
+                    ],
                     comment: "Live at AT&T Stadium in Arlington! Tampa Bay can't handle the noise. The Cowboys' defense is going to record 12 sacks and return two pick-sixes in the first 10 minutes. Lay the 3 points!" 
                 },
                 { 
                     league: "NCAAF", 
-                    teams: "South Florida Bulls at UTSA Roadrunners (7:30 PM - ESPN)", 
-                    odds: "UTSA -4.0", 
-                    tag: "ALAMODOME SHOOTOUT", 
+                    title: "ALAMODOME SHOOTOUT PARLAY", 
+                    odds: "+680 PARLAY", 
+                    tag: "COLLEGE THURSDAY", 
+                    legs: [
+                        "UTSA Roadrunners -4.0 Spread vs USF",
+                        "UTSA Team Total OVER 45.5 Points",
+                        "Game Total OVER 62.5 (7:30 PM - ESPN)"
+                    ],
                     comment: "AAC action in San Antonio! The Alamodome will be deafening. UTSA is going to put up 60 points on USF's secondary. Lay the 4 points with absolute 100% marrow confidence!" 
                 }
             ],
@@ -1287,16 +1185,26 @@
             5: [
                 { 
                     league: "NCAAF", 
-                    teams: "Sam Houston Bearkats at Liberty Flames (7:00 PM - ESPNU)", 
-                    odds: "Liberty -6.5", 
-                    tag: "FRIDAY NIGHT SLAM", 
+                    title: "FRIDAY NIGHT FLAMES 3-LEG PARLAY", 
+                    odds: "+890 PARLAY", 
+                    tag: "FRIDAY SLAM", 
+                    legs: [
+                        "Liberty Flames -6.5 Spread vs Sam Houston",
+                        "Liberty 50+ Unanswered Points in First Half",
+                        "Game Total OVER 56.5 (7:00 PM - ESPNU)"
+                    ],
                     comment: "Live at Williams Stadium in Lynchburg! Liberty's offense is going to drop 50 unanswered points before Sam Houston even completes a pass. Easy Friday night cash!" 
                 },
                 { 
                     league: "NCAAF", 
-                    teams: "Florida State Seminoles at Louisville Cardinals (7:00 PM - ESPN)", 
-                    odds: "Louisville -3.5", 
-                    tag: "ACC FRIDAY SHOWDOWN", 
+                    title: "ACC FRIDAY CARDINAL PARLAY", 
+                    odds: "+1050 PARLAY", 
+                    tag: "ACC SHOWDOWN", 
+                    legs: [
+                        "Louisville Cardinals -3.5 Spread vs Florida State",
+                        "Louisville Defense Intercept Every Pass Thrown",
+                        "Game Total UNDER 52.5 (7:00 PM - ESPN)"
+                    ],
                     comment: "L&N Federal Credit Union Stadium is going to be rocking! Louisville's defense is going to intercept every single pass thrown tonight. Lay the small spread with total overconfidence!" 
                 }
             ],
@@ -1304,65 +1212,82 @@
             6: [
                 { 
                     league: "NCAAF", 
-                    teams: "#1 Texas Longhorns vs Oklahoma Sooners (3:30 PM - ABC)", 
-                    odds: "Texas -8.5", 
-                    tag: "RED RIVER RIVALRY MASSACRE", 
+                    title: "RED RIVER RIVALRY MASSACRE PARLAY", 
+                    odds: "+2200 PARLAY", 
+                    tag: "4-LEG MONSTER SLIP", 
+                    legs: [
+                        "#1 Texas Longhorns -8.5 Spread vs Oklahoma",
+                        "Texas Scores on All 14 Drives",
+                        "Oklahoma Held to Under 50 Total Yards",
+                        "Game Total OVER 65.5 (3:30 PM - ABC at Cotton Bowl)"
+                    ],
                     comment: "Live at the Cotton Bowl in Dallas! Texas is ranked #1 in the country and they're going to score on all 14 drives today. Oklahoma won't even cross midfield. Lay the 8.5 points and double down!" 
                 },
                 { 
                     league: "NCAAF", 
-                    teams: "Georgia Bulldogs at Alabama Crimson Tide (7:30 PM - ABC)", 
-                    odds: "Georgia -2.5", 
-                    tag: "SATURDAY NIGHT BLOCKBUSTER", 
+                    title: "SEC SATURDAY NIGHT BLOCKBUSTER PARLAY", 
+                    odds: "+1350 PARLAY", 
+                    tag: "SEC PRIMETIME", 
+                    legs: [
+                        "Georgia Bulldogs -2.5 Spread at Alabama",
+                        "Georgia Wins by 30+ Points Outright",
+                        "Game Total OVER 54.5 (7:30 PM - ABC at Bryant-Denny)"
+                    ],
                     comment: "Bryant-Denny Stadium in Tuscaloosa! Georgia's front seven is going to shut down everything Alabama tries. Georgia wins by 30 points minimum. Put the house on the Bulldogs!" 
-                },
-                { 
-                    league: "NCAAF", 
-                    teams: "South Carolina Gamecocks at #16 Florida Gators (12:45 PM - SECN)", 
-                    odds: "Florida -6.5", 
-                    tag: "SEC SWAMP BATTLE", 
-                    comment: "Ben Hill Griffin Stadium in Gainesville! The Swamp is going to swallow South Carolina whole. Florida's running game will average 15 yards per carry today. Lay the points!" 
                 }
             ],
             // Sunday (Massive NFL Day)
             0: [
                 { 
                     league: "NFL", 
-                    teams: "Philadelphia Eagles vs Jacksonville Jaguars in London (8:30 AM - NFLN)", 
-                    odds: "Eagles -4.5", 
-                    tag: "LONDON MORNING LOCK", 
+                    title: "LONDON MORNING SAQUON PARLAY", 
+                    odds: "+1600 PARLAY", 
+                    tag: "LONDON MORNING SLIP", 
+                    legs: [
+                        "Philadelphia Eagles -4.5 Spread vs Jaguars",
+                        "Saquon Barkley 250+ Rushing Yards Before Lunch",
+                        "Game Total OVER 46.5 (8:30 AM - NFLN)"
+                    ],
                     comment: "Northumberland Development Project Stadium in London! The Eagles crossed the Atlantic to dominate. Saquon Barkley is going to rush for 250 yards before lunch time. Lay the 4.5 points!" 
                 },
                 { 
                     league: "NFL", 
-                    teams: "Houston Texans at Tennessee Titans (1:00 PM - CBS)", 
-                    odds: "Texans -2.5", 
-                    tag: "NISSAN STADIUM SHOWDOWN", 
+                    title: "SUNDAY AFTERNOON AIR ATTACK PARLAY", 
+                    odds: "+1150 PARLAY", 
+                    tag: "SUNDAY LOCK SLIP", 
+                    legs: [
+                        "Houston Texans -2.5 Spread at Tennessee Titans",
+                        "CJ Stroud 6+ Passing TDs in First Half",
+                        "Game Total OVER 44.5 (1:00 PM - CBS)"
+                    ],
                     comment: "Live in Nashville! CJ Stroud is going to throw 6 touchdown passes in the first half alone. Tennessee can't stop this air attack. Lay the tiny spread and celebrate!" 
-                },
-                { 
-                    league: "NFL", 
-                    teams: "Chicago Bears at Green Bay Packers (1:00 PM - FOX)", 
-                    odds: "Packers -3.5", 
-                    tag: "LAMBEAU FIELD CLASSIC", 
-                    comment: "Lambeau Field in Green Bay! The Packers at home against Chicago is a guaranteed cash printer. Green Bay's defense will force 5 turnovers today. Lay the 3.5 points!" 
                 }
             ]
         };
 
-        const fallbackGames = [
+        const parlayFallback = [
             { 
-                league: "NFL Weekend Slate Preview", 
-                teams: "Buffalo Bills at Los Angeles Rams", 
-                odds: "Bills -3.5", 
-                tag: "LOOKING AHEAD TO WEEKEND", 
+                league: "NFL LOOKAHEAD", 
+                title: "SOFI STADIUM MEGA-PARLAY", 
+                odds: "+1450 PARLAY", 
+                tag: "WEEKEND LOOKAHEAD", 
+                legs: [
+                    "Buffalo Bills -3.5 Spread at LA Rams",
+                    "Josh Allen 4+ Passing TDs in 1st Quarter",
+                    "Game Total OVER 52.5 Points"
+                ],
                 comment: "No games on the board today, so Big Jim is looking ahead to the massive clash at SoFi Stadium! Josh Allen is going to run over three defenders on his way to 10 touchdowns. Lay the points early!" 
             },
             { 
-                league: "NCAAF", 
-                teams: "#1 Texas Longhorns vs Oklahoma Sooners at the Cotton Bowl", 
-                odds: "Texas -8.5", 
-                tag: "RED RIVER LOOKAHEAD", 
+                league: "NCAAF LOOKAHEAD", 
+                title: "RED RIVER RIVALRY MONSTER SLIP", 
+                odds: "+2200 PARLAY", 
+                tag: "COTTON BOWL LOCK", 
+                legs: [
+                    "#1 Texas Longhorns -8.5 Spread vs Oklahoma",
+                    "Texas Scores on All 14 Drives",
+                    "Game Total OVER 65.5 Points"
+                ],
                 comment: "No games today, so I'm already counting down to Saturday at the Cotton Bowl! Texas is ranked #1 and will score on every drive. Lock in the Longhorns right now, brother!" 
             }
         ];
@@ -1371,19 +1296,19 @@
             const today = new Date();
             const fullDateString = today.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
             
-            document.getElementById("currentDateBanner").innerText = `🔴 LIVE TODAY'S BOARDS — ${fullDateString}`;
+            document.getElementById("currentDateBanner").innerText = `🔴 LIVE TODAY'S PARLAY SLIPS — ${fullDateString}`;
 
-            const dayOfWeek = today.getDay(); // 0 (Sun) to 6 (Sat)
+            const dayOfWeek = today.getDay();
             const picksContainer = document.getElementById("dynamicPicksContainer");
-            picksContainer.innerHTML = ""; // Clear loader
+            picksContainer.innerHTML = "";
 
-            let matchups = sportsLibrary[dayOfWeek] || [];
+            let matchups = parlaySportsLibrary[dayOfWeek] || [];
 
             if (matchups.length === 0) {
-                matchups = fallbackGames;
-                document.getElementById("scheduleNoticeText").innerText = "No game schedules today! Big Jim is looking ahead to the next upcoming matchups:";
+                matchups = parlayFallback;
+                document.getElementById("scheduleNoticeText").innerText = "No game schedules today! Big Jim is looking ahead to the next upcoming parlay slips:";
             } else {
-                document.getElementById("scheduleNoticeText").innerText = "Game schedules actively tracking live. Unreliable, high-energy betting recommendations on today's/upcoming games:";
+                document.getElementById("scheduleNoticeText").innerText = "Game schedules actively tracking live. Unreliable, high-energy multi-leg parlay slips on today's/upcoming games:";
             }
 
             matchups.forEach((match, idx) => {
@@ -1393,12 +1318,19 @@
                 const seedVal = today.getDate() + idx;
                 const confidence = 85 + ((seedVal * 13) % 15);
 
+                let legsHtml = '<ul class="parlay-legs-list">';
+                match.legs.forEach(leg => {
+                    legsHtml += `<li><span class="leg-icon">⚡</span> ${leg}</li>`;
+                });
+                legsHtml += '</ul>';
+
                 card.innerHTML = `
                     <div class="pick-header">
-                        <span class="pick-title">${match.league}: ${match.teams}</span>
+                        <span class="pick-title">${match.league}: ${match.title}</span>
                         <span class="pick-odds">${match.odds}</span>
                         <span class="pick-tag ${idx === 1 ? "parlay" : idx === 2 ? "live-highlight" : ""}">${match.tag}</span>
                     </div>
+                    ${legsHtml}
                     <p class="pick-quote">"${match.comment}"</p>
                     <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--accent-gold); font-weight: 700;">
                         <span>BIG JIM'S OVERCONFIDENT RATING</span>
@@ -1412,125 +1344,8 @@
             });
         }
 
-        // Parse shop feed to build dynamic carousel cards
-        let currentIdx = 0;
-        const shopUrl = "https://big-jims-pick-dog.myspreadshop.com";
-
-        async function loadSpreadshopFeed() {
-            const track = document.getElementById('carouselTrack');
-            try {
-                // Fetch public shop RSS feed via cors proxy
-                const rssApiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(shopUrl + '/rss')}`;
-                const res = await fetch(rssApiUrl);
-                const data = await res.json();
-
-                if (data.status === 'ok' && data.items && data.items.length > 0) {
-                    track.innerHTML = ""; // Clear loader
-                    
-                    data.items.forEach(item => {
-                        let imgUrl = item.thumbnail || item.enclosure?.link;
-                        if (!imgUrl && item.content) {
-                            const imgMatch = item.content.match(/src=["'](.*?)["']/);
-                            if (imgMatch) imgUrl = imgMatch[1];
-                        }
-                        if (!imgUrl) {
-                            imgUrl = "https://image.spreadshirtmedia.com/image-server/v1/products/710609425/views/1,width=400,height=400,appearanceId=2.png";
-                        }
-
-                        const merchCard = document.createElement('div');
-                        merchCard.className = 'merch-item';
-                        merchCard.innerHTML = `
-                            <div>
-                                <div class="merch-image-wrapper">
-                                    <img src="${imgUrl}" alt="${item.title}" class="merch-thumb" onerror="this.src='https://image.spreadshirtmedia.com/image-server/v1/products/710609425/views/1,width=400,height=400,appearanceId=2.png'">
-                                </div>
-                                <div class="merch-title">${item.title}</div>
-                                <div class="merch-price">$24.99</div>
-                            </div>
-                            <a href="${item.link || shopUrl}" target="_blank" class="buy-btn">BUY ON SPREADSHOP ➔</a>
-                        `;
-                        track.appendChild(merchCard);
-                    });
-                } else {
-                    showCDNMerchFallback();
-                }
-            } catch (e) {
-                console.log("RSS Feed fetch failed, running CDN fallback:", e);
-                showCDNMerchFallback();
-            }
-        }
-
-        // High-res CDN fallback guarantee so products always render visually
-        function showCDNMerchFallback() {
-            const track = document.getElementById('carouselTrack');
-            track.innerHTML = "";
-
-            const liveProducts = [
-                {
-                    name: '"GOD DAMN! WOO!" TRUCKER HAT',
-                    price: "$29.99",
-                    img: "https://image.spreadshirtmedia.com/image-server/v1/products/710609438/views/1,width=400,height=400,appearanceId=1.png",
-                    link: `${shopUrl}/god+damn+woo+big+jims+pick+dog+men+s+classic+trucker+cap-A69696969`
-                },
-                {
-                    name: '"GOD DAMN!" OFFICIAL TEE',
-                    price: "$24.99",
-                    img: "https://image.spreadshirtmedia.com/image-server/v1/products/710609425/views/1,width=400,height=400,appearanceId=2.png",
-                    link: `${shopUrl}/god+damn+woo+big+jims+pick+dog+men+s+t+shirt-A69696968`
-                },
-                {
-                    name: "UNRELIABLE TIPS CAN COOLER",
-                    price: "$12.99",
-                    img: "https://image.spreadshirtmedia.com/image-server/v1/products/710609419/views/1,width=400,height=400,appearanceId=3.png",
-                    link: `${shopUrl}/god+damn+woo+big+jims+pick+dog+beverage+cooler-A69696967`
-                },
-                {
-                    name: '"GOD DAMN!" PULLOVER HOODIE',
-                    price: "$44.99",
-                    img: "https://image.spreadshirtmedia.com/image-server/v1/products/710609440/views/1,width=400,height=400,appearanceId=4.png",
-                    link: `${shopUrl}/god+damn+woo+big+jims+pick+dog+unisex+heavyweight+hoodie-A69696966`
-                }
-            ];
-
-            liveProducts.forEach(item => {
-                const merchCard = document.createElement('div');
-                merchCard.className = 'merch-item';
-                merchCard.innerHTML = `
-                    <div>
-                        <div class="merch-image-wrapper">
-                            <img src="${item.img}" alt="${item.name}" class="merch-thumb">
-                        </div>
-                        <div class="merch-title">${item.name}</div>
-                        <div class="merch-price">${item.price}</div>
-                    </div>
-                    <a href="${item.link}" target="_blank" class="buy-btn">BUY ON SPREADSHOP ➔</a>
-                `;
-                track.appendChild(merchCard);
-            });
-        }
-
-        function moveCarousel(direction) {
-            const track = document.getElementById('carouselTrack');
-            const items = document.querySelectorAll('.carousel-track .merch-item');
-            const gap = 20;
-            
-            if (items.length === 0) return;
-
-            let itemsPerView = 3;
-            if (window.innerWidth <= 900) itemsPerView = 2;
-            if (window.innerWidth <= 600) itemsPerView = 1;
-
-            const maxIdx = items.length - itemsPerView;
-            currentIdx = Math.min(Math.max(currentIdx + direction, 0), maxIdx);
-
-            const itemWidth = items[0].getBoundingClientRect().width;
-            const offset = currentIdx * (itemWidth + gap);
-            track.style.transform = `translateX(-${offset}px)`;
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             generateLiveDayBets();
-            loadSpreadshopFeed();
         });
     </script>
 </body>
