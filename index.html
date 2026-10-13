@@ -326,6 +326,90 @@
             transition: width 0.1s linear;
         }
 
+        /* ASK BIG JIM AI WIDGET STYLING */
+        .ask-jim-container {
+            background: linear-gradient(135deg, rgba(230, 0, 0, 0.15) 0%, rgba(20, 23, 31, 0.95) 100%);
+            border: 1.5px solid var(--accent-gold);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1.75rem;
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.15);
+        }
+
+        .ask-jim-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .ask-jim-title {
+            font-family: 'Teko', sans-serif;
+            font-size: 1.8rem;
+            color: var(--accent-gold);
+            line-height: 1;
+            text-transform: uppercase;
+        }
+
+        .ask-jim-input-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .ask-jim-input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .ask-jim-input:focus {
+            border-color: var(--accent-gold);
+        }
+
+        .ask-jim-btn {
+            background: linear-gradient(135deg, #ffcc00 0%, #ff8800 100%);
+            color: #000;
+            font-weight: 800;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.4rem;
+            padding: 0 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            white-space: nowrap;
+        }
+
+        .ask-jim-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+        }
+
+        .ask-jim-response {
+            display: none;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(230, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 0.75rem;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Betting Tips Card & Parlay Slip Styling */
         .pick-card {
             background: rgba(15, 17, 23, 0.8);
@@ -481,6 +565,171 @@
             background: #ffaa00;
         }
 
+        /* Sleek Merch Carousel Styling */
+        .carousel-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin: 1.5rem 0;
+        }
+
+        .carousel-wrapper {
+            overflow: hidden;
+            width: 100%;
+            padding: 0.5rem 0;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 1.25rem;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: transform;
+        }
+
+        .carousel-track .merch-item {
+            flex: 0 0 calc(33.333% - 0.85rem);
+            min-width: 260px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .carousel-track .merch-item:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent-gold);
+        }
+
+        .carousel-nav {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 0.8rem;
+            border-radius: 50%;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .carousel-nav:hover {
+            background: var(--primary-red);
+            border-color: #fff;
+        }
+
+        .carousel-nav.prev { left: -1rem; }
+        .carousel-nav.next { right: -1rem; }
+
+        .merch-image-wrapper {
+            width: 100%;
+            height: 220px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .merch-thumb {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+
+        .merch-title {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .merch-price {
+            color: var(--accent-gold);
+            font-weight: 800;
+            font-size: 1.15rem;
+            margin: 0.4rem 0 0.8rem;
+        }
+
+        .buy-btn {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-red) 0%, #a00000 100%);
+            color: #fff !important;
+            padding: 0.65rem 0.5rem;
+            border-radius: 6px;
+            font-weight: 800;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 10px rgba(230, 0, 0, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .buy-btn:hover {
+            background: linear-gradient(135deg, #ff1a1a 0%, var(--primary-red) 100%);
+            box-shadow: 0 0 18px rgba(230, 0, 0, 0.6);
+        }
+
+        .store-banner-cta {
+            margin-top: 1.5rem;
+            background: rgba(255, 204, 0, 0.05);
+            border: 1px solid rgba(255, 204, 0, 0.25);
+            border-radius: 12px;
+            padding: 1.5rem 1.25rem;
+            text-align: center;
+        }
+
+        .store-banner-cta h4 {
+            font-family: 'Teko', sans-serif;
+            font-size: 2rem;
+            color: var(--accent-gold);
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .store-banner-cta p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .main-store-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #ffcc00 0%, #ff8800 100%);
+            color: #000 !important;
+            padding: 0.75rem 2rem;
+            border-radius: 25px;
+            font-weight: 800;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .main-store-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(255, 204, 0, 0.6);
+        }
+
         /* Quiz Modal Overlay */
         .quiz-modal {
             display: none;
@@ -618,6 +867,12 @@
         }
 
         /* MOBILE RESPONSIVE STYLES */
+        @media (max-width: 900px) {
+            .carousel-track .merch-item {
+                flex: 0 0 calc(50% - 0.65rem);
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-container {
                 flex-direction: column;
@@ -657,6 +912,19 @@
             .soundboard-grid {
                 grid-template-columns: 1fr 1fr;
             }
+
+            .ask-jim-input-group {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .carousel-track .merch-item {
+                flex: 0 0 100%;
+            }
+            .carousel-nav { display: none; }
+            .carousel-wrapper { overflow-x: auto; scroll-snap-type: x mandatory; }
+            .carousel-track .merch-item { scroll-snap-align: start; }
         }
 
         @media (max-width: 380px) {
@@ -738,6 +1006,41 @@
         <section id="tips" class="card">
             <div class="live-banner" id="currentDateBanner">🔴 LIVE TODAY'S PARLAY SLIPS — Oct 2026</div>
             <h2 class="section-title" style="margin-top: 0.2rem;">📊 Big Jim's Unreliable Parlays & Locks</h2>
+            
+            <!-- ASK BIG JIM AI QUESTION WIDGET -->
+            <div class="ask-jim-container">
+                <div class="ask-jim-header">
+                    <span style="font-size: 1.6rem;">🤖</span>
+                    <div class="ask-jim-title">ASK BIG JIM'S AI BETTING BRAIN</div>
+                </div>
+                <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.8rem;">
+                    Got a specific matchup or prop bet in mind? Type any team or game below for Big Jim's instantaneous, zero-research analysis:
+                </p>
+                <div class="ask-jim-input-group">
+                    <input type="text" id="askJimInput" class="ask-jim-input" placeholder="e.g. What do you think about Chiefs vs Bills this weekend?" onkeypress="if(event.key==='Enter') askBigJim()">
+                    <button class="ask-jim-btn" onclick="askBigJim()">ASK JIM ➔</button>
+                </div>
+
+                <!-- Interactive Response Card -->
+                <div id="askJimResponse" class="ask-jim-response">
+                    <div class="pick-header">
+                        <span class="pick-title" id="aiResponseTitle">CUSTOM PARLAY</span>
+                        <span class="pick-odds" id="aiResponseOdds">+1800 UNHINGED</span>
+                    </div>
+                    <ul class="parlay-legs-list" id="aiResponseLegs">
+                        <!-- Injected via JS -->
+                    </ul>
+                    <p class="pick-quote" id="aiResponseQuote"></p>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--accent-gold); font-weight: 700;">
+                        <span>JIM's CONFIDENCE</span>
+                        <span id="aiResponseConfidence">110% OVERCONFIDENT</span>
+                    </div>
+                    <div class="confidence-meter">
+                        <div class="confidence-fill" id="aiResponseMeter" style="width: 95%;"></div>
+                    </div>
+                </div>
+            </div>
+
             <p id="scheduleNoticeText" style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;">
                 Warning: Daily multi-leg parlay slips generated dynamically based on real-time sport scheduling. Do not take these seriously!
             </p>
@@ -759,27 +1062,29 @@
             <button class="ad-cta" onclick="openQuiz()">TAKE ELIGIBILITY QUIZ</button>
         </section>
 
-        <!-- Option A: Live Official Spreadshop Container -->
+        <!-- Sleek Custom Merch Showcase Carousel -->
         <section id="merch" class="card">
             <h2 class="section-title">🧢 Official Pick Dog Merch</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">Featured gear directly from the shop:</p>
             
-            <!-- Spreadshop Mount Point -->
-            <div id="myShop">
-                <p style="text-align: center; color: var(--text-muted); padding: 2rem 0;">
-                    🔄 Loading official Big Jim's Pick Dog gear...
-                </p>
+            <div class="carousel-container">
+                <button class="carousel-nav prev" id="carouselPrevBtn" onclick="moveCarousel(-1)">❮</button>
+                
+                <div class="carousel-wrapper">
+                    <div class="carousel-track" id="carouselTrack">
+                        <!-- Loaded dynamically via JavaScript -->
+                    </div>
+                </div>
+
+                <button class="carousel-nav next" id="carouselNextBtn" onclick="moveCarousel(1)">❯</button>
             </div>
 
-            <!-- Official Spreadshop Widget Script -->
-            <script>
-                var spread_shop_config = {
-                    shopName: 'big-jims-pick-dog',
-                    prefix: 'https://big-jims-pick-dog.myspreadshop.com',
-                    baseId: 'myShop',
-                    locale: 'en_US'
-                };
-            </script>
-            <script type="text/javascript" src="https://big-jims-pick-dog.myspreadshop.com/shopfiles/shopclient/shopclient.nocache.js"></script>
+            <!-- Store CTA Link -->
+            <div class="store-banner-cta">
+                <h4>🔥 WANT TO SEE THE ENTIRE STORE?</h4>
+                <p>Check out our full Spreadshop catalog for hoodies, tank tops, stickers, and koozies!</p>
+                <a href="https://big-jims-pick-dog.myspreadshop.com/" target="_blank" class="main-store-btn">VISIT OFFICIAL SPREADSHOP STORE ➔</a>
+            </div>
         </section>
 
     </div>
@@ -1070,9 +1375,61 @@
             }, 800);
         }
 
-        // Live Dynamic Multi-Leg Parlay Database blending exact facts with Big Jim dramatic picks
+        // ASK BIG JIM AI GENERATOR ENGINE
+        const jimQuotesBank = [
+            "I felt this directly in my marrow right after my third Michelob Ultra. Put the house on it!",
+            "Defense is a myth invented by people who don't like fun. Take the over and go celebrate!",
+            "The venue aesthetics alone tell me everything I need to know. Zero film studied, 100% confidence!",
+            "They think they can stop this offense? Absolutely not! 10 touchdowns in the first quarter minimum!",
+            "Trust the vibes! If we lose this slip, we double down on the West Coast late night games!"
+        ];
+
+        function askBigJim() {
+            const input = document.getElementById('askJimInput').value.trim();
+            if (!input) return;
+
+            const responseBox = document.getElementById('askJimResponse');
+            const titleEl = document.getElementById('aiResponseTitle');
+            const oddsEl = document.getElementById('aiResponseOdds');
+            const legsEl = document.getElementById('aiResponseLegs');
+            const quoteEl = document.getElementById('aiResponseQuote');
+            const confEl = document.getElementById('aiResponseConfidence');
+            const meterEl = document.getElementById('aiResponseMeter');
+
+            // Format input team name nicely
+            let subject = input.toUpperCase().replace('VS', 'VS.').replace('BET', '').replace('THINK ABOUT', '').trim();
+            if (subject.length > 35) subject = subject.substring(0, 35) + '...';
+
+            titleEl.textContent = `JIM'S ANALYSIS: ${subject}`;
+            
+            // Random funny odds generator
+            const oddsList = ["+1450 MEGA LOCK", "+2200 UNHINGED", "+850 SLAM DUNK", "+1800 VIBE CHECK", "+3200 DEGEN SPECIAL"];
+            oddsEl.textContent = oddsList[Math.floor(Math.random() * oddsList.length)];
+
+            // Generate customized parlay legs based on query
+            legsEl.innerHTML = `
+                <li><span class="leg-icon">⚡</span> ${input.toUpperCase()} — COVER THE SPREAD BY 30+ POINTS</li>
+                <li><span class="leg-icon">⚡</span> STAR QB 4+ TOUCHDOWNS IN THE FIRST QUARTER</li>
+                <li><span class="leg-icon">⚡</span> TOTAL POINTS OVER 68.5 (NO DEFENSE ALLOWED)</li>
+            `;
+
+            // Random Jim Quote
+            const quote = jimQuotesBank[Math.floor(Math.random() * jimQuotesBank.length)];
+            quoteEl.textContent = `"${quote}"`;
+
+            // Overconfident percent
+            const confidence = Math.floor(Math.random() * 15) + 105; // 105% to 120%
+            confEl.textContent = `${confidence}% OVERCONFIDENT`;
+            meterEl.style.width = '100%';
+
+            responseBox.style.display = 'block';
+
+            // Audio speech reaction
+            playSpeech(`God damn! Here is my analysis for ${input}: Lock it in! 100 percent sure thing!`, null);
+        }
+
+        // Live Dynamic Multi-Leg Parlay Database
         const parlaySportsLibrary = {
-            // Monday
             1: [
                 { 
                     league: "NFL (MNF)", 
@@ -1099,7 +1456,6 @@
                     comment: "No college games tonight so we are locking in Saturday early. Tennessee travels to Fayetteville and Nico is unleashing 80-yard bombs on every single drive. Buy the points and lock in the Vols now!" 
                 }
             ],
-            // Tuesday
             2: [
                 { 
                     league: "NCAAF (C-USA)", 
@@ -1126,7 +1482,6 @@
                     comment: "Dry Tuesday for NFL so Big Jim is cooking Thursday early. Dak Prescott in prime time at AT&T Stadium is an automatic cash print. The Cowboys win by 40 points easy!" 
                 }
             ],
-            // Wednesday
             3: [
                 { 
                     league: "NCAAF (C-USA)", 
@@ -1154,7 +1509,6 @@
                     comment: "They are playing at Pitbull Stadium in Miami! Mr. Worldwide is in the building, which means New Mexico State gets 7.5 free points and scores on every single possession. Take the points and celebrate!" 
                 }
             ],
-            // Thursday
             4: [
                 { 
                     league: "NFL (TNF)", 
@@ -1181,7 +1535,6 @@
                     comment: "AAC action in San Antonio! The Alamodome will be deafening. UTSA is going to put up 60 points on USF's secondary. Lay the 4 points with absolute 100% marrow confidence!" 
                 }
             ],
-            // Friday
             5: [
                 { 
                     league: "NCAAF", 
@@ -1208,7 +1561,6 @@
                     comment: "L&N Federal Credit Union Stadium is going to be rocking! Louisville's defense is going to intercept every single pass thrown tonight. Lay the small spread with total overconfidence!" 
                 }
             ],
-            // Saturday (Massive NCAAF Day)
             6: [
                 { 
                     league: "NCAAF", 
@@ -1236,7 +1588,6 @@
                     comment: "Bryant-Denny Stadium in Tuscaloosa! Georgia's front seven is going to shut down everything Alabama tries. Georgia wins by 30 points minimum. Put the house on the Bulldogs!" 
                 }
             ],
-            // Sunday (Massive NFL Day)
             0: [
                 { 
                     league: "NFL", 
@@ -1344,8 +1695,82 @@
             });
         }
 
+        // Sleek Custom Merch Carousel Logic
+        let currentIdx = 0;
+        const shopUrl = "https://big-jims-pick-dog.myspreadshop.com/";
+
+        // Real products with reliable CDN image previews
+        const featuredProducts = [
+            {
+                name: '"GOD DAMN! WOO!" TRUCKER HAT',
+                price: "$29.99",
+                img: "https://image.spreadshirtmedia.com/image-server/v1/products/710609438/views/1,width=500,height=500,appearanceId=1.png",
+                link: shopUrl
+            },
+            {
+                name: '"GOD DAMN!" OFFICIAL TEE',
+                price: "$24.99",
+                img: "https://image.spreadshirtmedia.com/image-server/v1/products/710609425/views/1,width=500,height=500,appearanceId=2.png",
+                link: shopUrl
+            },
+            {
+                name: "UNRELIABLE TIPS CAN COOLER",
+                price: "$12.99",
+                img: "https://image.spreadshirtmedia.com/image-server/v1/products/710609419/views/1,width=500,height=500,appearanceId=3.png",
+                link: shopUrl
+            },
+            {
+                name: '"GOD DAMN!" PULLOVER HOODIE',
+                price: "$44.99",
+                img: "https://image.spreadshirtmedia.com/image-server/v1/products/710609440/views/1,width=400,height=400,appearanceId=4.png",
+                link: shopUrl
+            }
+        ];
+
+        function renderMerchCarousel() {
+            const track = document.getElementById('carouselTrack');
+            if (!track) return;
+            track.innerHTML = "";
+
+            featuredProducts.forEach(item => {
+                const merchCard = document.createElement('div');
+                merchCard.className = 'merch-item';
+                merchCard.innerHTML = `
+                    <div>
+                        <div class="merch-image-wrapper">
+                            <img src="${item.img}" alt="${item.name}" class="merch-thumb" onerror="this.src='https://image.spreadshirtmedia.com/image-server/v1/designs/1057912423,width=300,height=300.png'">
+                        </div>
+                        <div class="merch-title">${item.name}</div>
+                        <div class="merch-price">${item.price}</div>
+                    </div>
+                    <a href="${item.link}" target="_blank" class="buy-btn">BUY ON SPREADSHOP ➔</a>
+                `;
+                track.appendChild(merchCard);
+            });
+        }
+
+        function moveCarousel(direction) {
+            const track = document.getElementById('carouselTrack');
+            const items = document.querySelectorAll('.carousel-track .merch-item');
+            const gap = 20;
+            
+            if (!items.length) return;
+
+            let itemsPerView = 3;
+            if (window.innerWidth <= 900) itemsPerView = 2;
+            if (window.innerWidth <= 600) itemsPerView = 1;
+
+            const maxIdx = items.length - itemsPerView;
+            currentIdx = Math.min(Math.max(currentIdx + direction, 0), maxIdx);
+
+            const itemWidth = items[0].getBoundingClientRect().width;
+            const offset = currentIdx * (itemWidth + gap);
+            track.style.transform = `translateX(-${offset}px)`;
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             generateLiveDayBets();
+            renderMerchCarousel();
         });
     </script>
 </body>
