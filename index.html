@@ -565,7 +565,7 @@
             background: #ffaa00;
         }
 
-        /* Sleek Merch Carousel Styling */
+        /* Sleek Merch Carousel Styling with Clean White Image Tiles */
         .carousel-container {
             position: relative;
             display: flex;
@@ -590,25 +590,26 @@
         .carousel-track .merch-item {
             flex: 0 0 calc(33.333% - 0.85rem);
             min-width: 260px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(18, 20, 28, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             padding: 1.25rem;
             text-align: center;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.2s, border-color 0.2s;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
         }
 
         .carousel-track .merch-item:hover {
-            transform: translateY(-3px);
+            transform: translateY(-4px);
             border-color: var(--accent-gold);
+            box-shadow: 0 8px 25px rgba(255, 204, 0, 0.2);
         }
 
         .carousel-nav {
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(0, 0, 0, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: #fff;
             font-size: 1.25rem;
             cursor: pointer;
@@ -635,29 +636,31 @@
         .merch-image-wrapper {
             width: 100%;
             height: 220px;
-            background: rgba(255, 255, 255, 0.02);
+            background: #ffffff;
             border-radius: 8px;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
         }
 
         .merch-thumb {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            border-radius: 6px;
+            mix-blend-mode: multiply;
         }
 
         .merch-title {
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 0.95rem;
             margin-bottom: 0.25rem;
             color: #fff;
             text-transform: uppercase;
+            line-height: 1.2;
         }
 
         .merch-price {
@@ -1032,7 +1035,7 @@
                     </ul>
                     <p class="pick-quote" id="aiResponseQuote"></p>
                     <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--accent-gold); font-weight: 700;">
-                        <span>JIM's CONFIDENCE</span>
+                        <span>JIM'S CONFIDENCE</span>
                         <span id="aiResponseConfidence">110% OVERCONFIDENT</span>
                     </div>
                     <div class="confidence-meter">
@@ -1375,19 +1378,54 @@
             }, 800);
         }
 
-        // ASK BIG JIM AI GENERATOR ENGINE
-        const jimQuotesBank = [
-            "I felt this directly in my marrow right after my third Michelob Ultra. Put the house on it!",
-            "Defense is a myth invented by people who don't like fun. Take the over and go celebrate!",
-            "The venue aesthetics alone tell me everything I need to know. Zero film studied, 100% confidence!",
-            "They think they can stop this offense? Absolutely not! 10 touchdowns in the first quarter minimum!",
-            "Trust the vibes! If we lose this slip, we double down on the West Coast late night games!"
-        ];
+        // REAL 2026 SCHEDULES & DYNAMIC AI PARLAY GENERATOR ENGINE
+        const knownNFLTeams = {
+            "SEAHAWKS": { name: "Seattle Seahawks", qb: "Geno Smith", wr: "DK Metcalf" },
+            "BRONCOS": { name: "Denver Broncos", qb: "Bo Nix", wr: "Courtland Sutton" },
+            "COWBOYS": { name: "Dallas Cowboys", qb: "Dak Prescott", wr: "CeeDee Lamb" },
+            "PACKERS": { name: "Green Bay Packers", qb: "Jordan Love", wr: "Christian Watson" },
+            "CHIEFS": { name: "Kansas City Chiefs", qb: "Patrick Mahomes", wr: "Travis Kelce" },
+            "CHARGERS": { name: "LA Chargers", qb: "Justin Herbert", wr: "Ladd McConkey" },
+            "JAGUARS": { name: "Jacksonville Jaguars", qb: "Trevor Lawrence", wr: "Brian Thomas Jr." },
+            "TEXANS": { name: "Houston Texans", qb: "CJ Stroud", wr: "Nico Collins" },
+            "RAVENS": { name: "Baltimore Ravens", qb: "Lamar Jackson", wr: "Zay Flowers" },
+            "BROWNS": { name: "Cleveland Browns", qb: "Deshaun Watson", wr: "Amari Cooper" },
+            "EAGLES": { name: "Philadelphia Eagles", qb: "Jalen Hurts", wr: "AJ Brown" },
+            "PANTHERS": { name: "Carolina Panthers", qb: "Bryce Young", wr: "Diontae Johnson" },
+            "BEARS": { name: "Chicago Bears", qb: "Caleb Williams", wr: "DJ Moore" },
+            "FALCONS": { name: "Atlanta Falcons", qb: "Kirk Cousins", wr: "Drake London" },
+            "GIANTS": { name: "New York Giants", qb: "Daniel Jones", wr: "Malik Nabers" },
+            "SAINTS": { name: "New Orleans Saints", qb: "Derek Carr", wr: "Chris Olave" },
+            "TITANS": { name: "Tennessee Titans", qb: "Will Levis", wr: "Calvin Ridley" },
+            "COLTS": { name: "Indianapolis Colts", qb: "Anthony Richardson", wr: "Michael Pittman Jr." },
+            "RAMS": { name: "Los Angeles Rams", qb: "Matthew Stafford", wr: "Puka Nacua" },
+            "CARDINALS": { name: "Arizona Cardinals", qb: "Kyler Murray", wr: "Marvin Harrison Jr." },
+            "BILLS": { name: "Buffalo Bills", qb: "Josh Allen", wr: "Keon Coleman" },
+            "RAIDERS": { name: "Las Vegas Raiders", qb: "Gardner Minshew", wr: "Davante Adams" },
+            "49ERS": { name: "San Francisco 49ers", qb: "Brock Purdy", wr: "Deebo Samuel" },
+            "COMMANDERS": { name: "Washington Commanders", qb: "Jayden Daniels", wr: "Terry McLaurin" },
+            "VOLS": { name: "Tennessee Volunteers", qb: "Nico Iamaleava", wr: "Squirrel White" },
+            "TENNESSEE": { name: "Tennessee Volunteers", qb: "Nico Iamaleava", wr: "Squirrel White" },
+            "TEXAS": { name: "Texas Longhorns", qb: "Quinn Ewers", wr: "Isaiah Bond" },
+            "OKLAHOMA": { name: "Oklahoma Sooners", qb: "Jackson Arnold", wr: "Deion Burks" },
+            "ALABAMA": { name: "Alabama Crimson Tide", qb: "Jalen Milroe", wr: "Ryan Williams" },
+            "GEORGIA": { name: "Georgia Bulldogs", qb: "Carson Beck", wr: "Dominic Lovett" }
+        };
+
+        const scheduleByDay = {
+            "THURSDAY": { game: "Seattle Seahawks at Denver Broncos (TNF)", primaryKey: "BRONCOS", altKey: "SEAHAWKS", venue: "Empower Field at Mile High" },
+            "TNF": { game: "Seattle Seahawks at Denver Broncos (TNF)", primaryKey: "BRONCOS", altKey: "SEAHAWKS", venue: "Empower Field at Mile High" },
+            "SUNDAY": { game: "Dallas Cowboys at Green Bay Packers (SNF)", primaryKey: "COWBOYS", altKey: "PACKERS", venue: "Lambeau Field" },
+            "SNF": { game: "Dallas Cowboys at Green Bay Packers (SNF)", primaryKey: "COWBOYS", altKey: "PACKERS", venue: "Lambeau Field" },
+            "MONDAY": { game: "Washington Commanders at San Francisco 49ers (MNF)", primaryKey: "49ERS", altKey: "COMMANDERS", venue: "Levi's Stadium" },
+            "MNF": { game: "Washington Commanders at San Francisco 49ers (MNF)", primaryKey: "49ERS", altKey: "COMMANDERS", venue: "Levi's Stadium" }
+        };
 
         function askBigJim() {
-            const input = document.getElementById('askJimInput').value.trim();
-            if (!input) return;
+            const rawInput = document.getElementById('askJimInput').value.trim();
+            if (!rawInput) return;
 
+            const queryUpper = rawInput.toUpperCase();
             const responseBox = document.getElementById('askJimResponse');
             const titleEl = document.getElementById('aiResponseTitle');
             const oddsEl = document.getElementById('aiResponseOdds');
@@ -1396,36 +1434,87 @@
             const confEl = document.getElementById('aiResponseConfidence');
             const meterEl = document.getElementById('aiResponseMeter');
 
-            // Format input team name nicely
-            let subject = input.toUpperCase().replace('VS', 'VS.').replace('BET', '').replace('THINK ABOUT', '').trim();
-            if (subject.length > 35) subject = subject.substring(0, 35) + '...';
+            let teamFound = null;
 
-            titleEl.textContent = `JIM'S ANALYSIS: ${subject}`;
-            
-            // Random funny odds generator
-            const oddsList = ["+1450 MEGA LOCK", "+2200 UNHINGED", "+850 SLAM DUNK", "+1800 VIBE CHECK", "+3200 DEGEN SPECIAL"];
-            oddsEl.textContent = oddsList[Math.floor(Math.random() * oddsList.length)];
+            // 1. Check if user asked about a day of the week
+            let dayMatch = Object.keys(scheduleByDay).find(day => queryUpper.includes(day));
 
-            // Generate customized parlay legs based on query
-            legsEl.innerHTML = `
-                <li><span class="leg-icon">⚡</span> ${input.toUpperCase()} — COVER THE SPREAD BY 30+ POINTS</li>
-                <li><span class="leg-icon">⚡</span> STAR QB 4+ TOUCHDOWNS IN THE FIRST QUARTER</li>
-                <li><span class="leg-icon">⚡</span> TOTAL POINTS OVER 68.5 (NO DEFENSE ALLOWED)</li>
-            `;
+            // 2. Check if user typed a specific team
+            for (let key in knownNFLTeams) {
+                if (queryUpper.includes(key)) {
+                    teamFound = knownNFLTeams[key];
+                    break;
+                }
+            }
 
-            // Random Jim Quote
-            const quote = jimQuotesBank[Math.floor(Math.random() * jimQuotesBank.length)];
-            quoteEl.textContent = `"${quote}"`;
+            let matchupTitle = "";
+            let legs = [];
+            let comment = "";
 
-            // Overconfident percent
-            const confidence = Math.floor(Math.random() * 15) + 105; // 105% to 120%
+            if (dayMatch) {
+                // User asked about Thursday, Sunday, etc.
+                const sched = scheduleByDay[dayMatch];
+                const homeTeam = knownNFLTeams[sched.primaryKey];
+                const awayTeam = knownNFLTeams[sched.altKey];
+
+                matchupTitle = `JIM'S ${dayMatch} LOCK: ${sched.game}`;
+                legs = [
+                    `${homeTeam.name} -3.5 Spread at ${sched.venue}`,
+                    `${homeTeam.qb} 350+ Passing Yards & 4 TDs`,
+                    `${awayTeam.wr} Anytime Touchdown Scorer`,
+                    `Game Total OVER 52.5 Points (Zero Defense Allowed)`
+                ];
+                comment = `You're asking about ${sched.game}? Empower Field/Lambeau is going to be rocking! ${homeTeam.qb} is going to drop 40 unanswered points in the first half flat. I feel this directly in my marrow—lay the points!`;
+            } else if (teamFound) {
+                // User asked about a specific team
+                matchupTitle = `JIM'S ANALYSIS: ${teamFound.name} Matchup`;
+                legs = [
+                    `${teamFound.name} -4.5 Spread (Smash the Line)`,
+                    `${teamFound.qb} 325+ Passing Yards & 3+ TDs`,
+                    `${teamFound.wr} 100+ Receiving Yards & 2 TDs`,
+                    `Team Total OVER 34.5 Points`
+                ];
+                comment = `${teamFound.name}? ${teamFound.qb} is on an absolute tear right now! Defense is a myth when ${teamFound.wr} is running 80-yard go-routes. Buy the points and lock this in immediately!`;
+            } else {
+                // Clean fallback for custom or unlisted inputs
+                let cleanQuery = rawInput.toUpperCase().replace('VS', 'VS.').replace('BET', '').replace('THINK ABOUT', '').trim();
+                if (cleanQuery.length > 28) cleanQuery = cleanQuery.substring(0, 28) + '...';
+
+                matchupTitle = `JIM'S LOCK: ${cleanQuery} (Week 6 Board)`;
+                legs = [
+                    `${cleanQuery} — Cover Spread by 20+ Points`,
+                    "Starting Quarterback 300+ Passing Yards & 3 Touchdowns",
+                    "Primary Receiver 100+ Yards & 2 TDs",
+                    "Game Total OVER 56.5 Points"
+                ];
+                comment = `My marrow is vibrating for ${cleanQuery}! Zero film studied, 100% pure instinct. Their offense is going to score on all 6 second-half drives. Smash the spread!`;
+            }
+
+            // Random unhinged parlay odds
+            const oddsList = ["+1450 MEGA-PARLAY", "+2200 UNHINGED SLIP", "+1800 VIBE CHECK", "+3200 DEGEN SPECIAL", "+1150 SURE THING"];
+            const selectedOdds = oddsList[Math.floor(Math.random() * oddsList.length)];
+
+            // Inject into UI
+            titleEl.textContent = matchupTitle;
+            oddsEl.textContent = selectedOdds;
+
+            let legsHtml = "";
+            legs.forEach(leg => {
+                legsHtml += `<li><span class="leg-icon">⚡</span> ${leg}</li>`;
+            });
+            legsEl.innerHTML = legsHtml;
+
+            quoteEl.textContent = `"${comment}"`;
+
+            // Overconfidence meter calculation
+            const confidence = Math.floor(Math.random() * 10) + 110;
             confEl.textContent = `${confidence}% OVERCONFIDENT`;
             meterEl.style.width = '100%';
 
             responseBox.style.display = 'block';
 
-            // Audio speech reaction
-            playSpeech(`God damn! Here is my analysis for ${input}: Lock it in! 100 percent sure thing!`, null);
+            // Voice reaction
+            playSpeech(`God damn! Here is my exact lock for ${matchupTitle.replace("JIM'S LOCK: ", "")}: Double down right now!`, null);
         }
 
         // Live Dynamic Multi-Leg Parlay Database
@@ -1695,35 +1784,39 @@
             });
         }
 
-        // Sleek Custom Merch Carousel Logic
+        // Live Inventory Merch Carousel
         let currentIdx = 0;
-        const shopUrl = "https://big-jims-pick-dog.myspreadshop.com/";
 
-        // Real products with reliable CDN image previews
         const featuredProducts = [
             {
-                name: '"GOD DAMN! WOO!" TRUCKER HAT',
-                price: "$29.99",
-                img: "https://image.spreadshirtmedia.com/image-server/v1/products/710609438/views/1,width=500,height=500,appearanceId=1.png",
-                link: shopUrl
-            },
-            {
-                name: '"GOD DAMN!" OFFICIAL TEE',
+                name: 'GOD DAMN, WOO: UNISEX T-SHIRT',
                 price: "$24.99",
-                img: "https://image.spreadshirtmedia.com/image-server/v1/products/710609425/views/1,width=500,height=500,appearanceId=2.png",
-                link: shopUrl
+                img: "https://image.spreadshirtmedia.com/image-server/v1/products/rk8ynuak1k6s-1130/views/1,width=500,height=500,appearanceId=228.png",
+                link: "https://big-jims-pick-dog.myspreadshop.com/god+damn+woo+big+jims+pick+dog-A32589a8ede29b874?sellable=rk8ynuak1k6s-1130&appearance=228"
             },
             {
-                name: "UNRELIABLE TIPS CAN COOLER",
-                price: "$12.99",
-                img: "https://image.spreadshirtmedia.com/image-server/v1/products/710609419/views/1,width=500,height=500,appearanceId=3.png",
-                link: shopUrl
+                name: 'BEARDED SHOUT TRUCKER HAT',
+                price: "$29.99",
+                img: "https://image.spreadshirtmedia.com/image-server/v1/products/rk8wkcj99aw1-1040/views/1,width=500,height=500,appearanceId=14.png",
+                link: "https://big-jims-pick-dog.myspreadshop.com/bearded+shout+circle+patch-A3258952d72f93461?sellable=rk8wkcj99aw1-1040&appearance=14"
             },
             {
-                name: '"GOD DAMN!" PULLOVER HOODIE',
-                price: "$44.99",
-                img: "https://image.spreadshirtmedia.com/image-server/v1/products/710609440/views/1,width=400,height=400,appearanceId=4.png",
-                link: shopUrl
+                name: "WOMEN'S CROPPED T-SHIRT",
+                price: "$26.99",
+                img: "https://image.spreadshirtmedia.com/image-server/v1/products/rk8wkcj99aw1-1408/views/1,width=500,height=500,appearanceId=231.png",
+                link: "https://big-jims-pick-dog.myspreadshop.com/bearded+shout+circle+patch-A3258952d72f93461?sellable=rk8wkcj99aw1-1408&appearance=231"
+            },
+            {
+                name: "MEN'S 50/50 T-SHIRT",
+                price: "$24.99",
+                img: "https://image.spreadshirtmedia.com/image-server/v1/products/rk8wkcj99aw1-1197/views/1,width=500,height=500,appearanceId=2.png",
+                link: "https://big-jims-pick-dog.myspreadshop.com/bearded+shout+circle+patch-A3258952d72f93461?sellable=rk8wkcj99aw1-1197&appearance=2"
+            },
+            {
+                name: "BEARDED SHOUT STICKER (S)",
+                price: "$4.99",
+                img: "https://image.spreadshirtmedia.com/image-server/v1/products/rk8wkcj99aw1-1459/views/1,width=500,height=500,appearanceId=842.png",
+                link: "https://big-jims-pick-dog.myspreadshop.com/bearded+shout+circle+patch-A3258952d72f93461?sellable=rk8wkcj99aw1-1459&appearance=842"
             }
         ];
 
