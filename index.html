@@ -106,14 +106,12 @@
             white-space: nowrap;
         }
 
-        /* Main Container */
         .container {
             max-width: 1100px;
             margin: 0 auto;
             padding: 1.5rem 1rem;
         }
 
-        /* Hero Section */
         .hero {
             text-align: center;
             padding: 1.5rem 0 2.5rem;
@@ -176,7 +174,6 @@
             padding: 0 1rem;
         }
 
-        /* Lock CTA Button */
         .cta-btn {
             display: inline-flex;
             align-items: center;
@@ -200,7 +197,6 @@
             box-shadow: 0 0 35px rgba(230, 0, 0, 0.8);
         }
 
-        /* Live Match Ticket / Live Indicator Styling */
         .live-banner {
             display: inline-flex;
             align-items: center;
@@ -1515,7 +1511,54 @@
             const confEl = document.getElementById('aiResponseConfidence');
             const meterEl = document.getElementById('aiResponseMeter');
 
-            // 1. DISAMBIGUATION FILTER FOR "TENNESSEE" / "UT"
+            // 1. JOKE / PERSONAL COMMENT FILTER
+            const jokeKeywords = ["HAIRY", "BEARD", "LOOK LIKE", "UGLY", "FAT", "DRUNK", "BEER", "OLD", "DUMB"];
+            const isJokeQuery = jokeKeywords.some(kw => queryUpper.includes(kw));
+
+            if (isJokeQuery) {
+                titleEl.textContent = "BIG JIM'S REBUTTAL";
+                oddsEl.textContent = "+10000 BEARD ENERGY";
+                legsEl.innerHTML = `
+                    <li><span class="leg-icon">🧔</span> My beard adds +500 to my parlay evaluation accuracy!</li>
+                    <li><span class="leg-icon">🍺</span> Powered strictly by cold Michelob Ultra and raw instinct.</li>
+                    <li><span class="leg-icon">⚡</span> Zero film studied, 100% pure confidence!</li>
+                `;
+                quoteEl.textContent = `"Talk all the trash you want brother, but this beard has predicted 4 straight multi-leg parlays! Now ask me about a real football game!"`;
+                confEl.textContent = "120% UNBOTHERED";
+                meterEl.style.width = '100%';
+                responseBox.style.display = 'block';
+                playSpeech("God damn! My beard adds 500 points to my parlay accuracy! Ask me about a real football game!");
+                return;
+            }
+
+            // 2. BROAD CATEGORY FILTER (e.g. "COLLEGE FOOTBALL", "SATURDAY", "NFL", "GAMES")
+            const isCategoryQuery = queryUpper.includes("COLLEGE FOOTBALL") || queryUpper.includes("CFB") || 
+                                    (queryUpper.includes("SATURDAY") && !queryUpper.includes("TITANS") && !queryUpper.includes("VOLS")) ||
+                                    queryUpper.includes("WHAT GAMES") || queryUpper.includes("SCHEDULE");
+
+            if (isCategoryQuery) {
+                titleEl.textContent = "SATURDAY COLLEGE FOOTBALL SLATE";
+                oddsEl.textContent = "FEATURED BOARD";
+                legsEl.innerHTML = `
+                    <li><span class="leg-icon">🍊</span> <strong>#14 Tennessee Vols vs #6 Alabama</strong> (3:30 PM - CBS)</li>
+                    <li><span class="leg-icon">🤠</span> <strong>#1 Texas Longhorns vs Oklahoma Sooners</strong> (3:30 PM - ABC)</li>
+                    <li><span class="leg-icon">🐶</span> <strong>#2 Georgia Bulldogs at Alabama</strong> (7:30 PM - ABC)</li>
+                `;
+                quoteEl.innerHTML = `
+                    <div style="margin-bottom: 0.5rem; color: #fff;">Pick a featured Saturday matchup below for Big Jim's full analysis:</div>
+                    <div class="choice-btn-group">
+                        <button class="choice-btn" onclick="triggerQuery('Tennessee Vols')">🍊 VOLS VS BAMA</button>
+                        <button class="choice-btn" onclick="triggerQuery('Texas Longhorns')">🤠 TEXAS VS OKLAHOMA</button>
+                    </div>
+                `;
+                confEl.textContent = "SATURDAY READY";
+                meterEl.style.width = '100%';
+                responseBox.style.display = 'block';
+                playSpeech("Here is Saturday's college football slate! Pick a matchup to get my full lock!");
+                return;
+            }
+
+            // 3. AMBIGUITY DISAMBIGUATION FOR "TENNESSEE" / "UT"
             if (queryUpper === "TENNESSEE" || queryUpper === "UT" || queryUpper === "TENN") {
                 titleEl.textContent = "WHICH TENNESSEE TEAM, BROTHER?";
                 oddsEl.textContent = "DECISION TIME";
@@ -1536,7 +1579,7 @@
                 return;
             }
 
-            // 2. NON-BETTING DIRECT QUESTION FILTER
+            // 4. NON-BETTING GENERAL QUESTIONS
             const nonBettingKeywords = ["OTHER THAN BETS", "WHO ARE YOU", "WHAT DO YOU DO", "HELLO", "HI", "HELP", "DIPLOMA", "STORE"];
             const isNonBettingQuery = nonBettingKeywords.some(kw => queryUpper.includes(kw));
 
@@ -1557,7 +1600,7 @@
                 return;
             }
 
-            // 3. SEARCH REAL UPCOMING GAMES
+            // 5. MATCH REAL UPCOMING GAMES
             let matchedGame = realUpcomingGames.find(g => 
                 g.keywords.some(kw => queryUpper.includes(kw))
             );
@@ -1580,24 +1623,24 @@
 
                 playSpeech(`God damn! Here is my lock for ${matchedGame.matchup}: Double down right now!`);
             } else {
-                // 4. SMART SPORTS FALLBACK (FOR ANY TEAM NOT IN PRESET LIST)
-                let cleanQuery = rawInput.toUpperCase().replace('VS', 'VS.').replace('BET', '').replace('THINK ABOUT', '').trim();
-                if (cleanQuery.length > 25) cleanQuery = cleanQuery.substring(0, 25) + '...';
+                // 6. SPECIFIC TEAM MATCHUP FALLBACK (IF SEARCHED TEAM IS NOT IN FEATURED LIST)
+                let teamName = rawInput.toUpperCase().replace('VS', 'VS.').replace('BET', '').replace('THINK ABOUT', '').trim();
+                if (teamName.length > 25) teamName = teamName.substring(0, 25) + '...';
 
-                titleEl.textContent = `JIM'S LOCK: ${cleanQuery} MATCHUP`;
+                titleEl.textContent = `JIM'S LOCK: ${teamName} MATCHUP`;
                 oddsEl.textContent = "+1650 UNHINGED SLIP";
                 legsEl.innerHTML = `
-                    <li><span class="leg-icon">⚡</span> ${cleanQuery} — Cover the Spread by 14+ Points</li>
+                    <li><span class="leg-icon">⚡</span> ${teamName} — Cover the Spread by 14+ Points</li>
                     <li><span class="leg-icon">⚡</span> Starting QB 300+ Passing Yards & 3 Touchdowns</li>
                     <li><span class="leg-icon">⚡</span> Primary Receiver 100+ Yards & 2 Touchdowns</li>
                     <li><span class="leg-icon">⚡</span> Game Total OVER 52.5 Points (Zero Defense Allowed)</li>
                 `;
-                quoteEl.textContent = `"My marrow is vibrating for ${cleanQuery}! Zero film studied, 100% pure instinct. Their offense is dropping 35 points in the first half. Smash the spread!"`;
+                quoteEl.textContent = `"My marrow is vibrating for ${teamName}! Zero film studied, 100% pure instinct. Their offense is dropping 35 points in the first half. Smash the spread!"`;
                 confEl.textContent = "115% OVERCONFIDENT";
                 meterEl.style.width = '100%';
                 responseBox.style.display = 'block';
 
-                playSpeech(`God damn! Here is my lock for ${cleanQuery}: Smash the spread right now!`);
+                playSpeech(`God damn! Here is my lock for ${teamName}: Smash the spread right now!`);
             }
         }
 
@@ -1868,38 +1911,38 @@
             });
         }
 
-        // Live Inventory Merch Carousel (Spreadshop Asset Server URLs)
+        // Live Inventory Merch Carousel (Guaranteed Static Composition Renderer)
         let currentIdx = 0;
 
         const featuredProducts = [
             {
                 name: 'GOD DAMN, WOO: UNISEX T-SHIRT',
                 price: "$24.99",
-                img: "https://spreadshirtmedia.com/image-server/v1/products/rk8ynuak1k6s-1130/views/1,width=500,height=500,appearanceId=228.png",
+                img: "https://image.spreadshirtmedia.com/image-server/v1/compositions/1057912423/views/1,width=500,height=500,appearanceId=228.png",
                 link: "https://big-jims-pick-dog.myspreadshop.com/god+damn+woo+big+jims+pick+dog-A32589a8ede29b874?sellable=rk8ynuak1k6s-1130&appearance=228"
             },
             {
                 name: 'BEARDED SHOUT TRUCKER HAT',
                 price: "$29.99",
-                img: "https://spreadshirtmedia.com/image-server/v1/products/rk8wkcj99aw1-1040/views/1,width=500,height=500,appearanceId=14.png",
+                img: "https://image.spreadshirtmedia.com/image-server/v1/compositions/1057912423/views/1,width=500,height=500,appearanceId=14.png",
                 link: "https://big-jims-pick-dog.myspreadshop.com/bearded+shout+circle+patch-A3258952d72f93461?sellable=rk8wkcj99aw1-1040&appearance=14"
             },
             {
                 name: "WOMEN'S CROPPED T-SHIRT",
                 price: "$26.99",
-                img: "https://spreadshirtmedia.com/image-server/v1/products/rk8wkcj99aw1-1408/views/1,width=500,height=500,appearanceId=231.png",
+                img: "https://image.spreadshirtmedia.com/image-server/v1/compositions/1057912423/views/1,width=500,height=500,appearanceId=231.png",
                 link: "https://big-jims-pick-dog.myspreadshop.com/bearded+shout+circle+patch-A3258952d72f93461?sellable=rk8wkcj99aw1-1408&appearance=231"
             },
             {
                 name: "MEN'S 50/50 T-SHIRT",
                 price: "$24.99",
-                img: "https://spreadshirtmedia.com/image-server/v1/products/rk8wkcj99aw1-1197/views/1,width=500,height=500,appearanceId=2.png",
+                img: "https://image.spreadshirtmedia.com/image-server/v1/compositions/1057912423/views/1,width=500,height=500,appearanceId=2.png",
                 link: "https://big-jims-pick-dog.myspreadshop.com/bearded+shout+circle+patch-A3258952d72f93461?sellable=rk8wkcj99aw1-1197&appearance=2"
             },
             {
                 name: "BEARDED SHOUT STICKER (S)",
                 price: "$4.99",
-                img: "https://spreadshirtmedia.com/image-server/v1/products/rk8wkcj99aw1-1459/views/1,width=500,height=500,appearanceId=842.png",
+                img: "https://image.spreadshirtmedia.com/image-server/v1/designs/1057912423,width=500,height=500.png",
                 link: "https://big-jims-pick-dog.myspreadshop.com/bearded+shout+circle+patch-A3258952d72f93461?sellable=rk8wkcj99aw1-1459&appearance=842"
             }
         ];
@@ -1915,7 +1958,7 @@
                 merchCard.innerHTML = `
                     <div>
                         <div class="merch-image-wrapper">
-                            <img src="${item.img}" alt="${item.name}" class="merch-thumb" onerror="this.src='https://spreadshirtmedia.com/image-server/v1/designs/1057912423,width=300,height=300.png'">
+                            <img src="${item.img}" alt="${item.name}" class="merch-thumb" onerror="this.src='https://image.spreadshirtmedia.com/image-server/v1/designs/1057912423,width=300,height=300.png'">
                         </div>
                         <div class="merch-title">${item.name}</div>
                         <div class="merch-price">${item.price}</div>
