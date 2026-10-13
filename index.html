@@ -56,12 +56,13 @@
             justify-content: space-between;
             align-items: center;
             padding: 0.8rem 1.25rem;
-            gap: 0.5rem;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
 
         .logo-text {
             font-family: 'Teko', sans-serif;
-            font-size: 1.8rem;
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
             font-weight: 700;
             color: var(--text-main);
             text-transform: uppercase;
@@ -77,15 +78,16 @@
         nav ul {
             display: flex;
             list-style: none;
-            gap: 1.25rem;
+            gap: clamp(0.75rem, 2vw, 1.5rem);
             align-items: center;
+            flex-wrap: wrap;
         }
 
         nav a {
             color: var(--text-muted);
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: clamp(0.8rem, 1.2vw, 0.95rem);
             transition: all 0.2s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -106,15 +108,17 @@
             white-space: nowrap;
         }
 
+        /* Main Container */
         .container {
-            max-width: 1100px;
+            max-width: clamp(320px, 92vw, 1200px);
             margin: 0 auto;
-            padding: 1.5rem 1rem;
+            padding: clamp(1rem, 2.5vw, 2.5rem) 1rem;
         }
 
+        /* Hero Section */
         .hero {
             text-align: center;
-            padding: 1.5rem 0 2.5rem;
+            padding: clamp(1rem, 3vw, 2.5rem) 0;
             position: relative;
         }
 
@@ -130,8 +134,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 320px;
-            height: 320px;
+            width: clamp(240px, 40vw, 360px);
+            height: clamp(240px, 40vw, 360px);
             background: radial-gradient(circle, rgba(230, 0, 0, 0.3) 0%, rgba(255, 204, 0, 0.08) 50%, transparent 75%);
             z-index: 1;
             pointer-events: none;
@@ -140,8 +144,8 @@
         .hero-logo {
             position: relative;
             z-index: 2;
-            width: 320px;
-            max-width: 80vw;
+            width: clamp(220px, 35vw, 340px);
+            max-width: 85vw;
             height: auto;
             image-rendering: -webkit-optimize-contrast;
             filter: drop-shadow(0 12px 25px rgba(0, 0, 0, 0.8));
@@ -154,7 +158,7 @@
 
         .hero-title {
             font-family: 'Teko', sans-serif;
-            font-size: 4rem;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
             font-weight: 700;
             line-height: 0.95;
             text-transform: uppercase;
@@ -165,7 +169,7 @@
         }
 
         .hero-subtitle {
-            font-size: 1.1rem;
+            font-size: clamp(0.9rem, 2vw, 1.15rem);
             color: var(--accent-gold);
             font-weight: 600;
             margin-bottom: 1.75rem;
@@ -174,14 +178,15 @@
             padding: 0 1rem;
         }
 
+        /* Lock CTA Button */
         .cta-btn {
             display: inline-flex;
             align-items: center;
             gap: 0.75rem;
             background: linear-gradient(135deg, var(--primary-red) 0%, #a00000 100%);
             color: #fff;
-            padding: 0.9rem 2rem;
-            font-size: 1.15rem;
+            padding: clamp(0.75rem, 1.5vw, 1rem) clamp(1.5rem, 3vw, 2.5rem);
+            font-size: clamp(0.95rem, 1.8vw, 1.2rem);
             font-weight: 800;
             text-transform: uppercase;
             border: none;
@@ -205,7 +210,7 @@
             border: 1px solid var(--primary-red);
             color: #fff;
             font-weight: 800;
-            font-size: 0.75rem;
+            font-size: clamp(0.7rem, 1.2vw, 0.8rem);
             padding: 0.3rem 0.6rem;
             border-radius: 4px;
             text-transform: uppercase;
@@ -226,7 +231,7 @@
 
         .section-title {
             font-family: 'Teko', sans-serif;
-            font-size: 2.2rem;
+            font-size: clamp(1.8rem, 3.5vw, 2.5rem);
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--text-main);
@@ -247,7 +252,7 @@
             background: var(--card-bg);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
-            padding: 1.5rem;
+            padding: clamp(1rem, 2.5vw, 1.75rem);
             margin-bottom: 2rem;
             backdrop-filter: blur(10px);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -268,7 +273,7 @@
         /* Soundboard Grid */
         .soundboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 1rem;
             margin-top: 1rem;
         }
@@ -325,7 +330,7 @@
             background: linear-gradient(135deg, rgba(230, 0, 0, 0.15) 0%, rgba(20, 23, 31, 0.95) 100%);
             border: 1.5px solid var(--accent-gold);
             border-radius: 12px;
-            padding: 1.25rem;
+            padding: clamp(1rem, 2vw, 1.5rem);
             margin-bottom: 1.75rem;
             box-shadow: 0 0 20px rgba(255, 204, 0, 0.15);
         }
@@ -347,7 +352,7 @@
 
         .ask-jim-title {
             font-family: 'Teko', sans-serif;
-            font-size: 1.8rem;
+            font-size: clamp(1.5rem, 2.5vw, 2rem);
             color: var(--accent-gold);
             line-height: 1;
             text-transform: uppercase;
@@ -363,9 +368,9 @@
             background: linear-gradient(135deg, #00b33c 0%, #00e64d 100%);
             color: #000;
             font-family: 'Teko', sans-serif;
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 1.5vw, 1.25rem);
             font-weight: 800;
-            padding: 0.3rem 0.9rem;
+            padding: 0.35rem 0.9rem;
             border: none;
             border-radius: 6px;
             cursor: pointer;
@@ -383,9 +388,9 @@
             background: linear-gradient(135deg, #e60000 0%, #ff4444 100%);
             color: #fff;
             font-family: 'Teko', sans-serif;
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 1.5vw, 1.25rem);
             font-weight: 700;
-            padding: 0.3rem 0.9rem;
+            padding: 0.35rem 0.9rem;
             border: none;
             border-radius: 6px;
             cursor: pointer;
@@ -403,10 +408,11 @@
             display: flex;
             gap: 0.5rem;
             margin-bottom: 1rem;
+            flex-wrap: wrap;
         }
 
         .ask-jim-input {
-            flex: 1;
+            flex: 1 1 240px;
             background: rgba(0, 0, 0, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 8px;
@@ -529,8 +535,8 @@
 
         .pick-title {
             font-family: 'Teko', sans-serif;
-            font-size: 1.8rem;
-            line-height: 1;
+            font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+            line-height: 1.1;
             text-transform: uppercase;
             color: #fff;
         }
@@ -539,7 +545,7 @@
             color: var(--accent-gold);
             font-weight: 800;
             font-family: 'Teko', sans-serif;
-            font-size: 1.8rem;
+            font-size: clamp(1.4rem, 2.5vw, 1.8rem);
             letter-spacing: 0.5px;
         }
 
@@ -561,6 +567,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            word-break: break-word;
         }
 
         .parlay-legs-list li:last-child {
@@ -598,7 +605,7 @@
             background: linear-gradient(135deg, #2b1700 0%, #1a0c00 100%);
             border: 2px dashed #ff8800;
             border-radius: 16px;
-            padding: 1.5rem;
+            padding: clamp(1rem, 2vw, 1.5rem);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -606,11 +613,12 @@
             margin-bottom: 2rem;
             box-shadow: 0 0 20px rgba(255, 136, 0, 0.2);
             scroll-margin-top: 100px;
+            flex-wrap: wrap;
         }
 
         .ad-content h3 {
             font-family: 'Teko', sans-serif;
-            font-size: 2rem;
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
             color: #ffcc00;
             line-height: 1;
         }
@@ -635,6 +643,75 @@
 
         .ad-cta:hover {
             background: #ffaa00;
+        }
+
+        /* SPREADSHOP EMBED DARK OVERRIDES (STRIPS GREY BOXES & PROMO BANNERS) */
+        #myShop {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            min-height: 300px;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        #myShop .sprd-header,
+        #myShop .sprd-startpage-hero,
+        #myShop .sprd-banner,
+        #myShop .sprd-promo-banner,
+        #myShop .sprd-navigation,
+        #myShop header,
+        #myShop .sprd-service-footer {
+            display: none !important;
+        }
+
+        #myShop iframe, 
+        #myShop div[class*="sprd-"] {
+            background-color: transparent !important;
+            color: #ffffff !important;
+            max-width: 100% !important;
+        }
+
+        .store-banner-cta {
+            margin-top: 1.5rem;
+            background: rgba(255, 204, 0, 0.05);
+            border: 1px solid rgba(255, 204, 0, 0.25);
+            border-radius: 12px;
+            padding: 1.5rem 1.25rem;
+            text-align: center;
+        }
+
+        .store-banner-cta h4 {
+            font-family: 'Teko', sans-serif;
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            color: var(--accent-gold);
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .store-banner-cta p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .main-store-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #ffcc00 0%, #ff8800 100%);
+            color: #000 !important;
+            padding: 0.75rem 2rem;
+            border-radius: 25px;
+            font-weight: 800;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .main-store-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(255, 204, 0, 0.6);
         }
 
         /* Quiz Modal Overlay */
@@ -773,36 +850,18 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* MOBILE RESPONSIVE STYLES */
+        /* MOBILE RESPONSIVE ADAPTATIONS */
         @media (max-width: 768px) {
             .nav-container {
                 flex-direction: column;
                 padding: 0.6rem 0.5rem;
-                gap: 0.4rem;
-            }
-
-            .logo-text {
-                font-size: 1.5rem;
+                gap: 0.5rem;
             }
 
             nav ul {
-                gap: 0.4rem;
+                gap: 0.5rem;
                 justify-content: center;
                 width: 100%;
-            }
-
-            nav a {
-                font-size: 0.72rem;
-                letter-spacing: 0;
-            }
-
-            .nav-ad-btn {
-                padding: 0.25rem 0.5rem;
-                font-size: 0.72rem;
-            }
-
-            .hero-title { 
-                font-size: 2.8rem; 
             }
 
             .ad-banner { 
@@ -811,21 +870,17 @@
             }
 
             .soundboard-grid {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
 
-            .ask-jim-input-group {
-                flex-direction: column;
+            .ask-jim-btn {
+                width: 100%;
             }
         }
 
-        @media (max-width: 380px) {
-            nav a {
-                font-size: 0.65rem;
-            }
-            .nav-ad-btn {
-                padding: 0.2rem 0.4rem;
-                font-size: 0.65rem;
+        @media (max-width: 480px) {
+            .soundboard-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -965,7 +1020,7 @@
             <h2 class="section-title">🧢 Official Pick Dog Merch</h2>
             <p style="color: var(--text-muted); margin-bottom: 1rem;">Featured gear directly from the shop:</p>
 
-            <!-- Spreadshop Mount Container -->
+            <!-- Spreadshop Mount Container (Strips Grey Banners & Welcome Hero) -->
             <div id="myShop">
                 <p style="text-align: center; color: var(--text-muted); padding: 2rem 0;">
                     🔄 Loading official Big Jim's Pick Dog gear...
@@ -978,10 +1033,19 @@
                     shopName: 'big-jims-pick-dog',
                     prefix: 'https://big-jims-pick-dog.myspreadshop.com',
                     baseId: 'myShop',
-                    locale: 'en_US'
+                    locale: 'en_US',
+                    startToken: 'articles',
+                    swipeView: true
                 };
             </script>
             <script type="text/javascript" src="https://big-jims-pick-dog.myspreadshop.com/shopfiles/shopclient/shopclient.nocache.js"></script>
+
+            <!-- Store CTA Link -->
+            <div class="store-banner-cta">
+                <h4>🔥 WANT TO SEE THE ENTIRE STORE?</h4>
+                <p>Check out our full Spreadshop catalog for hoodies, tank tops, stickers, and koozies!</p>
+                <a href="https://big-jims-pick-dog.myspreadshop.com/" target="_blank" class="main-store-btn">VISIT OFFICIAL SPREADSHOP STORE ➔</a>
+            </div>
         </section>
 
     </div>
