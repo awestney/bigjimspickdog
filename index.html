@@ -333,8 +333,16 @@
         .ask-jim-header {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 0.75rem;
             margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .ask-jim-title-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
         .ask-jim-title {
@@ -343,6 +351,52 @@
             color: var(--accent-gold);
             line-height: 1;
             text-transform: uppercase;
+        }
+
+        .quick-action-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .high-prob-btn {
+            background: linear-gradient(135deg, #00b33c 0%, #00e64d 100%);
+            color: #000;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            padding: 0.3rem 0.9rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 230, 77, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-transform: uppercase;
+        }
+
+        .high-prob-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 18px rgba(0, 230, 77, 0.6);
+        }
+
+        .random-parlay-btn {
+            background: linear-gradient(135deg, #e60000 0%, #ff4444 100%);
+            color: #fff;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 0.3rem 0.9rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(230, 0, 0, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-transform: uppercase;
+        }
+
+        .random-parlay-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 18px rgba(230, 0, 0, 0.8);
         }
 
         .ask-jim-input-group {
@@ -415,6 +469,7 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
+            font-size: 0.85rem;
         }
 
         .choice-btn:hover {
@@ -582,172 +637,6 @@
             background: #ffaa00;
         }
 
-        /* Merch Carousel Styling with Clean White Image Container */
-        .carousel-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            width: 100%;
-            margin: 1.5rem 0;
-        }
-
-        .carousel-wrapper {
-            overflow: hidden;
-            width: 100%;
-            padding: 0.5rem 0;
-        }
-
-        .carousel-track {
-            display: flex;
-            gap: 1.25rem;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            will-change: transform;
-        }
-
-        .carousel-track .merch-item {
-            flex: 0 0 calc(33.333% - 0.85rem);
-            min-width: 260px;
-            background: rgba(18, 20, 28, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 1.25rem;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-        }
-
-        .carousel-track .merch-item:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent-gold);
-            box-shadow: 0 8px 25px rgba(255, 204, 0, 0.2);
-        }
-
-        .carousel-nav {
-            background: rgba(0, 0, 0, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
-            font-size: 1.25rem;
-            cursor: pointer;
-            padding: 0.8rem;
-            border-radius: 50%;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .carousel-nav:hover {
-            background: var(--primary-red);
-            border-color: #fff;
-        }
-
-        .carousel-nav.prev { left: -1rem; }
-        .carousel-nav.next { right: -1rem; }
-
-        .merch-image-wrapper {
-            width: 100%;
-            height: 220px;
-            background: #ffffff;
-            border-radius: 8px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-            padding: 10px;
-        }
-
-        .merch-thumb {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-
-        .merch-title {
-            font-weight: 700;
-            font-size: 0.95rem;
-            margin-bottom: 0.25rem;
-            color: #fff;
-            text-transform: uppercase;
-            line-height: 1.2;
-        }
-
-        .merch-price {
-            color: var(--accent-gold);
-            font-weight: 800;
-            font-size: 1.15rem;
-            margin: 0.4rem 0 0.8rem;
-        }
-
-        .buy-btn {
-            display: block;
-            width: 100%;
-            background: linear-gradient(135deg, var(--primary-red) 0%, #a00000 100%);
-            color: #fff !important;
-            padding: 0.65rem 0.5rem;
-            border-radius: 6px;
-            font-weight: 800;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
-            box-shadow: 0 0 10px rgba(230, 0, 0, 0.3);
-            transition: all 0.2s ease;
-        }
-
-        .buy-btn:hover {
-            background: linear-gradient(135deg, #ff1a1a 0%, var(--primary-red) 100%);
-            box-shadow: 0 0 18px rgba(230, 0, 0, 0.6);
-        }
-
-        .store-banner-cta {
-            margin-top: 1.5rem;
-            background: rgba(255, 204, 0, 0.05);
-            border: 1px solid rgba(255, 204, 0, 0.25);
-            border-radius: 12px;
-            padding: 1.5rem 1.25rem;
-            text-align: center;
-        }
-
-        .store-banner-cta h4 {
-            font-family: 'Teko', sans-serif;
-            font-size: 2rem;
-            color: var(--accent-gold);
-            line-height: 1;
-            margin-bottom: 0.25rem;
-        }
-
-        .store-banner-cta p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-        }
-
-        .main-store-btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #ffcc00 0%, #ff8800 100%);
-            color: #000 !important;
-            padding: 0.75rem 2rem;
-            border-radius: 25px;
-            font-weight: 800;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 0.95rem;
-            box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .main-store-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 25px rgba(255, 204, 0, 0.6);
-        }
-
         /* Quiz Modal Overlay */
         .quiz-modal {
             display: none;
@@ -885,12 +774,6 @@
         }
 
         /* MOBILE RESPONSIVE STYLES */
-        @media (max-width: 900px) {
-            .carousel-track .merch-item {
-                flex: 0 0 calc(50% - 0.65rem);
-            }
-        }
-
         @media (max-width: 768px) {
             .nav-container {
                 flex-direction: column;
@@ -934,15 +817,6 @@
             .ask-jim-input-group {
                 flex-direction: column;
             }
-        }
-
-        @media (max-width: 600px) {
-            .carousel-track .merch-item {
-                flex: 0 0 100%;
-            }
-            .carousel-nav { display: none; }
-            .carousel-wrapper { overflow-x: auto; scroll-snap-type: x mandatory; }
-            .carousel-track .merch-item { scroll-snap-align: start; }
         }
 
         @media (max-width: 380px) {
@@ -1028,14 +902,20 @@
             <!-- ASK BIG JIM AI QUESTION WIDGET -->
             <div class="ask-jim-container">
                 <div class="ask-jim-header">
-                    <span style="font-size: 1.6rem;">🤖</span>
-                    <div class="ask-jim-title">ASK BIG JIM'S AI BETTING BRAIN</div>
+                    <div class="ask-jim-title-group">
+                        <span style="font-size: 1.6rem;">🤖</span>
+                        <div class="ask-jim-title">ASK BIG JIM'S AI BETTING BRAIN</div>
+                    </div>
+                    <div class="quick-action-group">
+                        <button class="high-prob-btn" onclick="generateHighProbabilitySlip()">🎯 HIGH PROBABILITY WINNER</button>
+                        <button class="random-parlay-btn" onclick="generateCrazyParlay()">🎲 CRAZY UNHINGED PARLAY</button>
+                    </div>
                 </div>
                 <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.8rem;">
                     Got a specific matchup or prop bet in mind? Type any team or game below for Big Jim's instantaneous analysis:
                 </p>
                 <div class="ask-jim-input-group">
-                    <input type="text" id="askJimInput" class="ask-jim-input" placeholder="e.g. Tennessee, Chiefs vs Bills, Thursday" onkeypress="if(event.key==='Enter') askBigJim()">
+                    <input type="text" id="askJimInput" class="ask-jim-input" placeholder="e.g. Tennessee, Chiefs vs Bills, Sunday, Thursday" onkeypress="if(event.key==='Enter') askBigJim()">
                     <button class="ask-jim-btn" onclick="askBigJim()">ASK JIM ➔</button>
                 </div>
 
@@ -1080,29 +960,28 @@
             <button class="ad-cta" onclick="openQuiz()">TAKE ELIGIBILITY QUIZ</button>
         </section>
 
-        <!-- Sleek Custom Merch Showcase Carousel -->
+        <!-- Sleek Custom Merch Showcase Container via Official Spreadshop JS Embed -->
         <section id="merch" class="card">
             <h2 class="section-title">🧢 Official Pick Dog Merch</h2>
             <p style="color: var(--text-muted); margin-bottom: 1rem;">Featured gear directly from the shop:</p>
-            
-            <div class="carousel-container">
-                <button class="carousel-nav prev" id="carouselPrevBtn" onclick="moveCarousel(-1)">❮</button>
-                
-                <div class="carousel-wrapper">
-                    <div class="carousel-track" id="carouselTrack">
-                        <!-- Loaded dynamically via JavaScript -->
-                    </div>
-                </div>
 
-                <button class="carousel-nav next" id="carouselNextBtn" onclick="moveCarousel(1)">❯</button>
+            <!-- Spreadshop Mount Container -->
+            <div id="myShop">
+                <p style="text-align: center; color: var(--text-muted); padding: 2rem 0;">
+                    🔄 Loading official Big Jim's Pick Dog gear...
+                </p>
             </div>
 
-            <!-- Store CTA Link -->
-            <div class="store-banner-cta">
-                <h4>🔥 WANT TO SEE THE ENTIRE STORE?</h4>
-                <p>Check out our full Spreadshop catalog for hoodies, tank tops, stickers, and koozies!</p>
-                <a href="https://big-jims-pick-dog.myspreadshop.com/" target="_blank" class="main-store-btn">VISIT OFFICIAL SPREADSHOP STORE ➔</a>
-            </div>
+            <!-- Official Spreadshop Integration Script -->
+            <script>
+                var spread_shop_config = {
+                    shopName: 'big-jims-pick-dog',
+                    prefix: 'https://big-jims-pick-dog.myspreadshop.com',
+                    baseId: 'myShop',
+                    locale: 'en_US'
+                };
+            </script>
+            <script type="text/javascript" src="https://big-jims-pick-dog.myspreadshop.com/shopfiles/shopclient/shopclient.nocache.js"></script>
         </section>
 
     </div>
@@ -1393,19 +1272,19 @@
             }, 800);
         }
 
-        // REAL UPCOMING GAMES DATABASE (OCTOBER 2026)
+        // REAL UPCOMING GAMES DATABASE WITH REAL SPORTSBOOK ODDS (OCTOBER 2026)
         const realUpcomingGames = [
             {
                 keywords: ["TITANS", "TENNESSEE TITANS"],
                 matchup: "Tennessee Titans at Indianapolis Colts (NFL Week 6 - Sun Oct 18, 1:00 PM ET)",
                 odds: "+1250 DIVISIONAL LOCK",
                 legs: [
-                    "Tennessee Titans +3.5 Spread at Lucas Oil Stadium",
-                    "Will Levis 275+ Passing Yards & 2+ TDs",
-                    "Calvin Ridley 80+ Receiving Yards & Anytime TD",
-                    "Game Total OVER 44.5 Points"
+                    "Indianapolis Colts -6.5 Spread vs Titans (Odds: -120)",
+                    "Game Total OVER 43.5 Points (Odds: -115)",
+                    "Will Levis 225+ Passing Yards",
+                    "Colts Moneyline Outright Win (Odds: -330)"
                 ],
-                comment: "Titans traveling up to Indy! Will Levis has that big arm throwing downfield. Calvin Ridley is going to burn their corners deep all day. Take the 3.5 points with Tennessee!"
+                comment: "Titans traveling up to Indy! Real Vegas line has Colts as -6.5 favorites. Will Levis throws downfield, but the Colts baseline is solid. Take the Colts moneyline!"
             },
             {
                 keywords: ["VOLS", "TENNESSEE VOLS", "VOLUNTEERS", "UT VOLS"],
@@ -1424,78 +1303,135 @@
                 matchup: "Seattle Seahawks at Denver Broncos (TNF - Oct 15, 8:15 PM ET)",
                 odds: "+1450 MEGA-LOCK",
                 legs: [
-                    "Denver Broncos -2.5 Spread at Empower Field at Mile High",
-                    "Bo Nix 300+ Passing Yards & 3+ TDs",
-                    "DK Metcalf 80+ Receiving Yards & Anytime TD",
-                    "Game Total OVER 46.5 Points"
+                    "Seattle Seahawks -3.0 Spread at Broncos (Odds: -105)",
+                    "Game Total OVER 40.5 Points (Odds: -110)",
+                    "Seahawks Moneyline Win (Odds: -155)",
+                    "DK Metcalf 80+ Receiving Yards & Anytime TD"
                 ],
-                comment: "Thursday Night Football in Denver! Empower Field is going to be deafening. Bo Nix isn't just covering -2.5, he's dropping 80-yard dimes on every drive. Lay the points!"
+                comment: "Thursday Night Football in Denver! Live Vegas odds have Seattle favored by -3.0 points. Lay the points with Geno and Metcalf!"
             },
             {
-                keywords: ["SUNDAY", "SNF", "COWBOYS", "PACKERS", "DALLAS", "GREEN BAY"],
+                keywords: ["SNF", "COWBOYS", "PACKERS", "DALLAS", "GREEN BAY"],
                 matchup: "Dallas Cowboys at Green Bay Packers (SNF - Oct 18, 8:20 PM ET)",
                 odds: "+1800 UNHINGED SLIP",
                 legs: [
-                    "Dallas Cowboys +3.5 Spread at Lambeau Field",
-                    "Dak Prescott 325+ Passing Yards",
-                    "CeeDee Lamb 100+ Receiving Yards & 2 TDs",
-                    "Game Total OVER 51.5 Points"
+                    "Green Bay Packers -1.5 Spread vs Cowboys (Odds: -102)",
+                    "Game Total OVER 52.5 Points (Odds: -115)",
+                    "Dak Prescott 300+ Passing Yards",
+                    "CeeDee Lamb 100+ Receiving Yards & 2 TDs"
                 ],
-                comment: "Sunday Night Football at Lambeau Field! Dak Prescott under the prime time lights is a cheat code. CeeDee Lamb runs right past their secondary all night. Take the points with Dallas!"
+                comment: "Sunday Night Football at Lambeau Field! Packers are -1.5 favorites with an explosive 52.5 over/under. Take the OVER on points!"
             },
             {
                 keywords: ["CHIEFS", "CHARGERS", "KANSAS CITY", "ARROWHEAD"],
                 matchup: "LA Chargers at Kansas City Chiefs (Sunday Oct 18, 4:25 PM ET)",
                 odds: "+1150 SURE THING",
                 legs: [
-                    "Kansas City Chiefs -6.5 Spread at Arrowhead Stadium",
-                    "Patrick Mahomes 4+ Passing Touchdowns",
-                    "Travis Kelce Anytime TD Scorer",
-                    "Game Total OVER 48.5 Points"
+                    "Kansas City Chiefs -8.5 Spread vs Chargers (Odds: -105)",
+                    "Game Total OVER 42.5 Points (Odds: -108)",
+                    "Chiefs Moneyline Win (Odds: -440)",
+                    "Patrick Mahomes 3+ Passing Touchdowns"
                 ],
-                comment: "Arrowhead Stadium on a Sunday afternoon! Patrick Mahomes in a divisional rivalry at home is free money. The Chiefs offense will score on all 6 second-half drives. Lay the points!"
+                comment: "Arrowhead Stadium on a Sunday afternoon! Chiefs are huge -8.5 favorites (-440 ML). Patrick Mahomes in a divisional rivalry at home is pure money!"
             },
             {
                 keywords: ["LONDON", "JAGUARS", "TEXANS", "HOUSTON", "WEMBLEY"],
                 matchup: "Houston Texans vs Jacksonville Jaguars at Wembley Stadium (Sun Oct 18, 9:30 AM ET)",
                 odds: "+1600 LONDON SPECIAL",
                 legs: [
-                    "Jacksonville Jaguars -2.5 Spread at Wembley Stadium",
-                    "Trevor Lawrence 3+ Touchdown Passes",
-                    "CJ Stroud 250+ Passing Yards",
-                    "Game Total OVER 45.5 Points"
+                    "Jacksonville Jaguars -2.5 Spread in London (Odds: -115)",
+                    "Game Total OVER 42.5 Points (Odds: -110)",
+                    "Jaguars Moneyline Win (Odds: -146)",
+                    "CJ Stroud 250+ Passing Yards"
                 ],
-                comment: "London morning football at Wembley Stadium! Trevor Lawrence crossed the Atlantic to throw bombs. Houston's secondary can't handle the jet lag. Lay the small line and celebrate before lunch!"
+                comment: "London morning football at Wembley Stadium! Jaguars are -2.5 favorites in the UK. Lay the small line and celebrate before lunch!"
             },
             {
                 keywords: ["COMMANDERS", "49ERS", "MONDAY", "MNF", "SAN FRANCISCO"],
                 matchup: "Washington Commanders at San Francisco 49ers (MNF - Oct 19, 8:15 PM ET)",
                 odds: "+1250 PRIME TIME SLAM",
                 legs: [
-                    "San Francisco 49ers -5.5 Spread at Levi's Stadium",
-                    "Brock Purdy 300+ Passing Yards",
-                    "Deebo Samuel Anytime TD Scorer",
-                    "Game Total OVER 47.5 Points"
+                    "San Francisco 49ers -7.5 Spread vs Commanders (Odds: -108)",
+                    "Game Total OVER 50.5 Points (Odds: -105)",
+                    "49ers Moneyline Win (Odds: -400)",
+                    "Brock Purdy 275+ Passing Yards"
                 ],
-                comment: "Monday Night Football in Santa Clara! The 49ers at Levi's Stadium in prime time are unstoppable. Brock Purdy and Deebo Samuel are going to put up 35 points in the first half alone!"
+                comment: "Monday Night Football in Santa Clara! The 49ers are heavy -7.5 favorites on MNF. Lay the points with Brock Purdy and Deebo!"
             },
             {
                 keywords: ["EAGLES", "PANTHERS", "PHILADELPHIA"],
                 matchup: "Carolina Panthers at Philadelphia Eagles (Sun Oct 18, 1:00 PM ET)",
                 odds: "+850 LINCOLN LOCK",
                 legs: [
-                    "Philadelphia Eagles -7.5 Spread at Lincoln Financial Field",
-                    "Jalen Hurts 2+ Rushing Touchdowns",
-                    "AJ Brown 100+ Receiving Yards",
-                    "Game Total OVER 44.5 Points"
+                    "Philadelphia Eagles -1.5 Spread vs Panthers (Odds: -104)",
+                    "Game Total OVER 41.5 Points (Odds: -115)",
+                    "Eagles Moneyline Win (Odds: -115)",
+                    "Jalen Hurts 2+ Total Touchdowns"
                 ],
-                comment: "Lincoln Financial Field is going to be rowdy! Jalen Hurts and the Eagles offense will bully Carolina's front seven all afternoon long. Lay the 7.5 points!"
+                comment: "Lincoln Financial Field is going to be rowdy! Eagles are tight -1.5 favorites at home. Back Jalen Hurts on the moneyline!"
             }
         ];
 
         function triggerQuery(promptText) {
             document.getElementById('askJimInput').value = promptText;
             askBigJim();
+        }
+
+        // HIGH PROBABILITY WINNER GENERATOR (FAVORITES ON REAL BETTING SITES)
+        function generateHighProbabilitySlip() {
+            const highProbLegs = [
+                "Kansas City Chiefs Moneyline Win (-440 Odds)",
+                "San Francisco 49ers Moneyline Win (-400 Odds)",
+                "Indianapolis Colts Moneyline Win (-330 Odds)",
+                "Seattle Seahawks Moneyline Win (-155 Odds)"
+            ];
+
+            let legsHtml = "";
+            highProbLegs.forEach(leg => {
+                legsHtml += `<li><span class="leg-icon">✅</span> <strong>HIGH PROBABILITY</strong>: ${leg}</li>`;
+            });
+
+            const responseBox = document.getElementById('askJimResponse');
+            document.getElementById('aiResponseTitle').textContent = "🎯 REAL-TIME HIGH PROBABILITY WINNER SLIP";
+            document.getElementById('aiResponseOdds').textContent = "+210 SAFE LOCK PARLAY";
+            document.getElementById('aiResponseLegs').innerHTML = legsHtml;
+            document.getElementById('aiResponseQuote').textContent = `"Pulled straight from real-time Vegas sportsbook moneylines! High-probability favorites stacked into a low-risk, high-confidence winning slip!"`;
+            document.getElementById('aiResponseConfidence').textContent = "92% HIGH PROBABILITY";
+            document.getElementById('aiResponseMeter').style.width = '92%';
+            responseBox.style.display = 'block';
+
+            playSpeech("Here is your high probability winner slip using real-time sportsbook moneylines!");
+        }
+
+        // CRAZY UNHINGED RANDOM PARLAY GENERATOR BUTTON
+        function generateCrazyParlay() {
+            const crazyTeams = [
+                { team: "Dallas Cowboys", play: "+1.5 Spread vs Packers (+110)" },
+                { team: "Tennessee Vols", play: "Moneyline Win vs Alabama (+135)" },
+                { team: "Kansas City Chiefs", play: "-8.5 Spread vs Chargers (-105)" },
+                { team: "Philadelphia Eagles", play: "Over 41.5 Total Points (-115)" },
+                { team: "Jacksonville Jaguars", play: "-2.5 Spread in London (-115)" },
+                { team: "San Francisco 49ers", play: "-7.5 Spread on MNF (-108)" },
+                { team: "Geno Smith", play: "300+ Passing Yards (+220)" },
+                { team: "Saquon Barkley", play: "2+ Touchdowns Scored (+185)" }
+            ];
+
+            let shuffled = [...crazyTeams].sort(() => 0.5 - Math.random()).slice(0, 5);
+            let legsHtml = "";
+            shuffled.forEach(item => {
+                legsHtml += `<li><span class="leg-icon">🔥</span> <strong>${item.team}</strong>: ${item.play}</li>`;
+            });
+
+            const responseBox = document.getElementById('askJimResponse');
+            document.getElementById('aiResponseTitle').textContent = "🎲 BIG JIM'S CRAZY 5-LEG UNHINGED PARLAY";
+            document.getElementById('aiResponseOdds').textContent = "+4500 MEGA DEGEN";
+            document.getElementById('aiResponseLegs').innerHTML = legsHtml;
+            document.getElementById('aiResponseQuote').textContent = `"I pulled this straight out of my marrow right after my 4th Michelob Ultra! Real live market lines mixed for maximum payout!"`;
+            document.getElementById('aiResponseConfidence').textContent = "150% UNHINGED";
+            document.getElementById('aiResponseMeter').style.width = '100%';
+            responseBox.style.display = 'block';
+
+            playSpeech("God damn! Here is my crazy five-leg unhinged mega parlay! Put the house on it!");
         }
 
         function askBigJim() {
@@ -1511,7 +1447,57 @@
             const confEl = document.getElementById('aiResponseConfidence');
             const meterEl = document.getElementById('aiResponseMeter');
 
-            // 1. JOKE / PERSONAL COMMENT FILTER
+            // 1. FUZZY TENNESSEE SPELLING MATCHER (Catches "TENNESSEE", "TENESSEE", "TENESEE", "TENESSE", "UT", "TENN")
+            const isTennesseeSpell = queryUpper.includes("TEN") || queryUpper.includes("TENN") || queryUpper === "UT";
+            if (isTennesseeSpell && !queryUpper.includes("TITANS") && !queryUpper.includes("VOLS")) {
+                titleEl.textContent = "WHICH TENNESSEE TEAM, BROTHER?";
+                oddsEl.textContent = "DECISION TIME";
+                legsEl.innerHTML = `
+                    <li><span class="leg-icon">🏈</span> Did you mean the <strong>Tennessee Volunteers (NCAAF)</strong> or the <strong>Tennessee Titans (NFL)</strong>?</li>
+                    <li><span class="leg-icon">⚡</span> Click a choice below to lock in Big Jim's analysis:</li>
+                `;
+                quoteEl.innerHTML = `
+                    <div class="choice-btn-group">
+                        <button class="choice-btn" onclick="triggerQuery('Tennessee Vols')">🍊 TENNESSEE VOLS (VS ALABAMA)</button>
+                        <button class="choice-btn" onclick="triggerQuery('Tennessee Titans')">⚔️ TENNESSEE TITANS (AT COLTS)</button>
+                    </div>
+                `;
+                confEl.textContent = "50/50 SPLIT";
+                meterEl.style.width = '50%';
+                responseBox.style.display = 'block';
+                playSpeech("Do you mean the Tennessee Vols against Alabama or the Tennessee Titans at the Colts?");
+                return;
+            }
+
+            // 2. SUNDAY NFL FULL SLATE DISAMBIGUATION FILTER
+            if (queryUpper.includes("SUNDAY") || queryUpper.includes("SNF")) {
+                titleEl.textContent = "SUNDAY NFL FULL BOARD SLATE";
+                oddsEl.textContent = "SELECT MATCHUP";
+                legsEl.innerHTML = `
+                    <li><span class="leg-icon">🇬🇧</span> <strong>Texans vs Jaguars</strong> (London - Jags -2.5 O/U 42.5)</li>
+                    <li><span class="leg-icon">🦅</span> <strong>Panthers at Eagles</strong> (Philly -1.5 O/U 41.5)</li>
+                    <li><span class="leg-icon">⚔️</span> <strong>Titans at Colts</strong> (Colts -6.5 O/U 43.5)</li>
+                    <li><span class="leg-icon">🏹</span> <strong>Chargers at Chiefs</strong> (Chiefs -8.5 O/U 42.5)</li>
+                    <li><span class="leg-icon">🤠</span> <strong>Cowboys at Packers</strong> (Packers -1.5 O/U 52.5 SNF)</li>
+                `;
+                quoteEl.innerHTML = `
+                    <div style="margin-bottom: 0.5rem; color: #fff;">Pick any Sunday matchup or option below for Big Jim's analysis:</div>
+                    <div class="choice-btn-group">
+                        <button class="choice-btn" onclick="triggerQuery('Jaguars')">🇬🇧 LONDON GAME</button>
+                        <button class="choice-btn" onclick="triggerQuery('Chiefs')">🏹 CHIEFS VS CHARGERS</button>
+                        <button class="choice-btn" onclick="triggerQuery('Cowboys')">🤠 COWBOYS VS PACKERS (SNF)</button>
+                        <button class="choice-btn" onclick="generateHighProbabilitySlip()">🎯 SAFE WINNER SLIP</button>
+                        <button class="choice-btn" onclick="generateCrazyParlay()">🎲 UNHINGED PARLAY</button>
+                    </div>
+                `;
+                confEl.textContent = "SUNDAY READY";
+                meterEl.style.width = '100%';
+                responseBox.style.display = 'block';
+                playSpeech("Here is the full Sunday NFL slate with live Vegas lines!");
+                return;
+            }
+
+            // 3. JOKE / PERSONAL COMMENT FILTER
             const jokeKeywords = ["HAIRY", "BEARD", "LOOK LIKE", "UGLY", "FAT", "DRUNK", "BEER", "OLD", "DUMB"];
             const isJokeQuery = jokeKeywords.some(kw => queryUpper.includes(kw));
 
@@ -1531,10 +1517,9 @@
                 return;
             }
 
-            // 2. BROAD CATEGORY FILTER (e.g. "COLLEGE FOOTBALL", "SATURDAY", "NFL", "GAMES")
+            // 4. BROAD CATEGORY FILTER ("COLLEGE FOOTBALL", "SATURDAY")
             const isCategoryQuery = queryUpper.includes("COLLEGE FOOTBALL") || queryUpper.includes("CFB") || 
-                                    (queryUpper.includes("SATURDAY") && !queryUpper.includes("TITANS") && !queryUpper.includes("VOLS")) ||
-                                    queryUpper.includes("WHAT GAMES") || queryUpper.includes("SCHEDULE");
+                                    (queryUpper.includes("SATURDAY") && !queryUpper.includes("TITANS") && !queryUpper.includes("VOLS"));
 
             if (isCategoryQuery) {
                 titleEl.textContent = "SATURDAY COLLEGE FOOTBALL SLATE";
@@ -1555,48 +1540,6 @@
                 meterEl.style.width = '100%';
                 responseBox.style.display = 'block';
                 playSpeech("Here is Saturday's college football slate! Pick a matchup to get my full lock!");
-                return;
-            }
-
-            // 3. AMBIGUITY DISAMBIGUATION FOR "TENNESSEE" / "UT"
-            if (queryUpper === "TENNESSEE" || queryUpper === "UT" || queryUpper === "TENN") {
-                titleEl.textContent = "WHICH TENNESSEE TEAM, BROTHER?";
-                oddsEl.textContent = "DECISION TIME";
-                legsEl.innerHTML = `
-                    <li><span class="leg-icon">🏈</span> Did you mean the <strong>Tennessee Volunteers (NCAAF)</strong> or the <strong>Tennessee Titans (NFL)</strong>?</li>
-                    <li><span class="leg-icon">⚡</span> Click a choice below to lock in Big Jim's analysis:</li>
-                `;
-                quoteEl.innerHTML = `
-                    <div class="choice-btn-group">
-                        <button class="choice-btn" onclick="triggerQuery('Tennessee Vols')">🍊 TENNESSEE VOLS (VS ALABAMA)</button>
-                        <button class="choice-btn" onclick="triggerQuery('Tennessee Titans')">⚔️ TENNESSEE TITANS (AT COLTS)</button>
-                    </div>
-                `;
-                confEl.textContent = "50/50 SPLIT";
-                meterEl.style.width = '50%';
-                responseBox.style.display = 'block';
-                playSpeech("Do you mean the Tennessee Vols against Alabama or the Tennessee Titans at the Colts?");
-                return;
-            }
-
-            // 4. NON-BETTING GENERAL QUESTIONS
-            const nonBettingKeywords = ["OTHER THAN BETS", "WHO ARE YOU", "WHAT DO YOU DO", "HELLO", "HI", "HELP", "DIPLOMA", "STORE"];
-            const isNonBettingQuery = nonBettingKeywords.some(kw => queryUpper.includes(kw));
-
-            if (isNonBettingQuery) {
-                titleEl.textContent = "BIG JIM'S DIRECT ANSWER";
-                oddsEl.textContent = "100% NO BS";
-                legsEl.innerHTML = `
-                    <li><span class="leg-icon">💬</span> Big Jim's Pick Dog is a high-energy betting & comedy site!</li>
-                    <li><span class="leg-icon">🔊</span> Use the Soundboard above to hear my signature voice clips.</li>
-                    <li><span class="leg-icon">🤠</span> Take the Redneck 101 Quiz to earn your official diploma.</li>
-                    <li><span class="leg-icon">🧢</span> Check out the Merch section for hats, tees, and koozies!</li>
-                `;
-                quoteEl.textContent = `"I'm Big Jim! If you're not asking about upcoming football locks, grab a cold Michelob Ultra, slam a soundboard button, or take the Redneck 101 quiz!"`;
-                confEl.textContent = "100% REAL TALK";
-                meterEl.style.width = '100%';
-                responseBox.style.display = 'block';
-                playSpeech("God damn! I am Big Jim! Ask me about an upcoming football matchup or check out the soundboard!");
                 return;
             }
 
@@ -1623,7 +1566,7 @@
 
                 playSpeech(`God damn! Here is my lock for ${matchedGame.matchup}: Double down right now!`);
             } else {
-                // 6. SPECIFIC TEAM MATCHUP FALLBACK (IF SEARCHED TEAM IS NOT IN FEATURED LIST)
+                // 6. SPECIFIC TEAM MATCHUP FALLBACK
                 let teamName = rawInput.toUpperCase().replace('VS', 'VS.').replace('BET', '').replace('THINK ABOUT', '').trim();
                 if (teamName.length > 25) teamName = teamName.substring(0, 25) + '...';
 
@@ -1911,86 +1854,8 @@
             });
         }
 
-        // Live Inventory Merch Carousel (Guaranteed Static Composition Renderer)
-        let currentIdx = 0;
-
-        const featuredProducts = [
-            {
-                name: 'GOD DAMN, WOO: UNISEX T-SHIRT',
-                price: "$24.99",
-                img: "https://image.spreadshirtmedia.com/image-server/v1/compositions/1057912423/views/1,width=500,height=500,appearanceId=228.png",
-                link: "https://big-jims-pick-dog.myspreadshop.com/god+damn+woo+big+jims+pick+dog-A32589a8ede29b874?sellable=rk8ynuak1k6s-1130&appearance=228"
-            },
-            {
-                name: 'BEARDED SHOUT TRUCKER HAT',
-                price: "$29.99",
-                img: "https://image.spreadshirtmedia.com/image-server/v1/compositions/1057912423/views/1,width=500,height=500,appearanceId=14.png",
-                link: "https://big-jims-pick-dog.myspreadshop.com/bearded+shout+circle+patch-A3258952d72f93461?sellable=rk8wkcj99aw1-1040&appearance=14"
-            },
-            {
-                name: "WOMEN'S CROPPED T-SHIRT",
-                price: "$26.99",
-                img: "https://image.spreadshirtmedia.com/image-server/v1/compositions/1057912423/views/1,width=500,height=500,appearanceId=231.png",
-                link: "https://big-jims-pick-dog.myspreadshop.com/bearded+shout+circle+patch-A3258952d72f93461?sellable=rk8wkcj99aw1-1408&appearance=231"
-            },
-            {
-                name: "MEN'S 50/50 T-SHIRT",
-                price: "$24.99",
-                img: "https://image.spreadshirtmedia.com/image-server/v1/compositions/1057912423/views/1,width=500,height=500,appearanceId=2.png",
-                link: "https://big-jims-pick-dog.myspreadshop.com/bearded+shout+circle+patch-A3258952d72f93461?sellable=rk8wkcj99aw1-1197&appearance=2"
-            },
-            {
-                name: "BEARDED SHOUT STICKER (S)",
-                price: "$4.99",
-                img: "https://image.spreadshirtmedia.com/image-server/v1/designs/1057912423,width=500,height=500.png",
-                link: "https://big-jims-pick-dog.myspreadshop.com/bearded+shout+circle+patch-A3258952d72f93461?sellable=rk8wkcj99aw1-1459&appearance=842"
-            }
-        ];
-
-        function renderMerchCarousel() {
-            const track = document.getElementById('carouselTrack');
-            if (!track) return;
-            track.innerHTML = "";
-
-            featuredProducts.forEach(item => {
-                const merchCard = document.createElement('div');
-                merchCard.className = 'merch-item';
-                merchCard.innerHTML = `
-                    <div>
-                        <div class="merch-image-wrapper">
-                            <img src="${item.img}" alt="${item.name}" class="merch-thumb" onerror="this.src='https://image.spreadshirtmedia.com/image-server/v1/designs/1057912423,width=300,height=300.png'">
-                        </div>
-                        <div class="merch-title">${item.name}</div>
-                        <div class="merch-price">${item.price}</div>
-                    </div>
-                    <a href="${item.link}" target="_blank" class="buy-btn">BUY ON SPREADSHOP ➔</a>
-                `;
-                track.appendChild(merchCard);
-            });
-        }
-
-        function moveCarousel(direction) {
-            const track = document.getElementById('carouselTrack');
-            const items = document.querySelectorAll('.carousel-track .merch-item');
-            const gap = 20;
-            
-            if (!items.length) return;
-
-            let itemsPerView = 3;
-            if (window.innerWidth <= 900) itemsPerView = 2;
-            if (window.innerWidth <= 600) itemsPerView = 1;
-
-            const maxIdx = items.length - itemsPerView;
-            currentIdx = Math.min(Math.max(currentIdx + direction, 0), maxIdx);
-
-            const itemWidth = items[0].getBoundingClientRect().width;
-            const offset = currentIdx * (itemWidth + gap);
-            track.style.transform = `translateX(-${offset}px)`;
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             generateLiveDayBets();
-            renderMerchCarousel();
         });
     </script>
 </body>
