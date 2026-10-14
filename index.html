@@ -1234,6 +1234,64 @@
         window.isTennesseePrideActive = false;
         window.currentSearchGames = [];
 
+        // UNIVERSAL FUZZY MATCHING DICTIONARY
+        const FUZZY_DICTIONARY = [
+            "PARLAY", "LEGS", "LINES", "PROPS", "BET", "LOCK", "SAFE", "UNHINGED",
+            "TONIGHT", "TODAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY",
+            "TENNESSEE", "VOLUNTEERS", "VOLS", "TITANS", "ALABAMA", "BAMA", "COLTS",
+            "RAIDERS", "STEELERS", "KENNESAW", "MISSOURI", "STATE", "WKU", "KENTUCKY",
+            "SAM", "HOUSTON", "LONGHORNS", "TEXAS", "OHIO", "BUCKEYES", "INDIANA",
+            "NCAA", "NCAAF", "NFL", "SOCCER", "HOCKEY", "SPREAD", "MONEYLINE", "OVER", "UNDER"
+        ];
+
+        // LEVENSHTEIN DISTANCE ALGORITHM
+        function getLevenshteinDistance(a, b) {
+            if (a.length === 0) return b.length;
+            if (b.length === 0) return a.length;
+
+            const matrix = [];
+            for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+            for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+
+            for (let i = 1; i <= b.length; i++) {
+                for (let j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1,
+                            matrix[i][j - 1] + 1,
+                            matrix[i - 1][j] + 1
+                        );
+                    }
+                }
+            }
+            return matrix[b.length][a.length];
+        }
+
+        function correctFuzzyWords(inputSentence) {
+            const words = inputSentence.toUpperCase().split(/\s+/);
+            const correctedWords = words.map(word => {
+                if (word.length <= 2 || !isNaN(word)) return word;
+
+                let bestMatch = word;
+                let lowestDistance = 999;
+
+                for (let dictTerm of FUZZY_DICTIONARY) {
+                    let distance = getLevenshteinDistance(word, dictTerm);
+                    let maxAllowedDiff = word.length > 6 ? 3 : 2;
+
+                    if (distance < lowestDistance && distance <= maxAllowedDiff) {
+                        lowestDistance = distance;
+                        bestMatch = dictTerm;
+                    }
+                }
+                return bestMatch;
+            });
+
+            return correctedWords.join(" ");
+        }
+
         function toggleTennesseePride() {
             window.isTennesseePrideActive = !window.isTennesseePrideActive;
             const btn = document.getElementById('tnPrideBtn');
@@ -1286,7 +1344,8 @@
                 if (game.sport_key && game.sport_key.includes("nfl")) leagueTitle = "NFL";
                 if (game.sport_title && game.sport_title.toUpperCase().includes("NFL")) leagueTitle = "NFL";
 
-                const commenceTime = new Date(game.commence_time).toLocaleString('en-US', { 
+                const gameDate = new Date(game.commence_time);
+                const commenceTime = gameDate.toLocaleString('en-US', { 
                     weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' 
                 });
 
@@ -1315,6 +1374,7 @@
 
                 return {
                     league: leagueTitle,
+                    commenceDate: gameDate,
                     keywords: [homeTeam.toUpperCase(), awayTeam.toUpperCase()],
                     matchup: `[${leagueTitle}] ${awayTeam} at ${homeTeam} (${commenceTime})`,
                     odds: `${spread || moneyline} Live Line`,
@@ -1359,6 +1419,7 @@
                 keywords: ["KENNESAW", "MISSOURI STATE", "KENNESAW STATE", "OWLS", "BEARS", "TONIGHT", "WEDNESDAY"],
                 matchup: "Kennesaw State Owls at Missouri State Bears (Wed Oct 14, 7:30 PM ET - CBSSN)",
                 odds: "+190 CUSA LOCK",
+                commenceDate: new Date("2026-10-14T23:30:00Z"),
                 safeLeg: "Kennesaw State -3.5 Spread at Missouri State (+100)",
                 safeProps: [
                     "Kennesaw State -3.5 Spread at Missouri State (+100)",
@@ -1386,6 +1447,7 @@
                 keywords: ["WKU", "WESTERN KENTUCKY", "SAM HOUSTON", "BEARKATS", "HILLTOPPERS", "TONIGHT", "WEDNESDAY"],
                 matchup: "Western Kentucky Hilltoppers at Sam Houston Bearkats (Wed Oct 14, 8:00 PM ET - ESPN)",
                 odds: "+220 WEDNESDAY NIGHT LOCK",
+                commenceDate: new Date("2026-10-15T00:00:00Z"),
                 safeLeg: "Western Kentucky -1.5 Spread at Sam Houston (-104)",
                 safeProps: [
                     "Western Kentucky -1.5 Spread at Sam Houston (-104)",
@@ -1412,6 +1474,7 @@
                 keywords: ["VOLS", "TENNESSEE VOLS", "VOLUNTEERS", "UT VOLS", "ALABAMA", "BAMA", "TENNESSEE", "TENNESSE", "TENESSEE", "TENESSE", "TN", "UT"],
                 matchup: "#14 Tennessee Volunteers vs #6 Alabama Crimson Tide (Sat Oct 17, 3:30 PM ET - Neyland)",
                 odds: "+2200 SEC MONSTER",
+                commenceDate: new Date("2026-10-17T19:30:00Z"),
                 safeLeg: "Tennessee Volunteers +8.5 Cover Spread vs Alabama (-108)",
                 safeProps: [
                     "Tennessee Volunteers +8.5 Cover Spread vs Alabama (-108)",
@@ -1454,8 +1517,6 @@
             generateScopedUnhingedSlip(shuffled, "WEEKLY TOP");
         }
 
-        // UNHINGED MODE: TRANSFORM & AUTOMATICALLY STACK WILD PROPS
-        // SAFE MODE: TRIM BLOATED PARLAYS DOWN TO 1-2 CLEAN LOCKS
         function setParlayMode(mode) {
             window.activeParlayMode = mode;
             
@@ -1466,7 +1527,6 @@
             let activeGames = window.currentSearchGames;
 
             if (mode === "UNHINGED") {
-                // Build an aggressive 4-6 leg unhinged parlay automatically
                 let unhingedLegs = [];
 
                 activeGames.forEach(game => {
@@ -1478,9 +1538,8 @@
 
                     let gameTitle = game.matchup ? game.matchup.split('(')[0].trim() : "Active Game";
 
-                    // Add main unhinged line + 1 or 2 props per game
                     pool.forEach(propText => {
-                        if (unhingedLegs.length < 6) {
+                        if (unhingedLegs.length < 5) {
                             unhingedLegs.push({ game: gameTitle, text: propText });
                         }
                     });
@@ -1488,10 +1547,9 @@
 
                 window.activeLegsList = unhingedLegs;
                 renderActiveLegsResponse(`🎲 UNHINGED ${window.activeLegsList.length}-LINE MEGA PARLAY`);
-                playSpeech(`Unhinged mode activated! Automatically stacked wild props to turn this into a lottery ticket!`);
+                playSpeech(`Unhinged mode activated! Automatically stacked wild props!`);
 
             } else {
-                // SAFE MODE: Trim down parlay to 1 or 2 clean probability locks
                 window.activeLegsList = [];
 
                 activeGames.slice(0, 2).forEach(game => {
@@ -1630,9 +1688,9 @@
             const legsEl = document.getElementById('aiResponseLegs');
             const quoteEl = document.getElementById('aiResponseQuote');
 
-            titleEl.textContent = `FETCHING FULL SATURDAY ${sport} BOARD...`;
+            titleEl.textContent = `FETCHING SATURDAY ${sport} BOARD...`;
             oddsEl.textContent = "CONNECTING...";
-            legsEl.innerHTML = `<li><span class="leg-icon">🔄</span> Fetching all live Saturday matchups from sportsbook feeds...</li>`;
+            legsEl.innerHTML = `<li><span class="leg-icon">🔄</span> Fetching live Saturday matchups from sportsbook feeds...</li>`;
             responseBox.style.display = 'block';
 
             let apiKey = "americanfootball_ncaaf";
@@ -1641,14 +1699,24 @@
             let liveGames = await fetchLiveSportsbookOdds(apiKey);
             
             let fullSaturdaySlate = [
-                { matchup: "#14 Tennessee Volunteers vs #6 Alabama Crimson Tide (3:30 PM ET - ABC)" },
-                { matchup: "Florida Gators at #7 Texas Longhorns (12:00 PM ET - ABC)" },
-                { matchup: "#4 Ohio State Buckeyes at #5 Indiana Hoosiers (12:00 PM ET - FOX)" },
-                { matchup: "Auburn Tigers at Georgia Bulldogs (3:30 PM ET - CBS)" },
-                { matchup: "Penn State Nittany Lions at Michigan Wolverines (3:30 PM ET - CBS)" }
+                { matchup: "#14 Tennessee Volunteers vs #6 Alabama Crimson Tide (Sat Oct 17, 3:30 PM ET - ABC)" },
+                { matchup: "Florida Gators at #7 Texas Longhorns (Sat Oct 17, 12:00 PM ET - ABC)" },
+                { matchup: "#4 Ohio State Buckeyes at #5 Indiana Hoosiers (Sat Oct 17, 12:00 PM ET - FOX)" },
+                { matchup: "Auburn Tigers at Georgia Bulldogs (Sat Oct 17, 3:30 PM ET - CBS)" },
+                { matchup: "Penn State Nittany Lions at Michigan Wolverines (Sat Oct 17, 3:30 PM ET - CBS)" }
             ];
 
-            let activeGames = (liveGames && liveGames.length > 0) ? liveGames : fullSaturdaySlate;
+            let saturdayFiltered = [];
+            if (liveGames && Array.isArray(liveGames)) {
+                saturdayFiltered = liveGames.filter(g => {
+                    if (g.commenceDate) {
+                        return g.commenceDate.getDay() === 6;
+                    }
+                    return g.matchup && g.matchup.toUpperCase().includes("SAT");
+                });
+            }
+
+            let activeGames = (saturdayFiltered && saturdayFiltered.length > 0) ? saturdayFiltered : fullSaturdaySlate;
 
             titleEl.textContent = `SATURDAY ${sport} GAME BOARD (${activeGames.length} MATCHUPS)`;
             oddsEl.textContent = "STEP 2: CHECK GAMES";
@@ -1706,61 +1774,71 @@
             playSpeech(`Generated your custom parlay from your checked Saturday games!`);
         }
 
-        // GLOBAL SEARCH PARSER WITH TONIGHT / WEDNESDAY TIME SCOPING
+        // GLOBAL SEARCH ENGINE WITH LEVENSHTEIN FUZZY MATCHING & DAY ROUTING
         async function askBigJim() {
             const rawInput = document.getElementById('askJimInput').value.trim();
             if (!rawInput) return;
 
-            // FUZZY TYPO & TIME SCOPE NORMALIZATION
-            let queryUpper = rawInput.toUpperCase()
-                .replace("TENNESSE", "TENNESSEE")
-                .replace("TENESSEE", "TENNESSEE")
-                .replace("TENESSE", "TENNESSEE")
-                .replace("TONIGHTS", "TONIGHT")
-                .replace("TONIGHT'S", "TONIGHT")
-                .replace("TODAYS", "TODAY")
-                .replace("TODAY'S", "TODAY")
-                .replace("SATURDAY GAME", "SATURDAY")
-                .replace("SATURDAYS GAME", "SATURDAY")
-                .replace("SATURDAYS GAMES", "SATURDAY");
+            const responseBox = document.getElementById('askJimResponse');
+            const titleEl = document.getElementById('aiResponseTitle');
+            const oddsEl = document.getElementById('aiResponseOdds');
+            const legsEl = document.getElementById('aiResponseLegs');
+            const quoteEl = document.getElementById('aiResponseQuote');
 
-            // CHECK MODE MODIFIERS
+            // 1. UNIVERSAL FUZZY CORRECTION
+            let queryUpper = correctFuzzyWords(rawInput);
+
+            // 2. CHECK SUNDAY NCAA EXCLUSION RULE
+            if (queryUpper.includes("SUNDAY") && (queryUpper.includes("NCAA") || queryUpper.includes("COLLEGE") || queryUpper.includes("NCAAF"))) {
+                titleEl.textContent = "NO NCAA GAMES SCHEDULED FOR SUNDAY";
+                oddsEl.textContent = "SCHEDULE ALERT";
+                legsEl.innerHTML = `
+                    <li><span class="leg-icon">⚠️</span> <strong>No NCAA College Football games scheduled for Sunday!</strong> College Football plays on Saturdays.</li>
+                    <li><span class="leg-icon">🏈</span> Would you like to check out <strong>Sunday's NFL Slate</strong> instead?</li>
+                `;
+                quoteEl.innerHTML = `
+                    <div style="margin-bottom: 0.5rem; color: #fff;">Big Jim recommends switching to Sunday Pro Football:</div>
+                    <div class="choice-btn-group">
+                        <button class="choice-btn complexity-btn" onclick="triggerQuery('NFL games for Sunday')">🏈 LOAD SUNDAY NFL SLATE</button>
+                        <button class="choice-btn" onclick="renderSaturdayGamesBoard('NCAA')">🏈 VIEW SATURDAY NCAA BOARD</button>
+                    </div>
+                `;
+                responseBox.style.display = 'block';
+                playSpeech("There are no college football games on Sunday! Check out the NFL slate instead!");
+                return;
+            }
+
+            // 3. MODE SELECTION MODIFIERS
             if (queryUpper.includes("SAFE") || queryUpper.includes("HIGH PROBABILITY")) {
                 window.activeParlayMode = "SAFE";
             } else if (queryUpper.includes("UNHINGED") || queryUpper.includes("CRAZY")) {
                 window.activeParlayMode = "UNHINGED";
             }
 
-            // EXPLICIT LEG COUNT EXTRACTOR
+            // 4. EXPLICIT LEG COUNT EXTRACTOR
             let requestedLegsCount = 0;
-            const digitMatch = queryUpper.match(/(\d+)\s*(LEG|LINE|PROP|PARLAY)/);
+            const digitMatch = rawInput.match(/(\d+)\s*(LEG|LINE|PROP|PARLAY)/i);
             if (digitMatch) {
                 requestedLegsCount = parseInt(digitMatch[1], 10);
             }
 
-            // SATURDAY BOARD DISAMBIGUATION
+            // 5. SATURDAY BOARD DISAMBIGUATION
             if (queryUpper.includes("SATURDAY") && !queryUpper.includes("VOLS") && !queryUpper.includes("ALABAMA") && !queryUpper.includes("TEXAS")) {
                 renderSaturdayGamesBoard("NCAA");
                 return;
             }
 
-            // TONIGHT / TODAY CUSA MIDWEEK MATCHUPS SCOPE
             const isTonightQuery = queryUpper.includes("TONIGHT") || queryUpper.includes("TODAY") || queryUpper.includes("WEDNESDAY");
 
-            // Attempt Live API Fetch
-            let liveGames = await fetchLiveSportsbookOdds("americanfootball_ncaaf");
-            if (!liveGames || liveGames.length === 0) {
-                liveGames = await fetchLiveSportsbookOdds("americanfootball_nfl");
-            }
-
+            // 6. ATTEMPT LIVE API FETCH
+            let liveGames = await fetchLiveSportsbookOdds(queryUpper.includes("NFL") ? "americanfootball_nfl" : "americanfootball_ncaaf");
             const activeGamesDatabase = (liveGames && liveGames.length > 0) ? liveGames : realUpcomingGames;
 
-            // Find matching games
             let matchedGames = [];
 
             if (isTonightQuery) {
                 matchedGames = activeGamesDatabase.filter(g => 
-                    g.keywords.some(kw => ["KENNESAW", "MISSOURI STATE", "WKU", "WESTERN KENTUCKY", "SAM HOUSTON", "TONIGHT", "WEDNESDAY"].includes(kw))
+                    g.keywords.some(kw => ["KENNESAW", "MISSOURI", "WKU", "KENTUCKY", "HOUSTON", "TONIGHT", "WEDNESDAY"].includes(kw))
                 );
                 if (matchedGames.length === 0) matchedGames = [realUpcomingGames[0], realUpcomingGames[1]];
             } else {
@@ -1798,7 +1876,6 @@
                 let targetCount = requestedLegsCount > 0 ? requestedLegsCount : accumulatedLegs.length;
                 let finalLegs = accumulatedLegs.slice(0, targetCount);
 
-                // Dynamically balance legs across matched games up to requested target count
                 if (finalLegs.length < targetCount && matchedGames.length > 0) {
                     let gameIdx = 0;
                     while (finalLegs.length < targetCount) {
@@ -1827,7 +1904,7 @@
                 return;
             }
 
-            // FALLBACK MATCHUP
+            // FALLBACK MATCHUP FOR UNRECOGNIZED PROMPTS
             let teamName = rawInput.toUpperCase().replace('VS', 'VS.').replace('BET', '').replace('THINK ABOUT', '').trim();
             if (teamName.length > 25) teamName = teamName.substring(0, 25) + '...';
 
