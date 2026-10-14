@@ -1808,7 +1808,7 @@
             playSpeech(`Generated your custom parlay from your checked Saturday games!`);
         }
 
-        // GLOBAL SEARCH ENGINE WITH LEVENSHTEIN FUZZY MATCHING & DISAMBIGUATION
+        // GLOBAL SEARCH ENGINE WITH SPORT-SCOPED TENNESSEE PRIDE
         async function askBigJim() {
             const rawInput = document.getElementById('askJimInput').value.trim();
             if (!rawInput) return;
@@ -1856,11 +1856,24 @@
                 requestedLegsCount = parseInt(digitMatch[1], 10);
             }
 
-            // 5. SATURDAY DIRECT PARLAY GENERATOR VS CHECKBOX BOARD ROUTING
-            if (queryUpper.includes("SATURDAY") && requestedLegsCount > 0 && !queryUpper.includes("VOLS")) {
-                let liveGames = await fetchLiveSportsbookOdds("americanfootball_ncaaf");
-                let activeGamesDatabase = (liveGames && liveGames.length > 0) ? liveGames : realUpcomingGames;
+            // 5. DETERMINE REQUESTED SPORT (NCAA VS NFL)
+            const isNFL = queryUpper.includes("NFL") || queryUpper.includes("TITANS") || queryUpper.includes("SUNDAY");
+            const requestedApiKey = isNFL ? "americanfootball_nfl" : "americanfootball_ncaaf";
 
+            // Attempt Live API Fetch for the specific requested sport
+            let liveGames = await fetchLiveSportsbookOdds(requestedApiKey);
+            let activeGamesDatabase = (liveGames && liveGames.length > 0) ? liveGames : realUpcomingGames;
+
+            const forceTennesseeBias = window.isTennesseePrideActive || queryUpper.includes("FAVOR TN") || queryUpper.includes("FAVOUR TN") || queryUpper.includes("TENNESSEE PRIDE");
+
+            // SPORT-SCOPED TENNESSEE PRIDE SCANNER (STRICTLY NCAA FOR NCAA, NFL FOR NFL)
+            let tennesseeKeywords = isNFL ? ["TITANS"] : ["VOLS", "TENNESSEE", "VOLUNTEERS", "MTSU"];
+            let tnSportGames = activeGamesDatabase.filter(g => 
+                g.keywords && g.keywords.some(kw => tennesseeKeywords.includes(kw))
+            );
+
+            // 6. SATURDAY BOARD DISAMBIGUATION / PARLAY BUILDING
+            if (queryUpper.includes("SATURDAY")) {
                 let satGames = activeGamesDatabase.filter(g => {
                     if (g.commenceDate) return g.commenceDate.getDay() === 6;
                     return true;
@@ -1868,30 +1881,41 @@
 
                 if (satGames.length === 0) satGames = realUpcomingGames;
 
+                // SCOPED TENNESSEE PRIDE INSERTION
+                if (forceTennesseeBias && tnSportGames.length > 0) {
+                    satGames = [...tnSportGames, ...satGames.filter(g => !tnSportGames.includes(g))];
+                }
+
                 window.currentSearchGames = satGames;
                 let autoLegs = [];
+                let targetLegs = requestedLegsCount > 0 ? requestedLegsCount : 5;
 
-                satGames.slice(0, requestedLegsCount).forEach(g => {
-                    let gameTitle = g.matchup ? g.matchup.split('(')[0].trim() : "Saturday Matchup";
-                    autoLegs.push({ game: gameTitle, text: g.safeLeg || `${gameTitle} Cover Spread` });
+                satGames.forEach(g => {
+                    if (autoLegs.length < targetLegs) {
+                        let gameTitle = g.matchup ? g.matchup.split('(')[0].trim() : "Saturday Matchup";
+                        let isTN = g.keywords && g.keywords.some(kw => tennesseeKeywords.includes(kw));
+
+                        if (isTN && forceTennesseeBias) {
+                            if (isNFL) {
+                                autoLegs.push({ game: gameTitle, text: "Tennessee Titans +6.5 Cover Spread vs Colts (-110)" });
+                            } else {
+                                autoLegs.push({ game: gameTitle, text: "Tennessee Volunteers Moneyline Win (+285) vs Alabama" });
+                            }
+                        } else {
+                            autoLegs.push({ game: gameTitle, text: g.safeLeg || `${gameTitle} Cover Spread` });
+                        }
+                    }
                 });
 
                 window.activeLegsList = autoLegs;
-                renderActiveLegsResponse(`JIM'S SATURDAY MOST LIKELY ${autoLegs.length}-LEG PARLAY`);
-                playSpeech(`Generated your most likely ${autoLegs.length}-leg Saturday parlay across all games!`);
+                let headerTitle = forceTennesseeBias ? `🍊 TENNESSEE PRIDE: ${autoLegs.length}-LEG SATURDAY LOCK` : `JIM'S SATURDAY MOST LIKELY ${autoLegs.length}-LEG PARLAY`;
+                renderActiveLegsResponse(headerTitle);
+                playSpeech(`Generated your ${forceTennesseeBias ? 'Tennessee Pride ' : ''}${autoLegs.length}-leg Saturday parlay!`);
                 return;
             }
 
-            if (queryUpper.includes("SATURDAY") && !queryUpper.includes("VOLS") && !queryUpper.includes("ALABAMA") && !queryUpper.includes("TEXAS")) {
-                renderSaturdayGamesBoard("NCAA");
-                return;
-            }
-
+            // 7. SPECIFIC MATCHUP OR TIME SEARCH
             const isTonightQuery = queryUpper.includes("TONIGHT") || queryUpper.includes("TODAY") || queryUpper.includes("WEDNESDAY");
-
-            // 6. ATTEMPT LIVE API FETCH
-            let liveGames = await fetchLiveSportsbookOdds(queryUpper.includes("NFL") ? "americanfootball_nfl" : "americanfootball_ncaaf");
-            const activeGamesDatabase = (liveGames && liveGames.length > 0) ? liveGames : realUpcomingGames;
 
             let matchedGames = [];
 
@@ -1906,25 +1930,26 @@
                 );
             }
 
-            const forceTennesseeBias = window.isTennesseePrideActive || queryUpper.includes("FAVOR TN") || queryUpper.includes("FAVOUR TN") || queryUpper.includes("TENNESSEE PRIDE");
+            // FORCE SCOPED TENNESSEE INCLUSION IF PRIDE IS ON
+            if (forceTennesseeBias && tnSportGames.length > 0) {
+                matchedGames = [...tnSportGames, ...matchedGames.filter(g => !tnSportGames.includes(g))];
+            }
 
             if (matchedGames.length > 0) {
                 window.currentSearchGames = matchedGames;
 
                 let accumulatedLegs = [];
                 matchedGames.forEach(game => {
-                    const isTNGame = game.keywords.some(kw => ["VOLS", "TENNESSEE", "TITANS", "MTSU"].includes(kw));
+                    const isTNGame = game.keywords && game.keywords.some(kw => tennesseeKeywords.includes(kw));
 
                     if (isTNGame && forceTennesseeBias) {
-                        if (game.keywords.includes("VOLS")) {
+                        if (!isNFL) {
                             accumulatedLegs.push({ game: game.matchup.split('(')[0].trim(), text: "Tennessee Volunteers Moneyline Win (+285)" });
                             accumulatedLegs.push({ game: game.matchup.split('(')[0].trim(), text: "Tennessee Volunteers +8.5 Cover Spread vs Alabama (-108)" });
                             accumulatedLegs.push({ game: game.matchup.split('(')[0].trim(), text: "Nico Iamaleava 275+ Passing Yards & 2 TDs" });
-                        } else if (game.keywords.includes("TITANS")) {
+                        } else {
                             accumulatedLegs.push({ game: game.matchup.split('(')[0].trim(), text: "Tennessee Titans +6.5 Cover Spread at Colts (-110)" });
                             accumulatedLegs.push({ game: game.matchup.split('(')[0].trim(), text: "Calvin Ridley 70+ Receiving Yards & Anytime TD" });
-                        } else {
-                            accumulatedLegs.push({ game: game.matchup.split('(')[0].trim(), text: game.safeLeg });
                         }
                     } else {
                         let props = window.activeParlayMode === "SAFE" ? (game.safeProps || game.defaultLegs) : (game.unhingedProps || game.playerProps);
@@ -1935,27 +1960,6 @@
                 let targetCount = requestedLegsCount > 0 ? requestedLegsCount : accumulatedLegs.length;
                 let finalLegs = accumulatedLegs.slice(0, targetCount);
 
-                if (finalLegs.length < targetCount && matchedGames.length > 0) {
-                    let gameIdx = 0;
-                    while (finalLegs.length < targetCount) {
-                        let curGame = matchedGames[gameIdx % matchedGames.length];
-                        let pool = window.activeParlayMode === "SAFE" ? (curGame.safeProps || []) : (curGame.unhingedProps || []);
-                        let curTexts = finalLegs.map(l => l.text);
-                        let nextProp = pool.find(p => !curTexts.includes(p));
-
-                        if (!nextProp) {
-                            let extraIdx = finalLegs.length + 1;
-                            nextProp = `Team Total Points OVER ${20 + extraIdx}.5`;
-                        }
-
-                        finalLegs.push({
-                            game: curGame.matchup.split('(')[0].trim(),
-                            text: nextProp
-                        });
-                        gameIdx++;
-                    }
-                }
-
                 window.activeLegsList = finalLegs;
                 let headerTitle = forceTennesseeBias ? "🍊 TENNESSEE PRIDE LOCK SLIP" : `JIM'S ${finalLegs.length}-LINE ${window.activeParlayMode} PARLAY`;
                 renderActiveLegsResponse(headerTitle);
@@ -1963,7 +1967,7 @@
                 return;
             }
 
-            // FALLBACK MATCHUP FOR UNRECOGNIZED PROMPTS
+            // FALLBACK MATCHUP
             let teamName = rawInput.toUpperCase().replace('VS', 'VS.').replace('BET', '').replace('THINK ABOUT', '').trim();
             if (teamName.length > 25) teamName = teamName.substring(0, 25) + '...';
 
