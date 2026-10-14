@@ -1121,7 +1121,7 @@
                     Got a specific matchup or prop bet in mind? Type any team or game below for Big Jim's instantaneous analysis:
                 </p>
                 <div class="ask-jim-input-group">
-                    <input type="text" id="askJimInput" class="ask-jim-input" placeholder="e.g. 6 leg parlay for all of this weeks nfl games" onkeypress="if(event.key==='Enter') askBigJim()">
+                    <input type="text" id="askJimInput" class="ask-jim-input" placeholder="e.g. what games are happening on saturday" onkeypress="if(event.key==='Enter') askBigJim()">
                     <button class="ask-jim-btn" onclick="askBigJim()">ASK JIM ➔</button>
                 </div>
 
@@ -1234,7 +1234,7 @@
         window.isTennesseePrideActive = false;
         window.currentSearchGames = [];
 
-        // SOUNDBOARD & SPEECH ENGINE FIX
+        // SOUNDBOARD AUDIO ENGINE
         let currentAudio = null;
 
         function animateEq(btn, durationMs = 2000) {
@@ -1497,8 +1497,26 @@
             });
         }
 
-        // EXPANDED FALLBACK DATABASE FOR FULL SLATE WEEKEND MATCHUPS
+        // FALLBACK DATABASE WITH REAL SUNDAY NFL & SATURDAY NCAA MATCHUPS
         const realUpcomingGames = [
+            {
+                keywords: ["VOLS", "TENNESSEE VOLS", "VOLUNTEERS", "UT VOLS", "ALABAMA", "BAMA", "TENNESSEE", "TN"],
+                matchup: "#14 Tennessee Volunteers vs #6 Alabama Crimson Tide (Sat Oct 17, 3:30 PM ET - Neyland)",
+                odds: "+2200 SEC MONSTER",
+                commenceDate: new Date("2026-10-17T19:30:00Z"),
+                safeLeg: "Tennessee Volunteers +8.5 Cover Spread vs Alabama (-108)",
+                safeProps: [
+                    "Tennessee Volunteers +8.5 Cover Spread vs Alabama (-108)",
+                    "Game Total OVER 51.5 Points (-110)",
+                    "Braylon Staley OVER 35.5 Receiving Yards (-114)"
+                ],
+                unhingedProps: [
+                    "Tennessee Volunteers Moneyline Outright Win (+285)",
+                    "Nico Iamaleava 300+ Passing Yards & 3 TDs",
+                    "Braylon Staley 85+ Receiving Yards & Anytime TD"
+                ],
+                comment: "Third Saturday in October at Neyland Stadium!"
+            },
             {
                 keywords: ["TITANS", "TENNESSEE TITANS", "COLTS", "INDIANAPOLIS"],
                 matchup: "Tennessee Titans at Indianapolis Colts (Sun Oct 18, 1:00 PM ET)",
@@ -1518,6 +1536,40 @@
                 comment: "Titans traveling up to Indy! Line has Colts as -6.5 favorites."
             },
             {
+                keywords: ["ARMY", "BLACK KNIGHTS", "FLORIDA ATLANTIC", "FAU"],
+                matchup: "Florida Atlantic Owls at Army Black Knights (Sat Oct 17, 11:00 AM ET)",
+                odds: "+173 LIVE LINE",
+                commenceDate: new Date("2026-10-17T15:00:00Z"),
+                safeLeg: "Army Black Knights Moneyline Win vs Florida Atlantic",
+                safeProps: [
+                    "Army Black Knights Moneyline Win vs Florida Atlantic",
+                    "Game Total OVER 45.5 Points",
+                    "Cale Hellums 180+ Passing Yards"
+                ],
+                unhingedProps: [
+                    "Army Black Knights -10.5 Alternate Spread",
+                    "Cale Hellums 250+ Passing Yards & 3 TDs",
+                    "Brady Anderson 80+ Receiving Yards & Anytime TD"
+                ],
+                comment: "Army Black Knights at Michie Stadium!"
+            },
+            {
+                keywords: ["BOWLING GREEN", "FALCONS", "BALL STATE", "CARDINALS"],
+                matchup: "Ball State Cardinals at Bowling Green Falcons (Sat Oct 17, 11:00 AM ET)",
+                odds: "+136 LIVE LINE",
+                commenceDate: new Date("2026-10-17T15:00:00Z"),
+                safeLeg: "Bowling Green Falcons Moneyline Win vs Ball State",
+                safeProps: [
+                    "Bowling Green Falcons Moneyline Win vs Ball State",
+                    "Game Total OVER 48.5 Points"
+                ],
+                unhingedProps: [
+                    "Bowling Green -12.5 Alternate Spread",
+                    "Winn Sharp 90+ Receiving Yards & Anytime TD"
+                ],
+                comment: "MAC Conference Action!"
+            },
+            {
                 keywords: ["RAIDERS", "LAS VEGAS RAIDERS", "STEELERS", "PITTSBURGH"],
                 matchup: "Las Vegas Raiders at Pittsburgh Steelers (Sun Oct 18, 1:00 PM ET)",
                 odds: "+1150 AFC SHOWDOWN",
@@ -1533,75 +1585,6 @@
                     "Russell Wilson 275+ Passing Yards & 3 TDs"
                 ],
                 comment: "Steelers -4.5 favorites at home!"
-            },
-            {
-                keywords: ["CHIEFS", "KANSAS CITY", "49ERS", "SAN FRANCISCO"],
-                matchup: "Kansas City Chiefs at San Francisco 49ers (Sun Oct 18, 4:25 PM ET)",
-                odds: "+1850 MARQUEE BATTLE",
-                commenceDate: new Date("2026-10-18T20:25:00Z"),
-                safeLeg: "Kansas City Chiefs -1.5 Cover Spread at 49ers (-108)",
-                safeProps: [
-                    "Kansas City Chiefs -1.5 Cover Spread at 49ers (-108)",
-                    "Patrick Mahomes 250+ Passing Yards",
-                    "Game Total OVER 46.5 Points"
-                ],
-                unhingedProps: [
-                    "Travis Kelce 85+ Receiving Yards & 2 TDs",
-                    "Patrick Mahomes 350+ Passing Yards & 4 TDs"
-                ],
-                comment: "Super Bowl rematch in Santa Clara!"
-            },
-            {
-                keywords: ["EAGLES", "PHILADELPHIA", "COWBOYS", "DALLAS"],
-                matchup: "Philadelphia Eagles at Dallas Cowboys (Sun Oct 18, 8:20 PM ET)",
-                odds: "+1420 SUNDAY NIGHT FOOTBALL",
-                commenceDate: new Date("2026-10-18T20:20:00Z"),
-                safeLeg: "Philadelphia Eagles -3.5 Spread at Cowboys (-112)",
-                safeProps: [
-                    "Philadelphia Eagles -3.5 Spread at Cowboys (-112)",
-                    "Jalen Hurts 225+ Passing Yards & Anytime TD",
-                    "AJ Brown 70+ Receiving Yards"
-                ],
-                unhingedProps: [
-                    "AJ Brown 100+ Receiving Yards & 2 TDs",
-                    "Jalen Hurts 3+ Rushing Touchdowns"
-                ],
-                comment: "NFC East rivalry battle on Sunday Night!"
-            },
-            {
-                keywords: ["BILLS", "BUFFALO", "RAMS", "LOS ANGELES"],
-                matchup: "Buffalo Bills at LA Rams (Sun Oct 18, 4:05 PM ET)",
-                odds: "+1600 CROSS-CONFERENCE",
-                commenceDate: new Date("2026-10-18T20:05:00Z"),
-                safeLeg: "Buffalo Bills -3.5 Cover Spread at Rams (-110)",
-                safeProps: [
-                    "Buffalo Bills -3.5 Cover Spread at Rams (-110)",
-                    "Josh Allen 250+ Passing Yards",
-                    "Game Total OVER 49.5 Points"
-                ],
-                unhingedProps: [
-                    "Josh Allen 320+ Passing Yards & 4 TDs",
-                    "Bills Defense 5+ Sacks Recorded"
-                ],
-                comment: "Bills heading out West to SoFi Stadium!"
-            },
-            {
-                keywords: ["VOLS", "TENNESSEE VOLS", "VOLUNTEERS", "UT VOLS", "ALABAMA", "BAMA", "TENNESSEE", "TN"],
-                matchup: "#14 Tennessee Volunteers vs #6 Alabama Crimson Tide (Sat Oct 17, 3:30 PM ET - Neyland)",
-                odds: "+2200 SEC MONSTER",
-                commenceDate: new Date("2026-10-17T19:30:00Z"),
-                safeLeg: "Tennessee Volunteers +8.5 Cover Spread vs Alabama (-108)",
-                safeProps: [
-                    "Tennessee Volunteers +8.5 Cover Spread vs Alabama (-108)",
-                    "Game Total OVER 51.5 Points (-110)",
-                    "Braylon Staley OVER 35.5 Receiving Yards (-114)"
-                ],
-                unhingedProps: [
-                    "Tennessee Volunteers Moneyline Outright Win (+285)",
-                    "Nico Iamaleava 300+ Passing Yards & 3 TDs",
-                    "Braylon Staley 85+ Receiving Yards & Anytime TD"
-                ],
-                comment: "Third Saturday in October at Neyland Stadium!"
             }
         ];
 
@@ -1881,7 +1864,7 @@
             playSpeech(`Generated your custom parlay from your checked Saturday games!`);
         }
 
-        // GLOBAL SEARCH ENGINE WITH FULL SLATE TRAPPING & SPORT-SCOPED TENNESSEE PRIDE
+        // GLOBAL SEARCH ENGINE WITH STRICT INFORMATIONAL VS PARLAY ROUTING & TENNESSEE PRIDE
         async function askBigJim() {
             const rawInput = document.getElementById('askJimInput').value.trim();
             if (!rawInput) return;
@@ -1906,7 +1889,7 @@
                 quoteEl.innerHTML = `
                     <div style="margin-bottom: 0.5rem; color: #fff;">Big Jim recommends switching to Sunday Pro Football:</div>
                     <div class="choice-btn-group">
-                        <button class="choice-btn complexity-btn" onclick="triggerQuery('6 leg parlay for all of this weeks nfl games')">🏈 LOAD SUNDAY NFL SLATE</button>
+                        <button class="choice-btn complexity-btn" onclick="triggerQuery('8 leg parlay for sundays nfl games')">🏈 LOAD SUNDAY NFL SLATE</button>
                         <button class="choice-btn" onclick="renderSaturdayGamesBoard('NCAA')">🏈 VIEW SATURDAY NCAA BOARD</button>
                     </div>
                 `;
@@ -1929,8 +1912,16 @@
                 requestedLegsCount = parseInt(digitMatch[1], 10);
             }
 
-            // 5. DETERMINE REQUESTED SPORT & BROAD WEEKLY PHRASES
-            const isNFL = queryUpper.includes("NFL") || queryUpper.includes("TITANS") || queryUpper.includes("SUNDAY") || queryUpper.includes("THIS WEEKS") || queryUpper.includes("THIS WEEK");
+            // 5. CHECK INFORMATIONAL INTENT ("WHAT GAMES ARE HAPPENING ON SATURDAY")
+            const isInformationalQuery = (queryUpper.includes("WHAT GAMES") || queryUpper.includes("WHATS HAPPENING") || queryUpper.includes("GAMES ARE HAPPENING") || queryUpper.includes("SHOW GAMES") || queryUpper.includes("LIST GAMES")) && requestedLegsCount === 0;
+
+            if (isInformationalQuery && queryUpper.includes("SATURDAY")) {
+                renderSaturdayGamesBoard(queryUpper.includes("NFL") ? "NFL" : "NCAA");
+                return;
+            }
+
+            // 6. DETERMINE REQUESTED SPORT (NCAA VS NFL)
+            const isNFL = queryUpper.includes("NFL") || queryUpper.includes("TITANS") || queryUpper.includes("SUNDAY");
             const requestedApiKey = isNFL ? "americanfootball_nfl" : "americanfootball_ncaaf";
 
             let liveGames = await fetchLiveSportsbookOdds(requestedApiKey);
@@ -1944,11 +1935,16 @@
                 g.keywords && g.keywords.some(kw => tennesseeKeywords.includes(kw))
             );
 
-            // 6. BROAD WEEKLY / SUNDAY / SATURDAY SLATE GENERATOR (PREVENTS FALLBACK SHORT-CIRCUIT)
-            const isBroadSlateQuery = queryUpper.includes("SUNDAY") || queryUpper.includes("SATURDAY") || queryUpper.includes("WEEK") || queryUpper.includes("WEEKS") || queryUpper.includes("ALL GAMES");
+            // 7. SPECIFIC MATCHUP / TEAM SEARCH
+            let matchedGames = activeGamesDatabase.filter(game => 
+                game.keywords && game.keywords.some(kw => queryUpper.includes(kw))
+            );
 
-            if (isBroadSlateQuery) {
-                let slateGames = activeGamesDatabase;
+            // 8. DAY SLATE / PARLAY GENERATOR ROUTE
+            const isDaySlateQuery = queryUpper.includes("SUNDAY") || queryUpper.includes("SATURDAY") || queryUpper.includes("WEEK") || queryUpper.includes("PARLAY");
+
+            if (isDaySlateQuery || matchedGames.length > 0) {
+                let slateGames = matchedGames.length > 0 ? matchedGames : activeGamesDatabase;
 
                 if (queryUpper.includes("SATURDAY")) {
                     slateGames = activeGamesDatabase.filter(g => !g.commenceDate || g.commenceDate.getDay() === 6);
@@ -1958,7 +1954,7 @@
 
                 if (slateGames.length === 0) slateGames = realUpcomingGames;
 
-                // MANDATORY TENNESSEE PRIDE PRIORITIZATION
+                // MANDATORY TENNESSEE PRIDE PRIORITIZATION INTO LEG 1
                 if (forceTennesseeBias && tnSportGames.length > 0) {
                     slateGames = [...tnSportGames, ...slateGames.filter(g => !tnSportGames.includes(g))];
                 }
@@ -1999,58 +1995,15 @@
                 return;
             }
 
-            // 7. SPECIFIC MATCHUP / TEAM SEARCH
-            let matchedGames = activeGamesDatabase.filter(game => 
-                game.keywords && game.keywords.some(kw => queryUpper.includes(kw))
-            );
-
-            if (forceTennesseeBias && tnSportGames.length > 0) {
-                matchedGames = [...tnSportGames, ...matchedGames.filter(g => !tnSportGames.includes(g))];
-            }
-
-            if (matchedGames.length > 0) {
-                window.currentSearchGames = matchedGames;
-
-                let accumulatedLegs = [];
-                matchedGames.forEach(game => {
-                    const isTNGame = game.keywords && game.keywords.some(kw => tennesseeKeywords.includes(kw));
-
-                    if (isTNGame && forceTennesseeBias) {
-                        if (!isNFL) {
-                            accumulatedLegs.push({ game: game.matchup.split('(')[0].trim(), text: "Tennessee Volunteers Moneyline Win (+285)" });
-                            accumulatedLegs.push({ game: game.matchup.split('(')[0].trim(), text: "Tennessee Volunteers +8.5 Cover Spread vs Alabama (-108)" });
-                            accumulatedLegs.push({ game: game.matchup.split('(')[0].trim(), text: "Nico Iamaleava 275+ Passing Yards & 2 TDs" });
-                        } else {
-                            accumulatedLegs.push({ game: game.matchup.split('(')[0].trim(), text: "Tennessee Titans +6.5 Cover Spread at Colts (-110)" });
-                            accumulatedLegs.push({ game: game.matchup.split('(')[0].trim(), text: "Calvin Ridley 70+ Receiving Yards & Anytime TD" });
-                        }
-                    } else {
-                        let props = window.activeParlayMode === "SAFE" ? (game.safeProps || game.defaultLegs) : (game.unhingedProps || game.playerProps);
-                        props.forEach(p => accumulatedLegs.push({ game: game.matchup.split('(')[0].trim(), text: p }));
-                    }
-                });
-
-                let targetCount = requestedLegsCount > 0 ? requestedLegsCount : accumulatedLegs.length;
-                let finalLegs = accumulatedLegs.slice(0, targetCount);
-
-                window.activeLegsList = finalLegs;
-                let headerTitle = forceTennesseeBias ? "🍊 TENNESSEE PRIDE LOCK SLIP" : `JIM'S ${finalLegs.length}-LINE ${window.activeParlayMode} PARLAY`;
-                renderActiveLegsResponse(headerTitle);
-                playSpeech(`Generated your ${finalLegs.length}-leg parlay!`);
-                return;
-            }
-
-            // FALLBACK FOR UNMATCHED SPECIFIC TERMS
+            // FALLBACK MATCHUP FOR UNMATCHED RAW PHRASES
             let fallbackTitle = isNFL ? "SUNDAY NFL SLATE" : "SATURDAY NCAA SLATE";
 
             window.activeLegsList = [
                 { game: "Tennessee Titans vs Indianapolis Colts", text: "Tennessee Titans +6.5 Cover Spread (-110)" },
                 { game: "Kansas City Chiefs at San Francisco 49ers", text: "Kansas City Chiefs -1.5 Cover Spread (-108)" },
                 { game: "Philadelphia Eagles at Dallas Cowboys", text: "Philadelphia Eagles -3.5 Spread (-112)" },
-                { game: "Buffalo Bills at LA Rams", text: "Buffalo Bills -3.5 Cover Spread (-110)" },
-                { game: "Las Vegas Raiders at Pittsburgh Steelers", text: "Pittsburgh Steelers Moneyline Win (-210)" },
-                { game: "Kansas City Chiefs at San Francisco 49ers", text: "Patrick Mahomes 250+ Passing Yards" }
-            ].slice(0, requestedLegsCount > 0 ? requestedLegsCount : 6);
+                { game: "Buffalo Bills at LA Rams", text: "Buffalo Bills -3.5 Cover Spread (-110)" }
+            ].slice(0, requestedLegsCount > 0 ? requestedLegsCount : 4);
 
             renderActiveLegsResponse(`JIM'S ${fallbackTitle} PARLAY`);
             playSpeech(`Generated your custom parlay slip!`);
