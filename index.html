@@ -1121,7 +1121,7 @@
                     Got a specific matchup or prop bet in mind? Type any team or game below for Big Jim's instantaneous analysis:
                 </p>
                 <div class="ask-jim-input-group">
-                    <input type="text" id="askJimInput" class="ask-jim-input" placeholder="e.g. 5 legs parlay for tonights ncaa games" onkeypress="if(event.key==='Enter') askBigJim()">
+                    <input type="text" id="askJimInput" class="ask-jim-input" placeholder="e.g. 5 leg parlay for saturdays college football games" onkeypress="if(event.key==='Enter') askBigJim()">
                     <button class="ask-jim-btn" onclick="askBigJim()">ASK JIM ➔</button>
                 </div>
 
@@ -1372,6 +1372,17 @@
                     });
                 }
 
+                // DYNAMIC NAMED PLAYER PROPS BUILDER
+                let qbName = "Starting QB";
+                let wrName = "Primary Receiver";
+
+                if (homeTeam.includes("Army") || awayTeam.includes("Army")) { qbName = "Cale Hellums"; wrName = "Brady Anderson"; }
+                else if (homeTeam.includes("Bowling Green") || awayTeam.includes("Bowling Green")) { qbName = "Jarin Mock"; wrName = "Winn Sharp"; }
+                else if (homeTeam.includes("Tennessee") || awayTeam.includes("Tennessee")) { qbName = "Nico Iamaleava"; wrName = "Braylon Staley"; }
+                else if (homeTeam.includes("Titans") || awayTeam.includes("Titans")) { qbName = "Will Levis"; wrName = "Calvin Ridley"; }
+                else if (homeTeam.includes("Texas") || awayTeam.includes("Texas")) { qbName = "Quinn Ewers"; wrName = "Johntay Cook"; }
+                else if (homeTeam.includes("Ohio State") || awayTeam.includes("Ohio State")) { qbName = "Will Howard"; wrName = "Jeremiah Smith"; }
+
                 return {
                     league: leagueTitle,
                     commenceDate: gameDate,
@@ -1383,20 +1394,20 @@
                         `${spread || 'Cover Spread'}`,
                         `${total || 'Over Points Total'}`,
                         `${homeTeam} Team Total OVER 20.5 Points`,
-                        `Running Back 50+ Rushing Yards`
+                        `${qbName} 225+ Passing Yards`
                     ],
                     unhingedProps: [
                         `${homeTeam} Outright Win Moneyline`,
-                        `Starting QB 300+ Passing Yards & 3 TDs`,
-                        `Primary Receiver 90+ Yards & Anytime TD`,
+                        `${qbName} 300+ Passing Yards & 3 TDs`,
+                        `${wrName} 85+ Receiving Yards & Anytime TD`,
                         `Game Total OVER 62.5 Points`
                     ],
                     playerProps: [
                         `${spread || 'Cover Spread'}`,
                         `${total || 'Over Points Total'}`,
                         `${homeTeam} Team Total OVER 24.5 Points`,
-                        `Primary Receiver 75+ Receiving Yards & Anytime TD`,
-                        `Starting QB 250+ Passing Yards & 2 TDs`
+                        `${wrName} 75+ Receiving Yards & Anytime TD`,
+                        `${qbName} 250+ Passing Yards & 2 TDs`
                     ],
                     defaultLegs: [
                         `${spread || 'Cover Spread'}`,
@@ -1413,8 +1424,46 @@
             });
         }
 
-        // FALLBACK DATABASE WITH REAL TONIGHT / WEDNESDAY MATCHUPS (OCTOBER 14, 2026)
+        // FALLBACK DATABASE WITH REAL TONIGHT / WEDNESDAY & SATURDAY MATCHUPS (OCTOBER 2026)
         const realUpcomingGames = [
+            {
+                keywords: ["ARMY", "BLACK KNIGHTS", "FLORIDA ATLANTIC", "FAU"],
+                matchup: "Florida Atlantic Owls at Army Black Knights (Sat Oct 17, 11:00 AM ET)",
+                odds: "+173 LIVE LINE",
+                commenceDate: new Date("2026-10-17T15:00:00Z"),
+                safeLeg: "Army Black Knights Moneyline Win vs Florida Atlantic",
+                safeProps: [
+                    "Army Black Knights Moneyline Win vs Florida Atlantic",
+                    "Game Total OVER 45.5 Points",
+                    "Cale Hellums 180+ Passing Yards",
+                    "Army Team Total OVER 24.5 Points"
+                ],
+                unhingedProps: [
+                    "Army Black Knights -10.5 Alternate Spread",
+                    "Cale Hellums 250+ Passing Yards & 3 TDs",
+                    "Brady Anderson 80+ Receiving Yards & Anytime TD",
+                    "Game Total OVER 58.5 Points"
+                ],
+                comment: "Army Black Knights at Michie Stadium!"
+            },
+            {
+                keywords: ["BOWLING GREEN", "FALCONS", "BALL STATE", "CARDINALS"],
+                matchup: "Ball State Cardinals at Bowling Green Falcons (Sat Oct 17, 11:00 AM ET)",
+                odds: "+136 LIVE LINE",
+                commenceDate: new Date("2026-10-17T15:00:00Z"),
+                safeLeg: "Bowling Green Falcons Moneyline Win vs Ball State",
+                safeProps: [
+                    "Bowling Green Falcons Moneyline Win vs Ball State",
+                    "Game Total OVER 48.5 Points",
+                    "Jarin Mock 200+ Passing Yards"
+                ],
+                unhingedProps: [
+                    "Bowling Green -12.5 Alternate Spread",
+                    "Winn Sharp 90+ Receiving Yards & Anytime TD",
+                    "Jarin Mock 300+ Passing Yards & 3 TDs"
+                ],
+                comment: "MAC Conference Action!"
+            },
             {
                 keywords: ["KENNESAW", "MISSOURI STATE", "KENNESAW STATE", "OWLS", "BEARS", "TONIGHT", "WEDNESDAY"],
                 matchup: "Kennesaw State Owls at Missouri State Bears (Wed Oct 14, 7:30 PM ET - CBSSN)",
@@ -1432,16 +1481,7 @@
                     "Rickie Collins 250+ Passing Yards & 3 Touchdowns",
                     "Game Total OVER 62.5 Points"
                 ],
-                playerProps: [
-                    "Kennesaw State -3.5 Spread at Missouri State (+100)",
-                    "Game Total OVER 51.5 Points (-118)",
-                    "Rickie Collins 225+ Passing Yards"
-                ],
-                defaultLegs: [
-                    "Kennesaw State -3.5 Spread at Plaster Stadium (+100)",
-                    "Game Total OVER 51.5 Points (-118)"
-                ],
-                comment: "Wednesday CUSA action in Springfield, MO! Kennesaw State comes in as -3.5 favorites."
+                comment: "Wednesday CUSA action in Springfield, MO!"
             },
             {
                 keywords: ["WKU", "WESTERN KENTUCKY", "SAM HOUSTON", "BEARKATS", "HILLTOPPERS", "TONIGHT", "WEDNESDAY"],
@@ -1452,23 +1492,13 @@
                 safeProps: [
                     "Western Kentucky -1.5 Spread at Sam Houston (-104)",
                     "Game Total OVER 53.5 Points (-108)",
-                    "Alton McCaskill 65+ Rushing Yards & Anytime TD",
-                    "WKU Quarterback 250+ Passing Yards"
+                    "Alton McCaskill 65+ Rushing Yards & Anytime TD"
                 ],
                 unhingedProps: [
                     "WKU Quarterback 350+ Passing Yards & 4 TDs",
-                    "Game Total OVER 64.5 Points",
-                    "WKU -8.5 Alternate Spread"
+                    "Game Total OVER 64.5 Points"
                 ],
-                playerProps: [
-                    "Western Kentucky -1.5 Spread at Sam Houston (-104)",
-                    "Game Total OVER 53.5 Points (-108)"
-                ],
-                defaultLegs: [
-                    "Western Kentucky -1.5 Spread at Sam Houston (-104)",
-                    "Game Total OVER 53.5 Points (-108)"
-                ],
-                comment: "Wednesday night CUSA clash at Bowers Stadium in Huntsville, TX! WKU is a tight -1.5 road favorite."
+                comment: "Wednesday night CUSA clash!"
             },
             {
                 keywords: ["VOLS", "TENNESSEE VOLS", "VOLUNTEERS", "UT VOLS", "ALABAMA", "BAMA", "TENNESSEE", "TENNESSE", "TENESSEE", "TENESSE", "TN", "UT"],
@@ -1486,51 +1516,9 @@
                     "Tennessee Volunteers Moneyline Outright Win (+285)",
                     "DeSean Bishop 80+ Rushing Yards & Anytime TD",
                     "Nico Iamaleava 300+ Passing Yards & 3 TDs",
-                    "Total Team Touchdowns OVER 3.5 (+120)"
+                    "Braylon Staley 85+ Receiving Yards & Anytime TD"
                 ],
-                playerProps: [
-                    "Tennessee Volunteers +8.5 Cover Spread vs Alabama (-108)",
-                    "Game Total OVER 51.5 Points (-110)"
-                ],
-                defaultLegs: [
-                    "Tennessee Volunteers +8.5 Cover Spread vs Alabama (-108)",
-                    "Game Total OVER 51.5 Points (-110)"
-                ],
-                comment: "Third Saturday in October at Neyland Stadium! Line has Tennessee +8.5 with a 51.5 over/under."
-            },
-            {
-                keywords: ["TEXAS", "LONGHORNS", "FLORIDA", "GATORS"],
-                matchup: "Florida Gators at #7 Texas Longhorns (Sat Oct 17, 12:00 PM ET - ABC)",
-                odds: "+1450 SEC LOCK",
-                commenceDate: new Date("2026-10-17T16:00:00Z"),
-                safeLeg: "Texas Longhorns -10.5 Cover Spread vs Florida (-110)",
-                safeProps: [
-                    "Texas Longhorns -10.5 Cover Spread vs Florida (-110)",
-                    "Quinn Ewers 250+ Passing Yards",
-                    "Game Total OVER 54.5 Points"
-                ],
-                unhingedProps: [
-                    "Texas Longhorns -21.5 Alternate Spread",
-                    "Quinn Ewers 350+ Passing Yards & 4 TDs"
-                ],
-                comment: "SEC matchup in Austin! Texas favored by -10.5."
-            },
-            {
-                keywords: ["OHIO STATE", "BUCKEYES", "INDIANA", "HOOSIERS"],
-                matchup: "#4 Ohio State Buckeyes at #5 Indiana Hoosiers (Sat Oct 17, 12:00 PM ET - FOX)",
-                odds: "+1850 BIG TEN MARQUEE",
-                commenceDate: new Date("2026-10-17T16:00:00Z"),
-                safeLeg: "Ohio State Buckeyes -3.5 Cover Spread at Indiana (-112)",
-                safeProps: [
-                    "Ohio State Buckeyes -3.5 Cover Spread at Indiana (-112)",
-                    "Will Howard 240+ Passing Yards",
-                    "Game Total OVER 52.5 Points"
-                ],
-                unhingedProps: [
-                    "Ohio State -10.5 Alternate Cover Spread",
-                    "Game Total OVER 65.5 Points"
-                ],
-                comment: "Top 5 Big Ten clash! Ohio State -3.5 favorites."
+                comment: "Third Saturday in October at Neyland Stadium!"
             }
         ];
 
@@ -1581,7 +1569,7 @@
 
                 window.activeLegsList = unhingedLegs;
                 renderActiveLegsResponse(`🎲 UNHINGED ${window.activeLegsList.length}-LINE MEGA PARLAY`);
-                playSpeech(`Unhinged mode activated! Automatically stacked wild props!`);
+                playSpeech(`Unhinged mode activated! Automatically stacked wild props with named players!`);
 
             } else {
                 window.activeLegsList = [];
@@ -1634,6 +1622,7 @@
             playSpeech(`Expanded your slip to a ${window.activeLegsList.length}-line ${window.activeParlayMode.toLowerCase()} parlay!`);
         }
 
+        // ACCURATE STRICTLY CAPPED SIMPLIFIER (MAX 3-4 LEGS OF MONEYLINES / SPREADS ONLY)
         function simplifyParlayLegs() {
             if (!window.currentSearchGames || window.currentSearchGames.length === 0) {
                 window.currentSearchGames = [realUpcomingGames[0]];
@@ -1642,14 +1631,18 @@
             let games = window.currentSearchGames;
             window.activeLegsList = [];
 
-            games.forEach(game => {
+            // Strictly cap at a max of 3 to 4 legs max
+            let capCount = Math.min(games.length, 4);
+
+            for (let i = 0; i < capCount; i++) {
+                let game = games[i];
                 let mainLeg = game.safeLeg || (game.defaultLegs ? game.defaultLegs[0] : "Moneyline Win");
                 let gameTitle = game.matchup ? game.matchup.split('(')[0].trim() : "Active Game";
                 window.activeLegsList.push({ game: gameTitle, text: mainLeg });
-            });
+            }
 
-            renderActiveLegsResponse(`🎯 SIMPLIFIED CLEAN WINNER SLIP`);
-            playSpeech(`Simplified back to a clean winner slip!`);
+            renderActiveLegsResponse(`🎯 SIMPLIFIED ${window.activeLegsList.length}-LEG CLEAN WINNER SLIP`);
+            playSpeech(`Simplified down to a clean ${window.activeLegsList.length}-leg moneyline and spread winner slip!`);
         }
 
         function renderActiveLegsResponse(customTitle = "") {
@@ -1808,7 +1801,7 @@
             playSpeech(`Generated your custom parlay from your checked Saturday games!`);
         }
 
-        // GLOBAL SEARCH ENGINE WITH SPORT-SCOPED TENNESSEE PRIDE
+        // GLOBAL SEARCH ENGINE WITH SPORT-SCOPED TENNESSEE PRIDE & GUARANTEED LEG 1 INJECTION
         async function askBigJim() {
             const rawInput = document.getElementById('askJimInput').value.trim();
             if (!rawInput) return;
@@ -1860,13 +1853,12 @@
             const isNFL = queryUpper.includes("NFL") || queryUpper.includes("TITANS") || queryUpper.includes("SUNDAY");
             const requestedApiKey = isNFL ? "americanfootball_nfl" : "americanfootball_ncaaf";
 
-            // Attempt Live API Fetch for the specific requested sport
             let liveGames = await fetchLiveSportsbookOdds(requestedApiKey);
             let activeGamesDatabase = (liveGames && liveGames.length > 0) ? liveGames : realUpcomingGames;
 
             const forceTennesseeBias = window.isTennesseePrideActive || queryUpper.includes("FAVOR TN") || queryUpper.includes("FAVOUR TN") || queryUpper.includes("TENNESSEE PRIDE");
 
-            // SPORT-SCOPED TENNESSEE PRIDE SCANNER (STRICTLY NCAA FOR NCAA, NFL FOR NFL)
+            // SPORT-SCOPED TENNESSEE PRIDE SCANNER
             let tennesseeKeywords = isNFL ? ["TITANS"] : ["VOLS", "TENNESSEE", "VOLUNTEERS", "MTSU"];
             let tnSportGames = activeGamesDatabase.filter(g => 
                 g.keywords && g.keywords.some(kw => tennesseeKeywords.includes(kw))
@@ -1881,7 +1873,7 @@
 
                 if (satGames.length === 0) satGames = realUpcomingGames;
 
-                // SCOPED TENNESSEE PRIDE INSERTION
+                // MANDATORY GUARANTEE: SCOPED TENNESSEE MATCHUP MOVES TO TOP OF ARRAY FIRST
                 if (forceTennesseeBias && tnSportGames.length > 0) {
                     satGames = [...tnSportGames, ...satGames.filter(g => !tnSportGames.includes(g))];
                 }
