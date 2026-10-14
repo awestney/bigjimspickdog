@@ -480,6 +480,17 @@
             color: #000;
         }
 
+        .complexity-btn {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: #000 !important;
+            font-weight: 800;
+        }
+
+        .complexity-btn.simplify {
+            background: linear-gradient(135deg, #ff4b1f 0%, #ff9068 100%);
+            color: #fff !important;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-5px); }
             to { opacity: 1; transform: translateY(0); }
@@ -1024,7 +1035,7 @@
                     Got a specific matchup or prop bet in mind? Type any team or game below for Big Jim's instantaneous analysis:
                 </p>
                 <div class="ask-jim-input-group">
-                    <input type="text" id="askJimInput" class="ask-jim-input" placeholder="e.g. tonight, Sam Houston & Tennessee favored, Delaware, Sunday" onkeypress="if(event.key==='Enter') askBigJim()">
+                    <input type="text" id="askJimInput" class="ask-jim-input" placeholder="e.g. Sam Houston and Tennessee 4 leg parlay with player props" onkeypress="if(event.key==='Enter') askBigJim()">
                     <button class="ask-jim-btn" onclick="askBigJim()">ASK JIM ➔</button>
                 </div>
 
@@ -1374,13 +1385,19 @@
             }, 800);
         }
 
-        // REAL UPCOMING GAMES DATABASE WITH REAL SPORTSBOOK ODDS (OCTOBER 2026)
+        // EXPANDED REAL UPCOMING GAMES DATABASE WITH SAME GAME PROPS (OCTOBER 2026)
         const realUpcomingGames = [
             {
                 keywords: ["KENNESAW", "MISSOURI STATE", "KENNESAW STATE", "BEARS", "OWLS"],
                 matchup: "Kennesaw State Owls at Missouri State Bears (Wed Oct 14, 7:30 PM ET - CBSSN)",
                 odds: "+190 CUSA LOCK",
                 safeLeg: "Kennesaw State Moneyline Win at Missouri State (-156 Odds)",
+                playerProps: [
+                    "Rickie Collins 225+ Passing Yards",
+                    "Kennesaw State RB 75+ Rushing Yards & Anytime TD",
+                    "Missouri State QB 1+ Interception Thrown",
+                    "Game Total OVER 51.5 Points"
+                ],
                 defaultLegs: [
                     "Kennesaw State -3.5 Spread at Plaster Stadium (Odds: +100)",
                     "Game Total OVER 51.5 Points (Odds: -118)",
@@ -1398,7 +1415,13 @@
                 matchup: "Western Kentucky Hilltoppers at Sam Houston Bearkats (Wed Oct 14, 8:00 PM ET - ESPN)",
                 odds: "+220 WEDNESDAY NIGHT LOCK",
                 safeLeg: "Western Kentucky Moneyline Win at Sam Houston (-115 Odds)",
-                favoredOppositeLeg: "Sam Houston State +1.5 Spread at Home (-105 Odds)",
+                favoredOppositeLeg: "Sam Houston State +1.5 Cover Spread at Home (-105 Odds)",
+                playerProps: [
+                    "Alton McCaskill 65+ Rushing Yards & Anytime TD",
+                    "WKU Quarterback 275+ Passing Yards & 2 TDs",
+                    "Sam Houston RB 50+ Rushing Yards",
+                    "Game Total OVER 53.5 Points"
+                ],
                 defaultLegs: [
                     "Western Kentucky -1.5 Spread at Sam Houston (Odds: -104)",
                     "Game Total OVER 53.5 Points (Odds: -108)",
@@ -1417,6 +1440,12 @@
                 odds: "+2200 SEC MONSTER",
                 safeLeg: "Tennessee Volunteers Moneyline Outright Win (+260 Odds)",
                 favoredOppositeLeg: "Tennessee Volunteers +9.5 Cover Spread at Neyland Stadium (-110 Odds)",
+                playerProps: [
+                    "DeSean Bishop 80+ Rushing Yards & Anytime TD",
+                    "Nico Iamaleava 275+ Passing Yards & 2+ Touchdowns",
+                    "Mike Matthews 60+ Receiving Yards",
+                    "Tennessee Offense 30+ Total Points"
+                ],
                 defaultLegs: [
                     "Tennessee Volunteers +9.5 Cover Spread vs Alabama",
                     "Game Total OVER 62.5 Points",
@@ -1435,6 +1464,11 @@
                 odds: "+1250 DIVISIONAL LOCK",
                 safeLeg: "Indianapolis Colts Moneyline Win vs Titans (-330 Odds)",
                 favoredOppositeLeg: "Tennessee Titans +6.5 Cover Spread at Indy (-110 Odds)",
+                playerProps: [
+                    "Calvin Ridley 70+ Receiving Yards & Anytime TD",
+                    "Will Levis 225+ Passing Yards",
+                    "Colts RB 85+ Rushing Yards"
+                ],
                 defaultLegs: [
                     "Indianapolis Colts -6.5 Spread vs Titans (Odds: -120)",
                     "Game Total OVER 43.5 Points (Odds: -115)",
@@ -1452,6 +1486,11 @@
                 matchup: "Seattle Seahawks at Denver Broncos (TNF - Oct 15, 8:15 PM ET)",
                 odds: "+1450 MEGA-LOCK",
                 safeLeg: "Seattle Seahawks Moneyline Win at Broncos (-155 Odds)",
+                playerProps: [
+                    "DK Metcalf 85+ Receiving Yards & Anytime TD",
+                    "Geno Smith 260+ Passing Yards",
+                    "Bo Nix 1+ Interception Thrown"
+                ],
                 defaultLegs: [
                     "Seattle Seahawks -3.0 Spread at Broncos (Odds: -105)",
                     "Game Total OVER 40.5 Points (Odds: -110)",
@@ -1469,6 +1508,11 @@
                 matchup: "Dallas Cowboys at Green Bay Packers (SNF - Oct 18, 8:20 PM ET)",
                 odds: "+1800 UNHINGED SLIP",
                 safeLeg: "Green Bay Packers Moneyline Win vs Cowboys (-125 Odds)",
+                playerProps: [
+                    "CeeDee Lamb 90+ Receiving Yards & Anytime TD",
+                    "Jordan Love 275+ Passing Yards & 2 TDs",
+                    "Dak Prescott 250+ Passing Yards"
+                ],
                 defaultLegs: [
                     "Green Bay Packers -1.5 Spread vs Cowboys (Odds: -102)",
                     "Game Total OVER 52.5 Points (Odds: -115)",
@@ -1486,6 +1530,11 @@
                 matchup: "LA Chargers at Kansas City Chiefs (Sunday Oct 18, 4:25 PM ET)",
                 odds: "+1150 SURE THING",
                 safeLeg: "Kansas City Chiefs Moneyline Win vs Chargers (-440 Odds)",
+                playerProps: [
+                    "Patrick Mahomes 285+ Passing Yards & 2 TDs",
+                    "Travis Kelce 65+ Receiving Yards & Anytime TD",
+                    "Isiah Pacheco 70+ Rushing Yards"
+                ],
                 defaultLegs: [
                     "Kansas City Chiefs -8.5 Spread vs Chargers (Odds: -105)",
                     "Game Total OVER 42.5 Points (Odds: -108)",
@@ -1517,6 +1566,69 @@
             generateScopedUnhingedSlip(shuffled, "WEEKLY TOP");
         }
 
+        // DYNAMICALLY EXPAND LEGS (BUILD DEEP SAME-GAME PARLAY)
+        function expandParlayLegs() {
+            if (!window.currentSearchGames || window.currentSearchGames.length === 0) {
+                window.currentSearchGames = realUpcomingGames;
+            }
+
+            let games = window.currentSearchGames;
+            let legsHtml = "";
+            let legCount = 0;
+
+            games.forEach(game => {
+                // Leg 1: Moneyline/Spread
+                let mainLeg = game.favoredTeamLeg || game.safeLeg;
+                legsHtml += `<li><span class="leg-icon">✅</span> <strong>${game.matchup.split('(')[0].trim()}</strong>: ${mainLeg}</li>`;
+                legCount++;
+
+                // Leg 2, 3, 4: Same Game Player Props & Totals
+                if (game.playerProps && game.playerProps.length > 0) {
+                    game.playerProps.forEach(prop => {
+                        legsHtml += `<li><span class="leg-icon">🎯</span> <strong>${game.matchup.split('(')[0].trim()} Prop</strong>: ${prop}</li>`;
+                        legCount++;
+                    });
+                }
+            });
+
+            const responseBox = document.getElementById('askJimResponse');
+            document.getElementById('aiResponseTitle').textContent = `🔥 DEEP ${legCount}-LINE SAME-GAME PARLAY`;
+            document.getElementById('aiResponseOdds').textContent = `+${legCount * 750} EXPANDED SLIP`;
+            document.getElementById('aiResponseLegs').innerHTML = legsHtml;
+            document.getElementById('aiResponseQuote').textContent = `"Added player rushing props, passing totals, and touchdown scorers for every match! Full ${legCount}-line same-game parlay locked in!"`;
+            document.getElementById('aiResponseConfidence').textContent = "140% MAX EXCITEMENT";
+            document.getElementById('aiResponseMeter').style.width = '100%';
+            responseBox.style.display = 'block';
+
+            playSpeech(`Expanded your slip to a ${legCount}-line same-game player prop parlay!`);
+        }
+
+        // DYNAMICALLY SIMPLIFY LEGS
+        function simplifyParlayLegs() {
+            if (!window.currentSearchGames || window.currentSearchGames.length === 0) {
+                window.currentSearchGames = realUpcomingGames;
+            }
+
+            let games = window.currentSearchGames;
+            let legsHtml = "";
+
+            games.forEach(game => {
+                let mainLeg = game.favoredTeamLeg || game.safeLeg;
+                legsHtml += `<li><span class="leg-icon">✅</span> <strong>${game.matchup.split('(')[0].trim()}</strong>: ${mainLeg}</li>`;
+            });
+
+            const responseBox = document.getElementById('askJimResponse');
+            document.getElementById('aiResponseTitle').textContent = `🎯 SIMPLIFIED CLEAN MONEYLINE SLIP`;
+            document.getElementById('aiResponseOdds').textContent = "+175 CLEAN LOCK";
+            document.getElementById('aiResponseLegs').innerHTML = legsHtml;
+            document.getElementById('aiResponseQuote').textContent = `"Simplified back to a clean 1-to-1 moneyline and spread winner slip!"`;
+            document.getElementById('aiResponseConfidence').textContent = "95% HIGH PROBABILITY";
+            document.getElementById('aiResponseMeter').style.width = '95%';
+            responseBox.style.display = 'block';
+
+            playSpeech(`Simplified back to a clean winner slip!`);
+        }
+
         // SCOPED SAFE WINNER SLIP BUILDER
         function generateScopedSafeSlip(gamesList, contextLabel) {
             if (!gamesList || gamesList.length === 0) gamesList = realUpcomingGames;
@@ -1531,7 +1643,7 @@
             document.getElementById('aiResponseTitle').textContent = `🎯 ${contextLabel} SAFE WINNER SLIP`;
             document.getElementById('aiResponseOdds').textContent = "+180 LOW-RISK PARLAY";
             document.getElementById('aiResponseLegs').innerHTML = legsHtml;
-            document.getElementById('aiResponseQuote').textContent = `"Strictly scoped to your requested games! Low-risk, heavy market favorites stacked into a clean winning slip!"`;
+            document.getElementById('aiResponseQuote').textContent = `"Strictly scoped to your requested search games! Low-risk, heavy market favorites stacked into a clean winning slip!"`;
             document.getElementById('aiResponseConfidence').textContent = "95% HIGH PROBABILITY";
             document.getElementById('aiResponseMeter').style.width = '95%';
             responseBox.style.display = 'block';
@@ -1561,7 +1673,7 @@
             playSpeech(`God damn! Here is your crazy unhinged parlay scoped to ${contextLabel.toLowerCase()}!`);
         }
 
-        // MULTI-ENTITY PARSER ENGINE
+        // ADVANCED MULTI-ENTITY & SAME-GAME PARLAY ENGINE
         function askBigJim() {
             const rawInput = document.getElementById('askJimInput').value.trim();
             if (!rawInput) return;
@@ -1575,9 +1687,11 @@
             const confEl = document.getElementById('aiResponseConfidence');
             const meterEl = document.getElementById('aiResponseMeter');
 
+            // Detect explicit leg requests
+            const isExplicitMultiLine = queryUpper.includes("4 LINE") || queryUpper.includes("4 LEG") || queryUpper.includes("5 LINE") || queryUpper.includes("5 LEG") || queryUpper.includes("PLAYER PROPS") || queryUpper.includes("RUSHING YARDS") || queryUpper.includes("TD SCORER") || queryUpper.includes("SAME GAME");
+
             // Find ALL matching games mentioned anywhere in sentence
             let matchedGames = [];
-
             realUpcomingGames.forEach(game => {
                 if (game.keywords.some(kw => queryUpper.includes(kw))) {
                     if (!matchedGames.includes(game)) {
@@ -1586,47 +1700,52 @@
                 }
             });
 
-            // Check if user specifically requested a team preference (e.g. "IN FAVOR OF TENNESSEE", "IN FAVOUR OF VOLS")
-            const isTennesseeFavorable = queryUpper.includes("IN FAVOR OF TENNESSEE") || queryUpper.includes("IN FAVOUR OF TENNESSEE") || queryUpper.includes("FAVOR TENNESSEE") || queryUpper.includes("FAVOUR TENNESSEE") || queryUpper.includes("FAVOR OF TENNESSEE") || queryUpper.includes("FAVOUR OF TENNESSEE");
+            // Check team preferences
+            const isTennesseeFavorable = queryUpper.includes("FAVOR TENNESSEE") || queryUpper.includes("FAVOUR TENNESSEE") || queryUpper.includes("TENNESSEE TO WIN") || queryUpper.includes("IN FAVOR OF TENNESSEE") || queryUpper.includes("IN FAVOUR OF TENNESSEE");
 
-            // MULTI-MATCHUP SEARCH DETECTED (e.g. "Sam Houston AND Tennessee vs Alabama")
-            if (matchedGames.length > 1) {
+            // MULTI-MATCHUP SEARCH OR EXPANDED PARLAY
+            if (matchedGames.length > 0 && (matchedGames.length > 1 || isExplicitMultiLine)) {
                 window.currentSearchGames = matchedGames;
 
                 let legsHtml = "";
+                
                 matchedGames.forEach(game => {
                     if (isTennesseeFavorable && game.keywords.includes("VOLS")) {
-                        game.favoredTeamLeg = "Tennessee Volunteers Moneyline Outright Win (+260 Odds vs Alabama)";
                         legsHtml += `<li><span class="leg-icon">🍊</span> <strong>${game.matchup.split('(')[0].trim()}</strong>: Tennessee Volunteers Moneyline Win (+260 Odds)</li>`;
+                        legsHtml += `<li><span class="leg-icon">🏃‍♂️</span> <strong>Tennessee Prop</strong>: DeSean Bishop 80+ Rushing Yards & Anytime Touchdown</li>`;
                     } else if (game.keywords.includes("SAM HOUSTON")) {
-                        game.favoredTeamLeg = "Sam Houston State +1.5 Cover Spread (-105 Odds)";
-                        legsHtml += `<li><span class="leg-icon">🏈</span> <strong>${game.matchup.split('(')[0].trim()}</strong>: Sam Houston State +1.5 Cover Spread (-105 Odds)</li>`;
+                        legsHtml += `<li><span class="leg-icon">🤠</span> <strong>${game.matchup.split('(')[0].trim()}</strong>: Sam Houston State +1.5 Cover Spread (-105 Odds)</li>`;
+                        legsHtml += `<li><span class="leg-icon">🏃‍♂️</span> <strong>Sam Houston Prop</strong>: Alton McCaskill 65+ Rushing Yards</li>`;
                     } else {
                         legsHtml += `<li><span class="leg-icon">⚡</span> <strong>${game.matchup.split('(')[0].trim()}</strong>: ${game.safeLeg}</li>`;
+                        if (game.playerProps && game.playerProps.length > 0) {
+                            legsHtml += `<li><span class="leg-icon">🎯</span> <strong>${game.matchup.split('(')[0].trim()} Prop</strong>: ${game.playerProps[0]}</li>`;
+                        }
                     }
                 });
 
-                titleEl.textContent = `JIM'S MULTI-GAME CUSTOM PARLAY (${matchedGames.length} MATCHUPS)`;
-                oddsEl.textContent = "+1250 CUSTOM SLIP";
+                const totalLegCount = (legsHtml.match(/<li/g) || []).length;
+                titleEl.textContent = `JIM'S ${totalLegCount}-LINE SAME GAME & CROSS-GAME PARLAY`;
+                oddsEl.textContent = `+${totalLegCount * 850} MEGA-SLIP`;
                 legsEl.innerHTML = legsHtml;
 
                 quoteEl.innerHTML = `
-                    <div style="margin-bottom: 0.5rem;">"Parsed both requested games directly from your query! Locked in Tennessee on the Moneyline as requested and paired with Sam Houston State!"</div>
+                    <div style="margin-bottom: 0.5rem;">"Extracted all requested games & player props into a full ${totalLegCount}-line Same-Game + Cross-Game Parlay! Use the controls below to add more player props or simplify!"</div>
                     <div class="choice-btn-group">
-                        <button class="choice-btn" onclick="generateScopedSafeSlip(window.currentSearchGames, 'CUSTOM QUERY')">🎯 SAFE WINNER SLIP</button>
-                        <button class="choice-btn" onclick="generateScopedUnhingedSlip(window.currentSearchGames, 'CUSTOM QUERY')">🎲 CRAZY UNHINGED PARLAY</button>
+                        <button class="choice-btn complexity-btn" onclick="expandParlayLegs()">➕ ADD MORE LEGS (BUILD SGP)</button>
+                        <button class="choice-btn complexity-btn simplify" onclick="simplifyParlayLegs()">➖ SIMPLIFY SLIP</button>
                     </div>
                 `;
 
-                confEl.textContent = "125% OVERCONFIDENT";
+                confEl.textContent = "135% OVERCONFIDENT";
                 meterEl.style.width = '100%';
                 responseBox.style.display = 'block';
 
-                playSpeech(`God damn! Parsed your requested games into a custom multi-matchup parlay slip!`);
+                playSpeech(`God damn! Built your full ${totalLegCount}-line Same-Game and player prop parlay slip!`);
                 return;
             }
 
-            // SINGLE GAME MATCH OR DAY MATCH
+            // SINGLE GAME MATCH
             if (matchedGames.length === 1) {
                 let matchedGame = matchedGames[0];
                 window.currentSearchGames = [matchedGame];
@@ -1643,8 +1762,8 @@
                 quoteEl.innerHTML = `
                     <div style="margin-bottom: 0.5rem;">"${matchedGame.comment}"</div>
                     <div class="choice-btn-group">
-                        <button class="choice-btn" onclick="generateScopedSafeSlip(window.currentSearchGames, '${matchedGame.matchup.split('(')[0].trim()}')">🎯 SAFE WINNER SLIP</button>
-                        <button class="choice-btn" onclick="generateScopedUnhingedSlip(window.currentSearchGames, '${matchedGame.matchup.split('(')[0].trim()}')">🎲 CRAZY UNHINGED PARLAY</button>
+                        <button class="choice-btn complexity-btn" onclick="expandParlayLegs()">➕ ADD MORE LEGS (BUILD SGP)</button>
+                        <button class="choice-btn complexity-btn simplify" onclick="simplifyParlayLegs()">➖ SIMPLIFY SLIP</button>
                     </div>
                 `;
 
@@ -1674,8 +1793,8 @@
                     <div class="choice-btn-group">
                         <button class="choice-btn" onclick="triggerQuery('Kennesaw State')">🦉 KENNESAW AT MISSOURI ST</button>
                         <button class="choice-btn" onclick="triggerQuery('Western Kentucky')">🔴 WKU AT SAM HOUSTON</button>
-                        <button class="choice-btn" onclick="generateScopedSafeSlip(window.currentSearchGames, 'TONIGHT\\'S')">🎯 SAFE WINNER SLIP</button>
-                        <button class="choice-btn" onclick="generateScopedUnhingedSlip(window.currentSearchGames, 'TONIGHT\\'S')">🎲 UNHINGED PARLAY</button>
+                        <button class="choice-btn complexity-btn" onclick="expandParlayLegs()">➕ ADD MORE LEGS (BUILD SGP)</button>
+                        <button class="choice-btn complexity-btn simplify" onclick="simplifyParlayLegs()">➖ SIMPLIFY SLIP</button>
                     </div>
                 `;
                 confEl.textContent = "LIVE TONIGHT";
