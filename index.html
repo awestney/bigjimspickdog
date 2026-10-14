@@ -1497,6 +1497,40 @@
                     "Game Total OVER 51.5 Points (-110)"
                 ],
                 comment: "Third Saturday in October at Neyland Stadium! Line has Tennessee +8.5 with a 51.5 over/under."
+            },
+            {
+                keywords: ["TEXAS", "LONGHORNS", "FLORIDA", "GATORS"],
+                matchup: "Florida Gators at #7 Texas Longhorns (Sat Oct 17, 12:00 PM ET - ABC)",
+                odds: "+1450 SEC LOCK",
+                commenceDate: new Date("2026-10-17T16:00:00Z"),
+                safeLeg: "Texas Longhorns -10.5 Cover Spread vs Florida (-110)",
+                safeProps: [
+                    "Texas Longhorns -10.5 Cover Spread vs Florida (-110)",
+                    "Quinn Ewers 250+ Passing Yards",
+                    "Game Total OVER 54.5 Points"
+                ],
+                unhingedProps: [
+                    "Texas Longhorns -21.5 Alternate Spread",
+                    "Quinn Ewers 350+ Passing Yards & 4 TDs"
+                ],
+                comment: "SEC matchup in Austin! Texas favored by -10.5."
+            },
+            {
+                keywords: ["OHIO STATE", "BUCKEYES", "INDIANA", "HOOSIERS"],
+                matchup: "#4 Ohio State Buckeyes at #5 Indiana Hoosiers (Sat Oct 17, 12:00 PM ET - FOX)",
+                odds: "+1850 BIG TEN MARQUEE",
+                commenceDate: new Date("2026-10-17T16:00:00Z"),
+                safeLeg: "Ohio State Buckeyes -3.5 Cover Spread at Indiana (-112)",
+                safeProps: [
+                    "Ohio State Buckeyes -3.5 Cover Spread at Indiana (-112)",
+                    "Will Howard 240+ Passing Yards",
+                    "Game Total OVER 52.5 Points"
+                ],
+                unhingedProps: [
+                    "Ohio State -10.5 Alternate Cover Spread",
+                    "Game Total OVER 65.5 Points"
+                ],
+                comment: "Top 5 Big Ten clash! Ohio State -3.5 favorites."
             }
         ];
 
@@ -1774,7 +1808,7 @@
             playSpeech(`Generated your custom parlay from your checked Saturday games!`);
         }
 
-        // GLOBAL SEARCH ENGINE WITH LEVENSHTEIN FUZZY MATCHING & DAY ROUTING
+        // GLOBAL SEARCH ENGINE WITH LEVENSHTEIN FUZZY MATCHING & DISAMBIGUATION
         async function askBigJim() {
             const rawInput = document.getElementById('askJimInput').value.trim();
             if (!rawInput) return;
@@ -1822,7 +1856,32 @@
                 requestedLegsCount = parseInt(digitMatch[1], 10);
             }
 
-            // 5. SATURDAY BOARD DISAMBIGUATION
+            // 5. SATURDAY DIRECT PARLAY GENERATOR VS CHECKBOX BOARD ROUTING
+            if (queryUpper.includes("SATURDAY") && requestedLegsCount > 0 && !queryUpper.includes("VOLS")) {
+                let liveGames = await fetchLiveSportsbookOdds("americanfootball_ncaaf");
+                let activeGamesDatabase = (liveGames && liveGames.length > 0) ? liveGames : realUpcomingGames;
+
+                let satGames = activeGamesDatabase.filter(g => {
+                    if (g.commenceDate) return g.commenceDate.getDay() === 6;
+                    return true;
+                });
+
+                if (satGames.length === 0) satGames = realUpcomingGames;
+
+                window.currentSearchGames = satGames;
+                let autoLegs = [];
+
+                satGames.slice(0, requestedLegsCount).forEach(g => {
+                    let gameTitle = g.matchup ? g.matchup.split('(')[0].trim() : "Saturday Matchup";
+                    autoLegs.push({ game: gameTitle, text: g.safeLeg || `${gameTitle} Cover Spread` });
+                });
+
+                window.activeLegsList = autoLegs;
+                renderActiveLegsResponse(`JIM'S SATURDAY MOST LIKELY ${autoLegs.length}-LEG PARLAY`);
+                playSpeech(`Generated your most likely ${autoLegs.length}-leg Saturday parlay across all games!`);
+                return;
+            }
+
             if (queryUpper.includes("SATURDAY") && !queryUpper.includes("VOLS") && !queryUpper.includes("ALABAMA") && !queryUpper.includes("TEXAS")) {
                 renderSaturdayGamesBoard("NCAA");
                 return;
