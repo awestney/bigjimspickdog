@@ -108,14 +108,12 @@
             white-space: nowrap;
         }
 
-        /* Main Container */
         .container {
             max-width: clamp(320px, 92vw, 1200px);
             margin: 0 auto;
             padding: clamp(1rem, 2.5vw, 2.5rem) 1rem;
         }
 
-        /* Hero Section */
         .hero {
             text-align: center;
             padding: clamp(1rem, 3vw, 2.5rem) 0;
@@ -178,7 +176,6 @@
             padding: 0 1rem;
         }
 
-        /* Lock CTA Button */
         .cta-btn {
             display: inline-flex;
             align-items: center;
@@ -645,31 +642,88 @@
             background: #ffaa00;
         }
 
-        /* SPREADSHOP EMBED DARK OVERRIDES (STRIPS GREY BOXES & PROMO BANNERS) */
-        #myShop {
-            background: transparent !important;
-            border: none !important;
-            box-shadow: none !important;
-            min-height: 300px;
+        /* NATIVE MERCH GRID WITH GUARANTEED WHITE SQUARES */
+        .merch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 1.25rem;
             width: 100%;
-            overflow-x: hidden;
         }
 
-        #myShop .sprd-header,
-        #myShop .sprd-startpage-hero,
-        #myShop .sprd-banner,
-        #myShop .sprd-promo-banner,
-        #myShop .sprd-navigation,
-        #myShop header,
-        #myShop .sprd-service-footer {
-            display: none !important;
+        .merch-card {
+            background: rgba(18, 20, 28, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
         }
 
-        #myShop iframe, 
-        #myShop div[class*="sprd-"] {
-            background-color: transparent !important;
+        .merch-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-gold);
+            box-shadow: 0 8px 25px rgba(255, 204, 0, 0.25);
+        }
+
+        /* Clean White Square Container for Product Mockups */
+        .merch-img-box {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background-color: #ffffff !important;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            overflow: hidden;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+            margin-bottom: 0.75rem;
+        }
+
+        .merch-img-box img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .merch-card-title {
+            font-family: 'Teko', sans-serif;
+            font-size: 1.4rem;
+            color: #ffffff;
+            line-height: 1.1;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+
+        .merch-card-price {
+            color: var(--accent-gold);
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .merch-buy-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-red) 0%, #a00000 100%);
             color: #ffffff !important;
-            max-width: 100% !important;
+            padding: 0.65rem 0.5rem;
+            border-radius: 6px;
+            font-weight: 800;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 10px rgba(230, 0, 0, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .merch-buy-btn:hover {
+            background: linear-gradient(135deg, #ff1a1a 0%, var(--primary-red) 100%);
+            box-shadow: 0 0 18px rgba(230, 0, 0, 0.6);
         }
 
         .store-banner-cta {
@@ -951,7 +1005,7 @@
 
         <!-- Daily Betting Tips Section -->
         <section id="tips" class="card">
-            <div class="live-banner" id="currentDateBanner">🔴 LIVE TODAY'S PARLAY SLIPS — Oct 13, 2026</div>
+            <div class="live-banner" id="currentDateBanner">🔴 LIVE TODAY'S PARLAY SLIPS — Oct 14, 2026</div>
             <h2 class="section-title" style="margin-top: 0.2rem;">📊 Big Jim's Unreliable Parlays & Locks</h2>
             
             <!-- ASK BIG JIM AI QUESTION WIDGET -->
@@ -970,7 +1024,7 @@
                     Got a specific matchup or prop bet in mind? Type any team or game below for Big Jim's instantaneous analysis:
                 </p>
                 <div class="ask-jim-input-group">
-                    <input type="text" id="askJimInput" class="ask-jim-input" placeholder="e.g. tonight, Delaware, Jacksonville State, WKU, Tennessee, Sunday" onkeypress="if(event.key==='Enter') askBigJim()">
+                    <input type="text" id="askJimInput" class="ask-jim-input" placeholder="e.g. tonight, Sam Houston & Tennessee favored, Delaware, Sunday" onkeypress="if(event.key==='Enter') askBigJim()">
                     <button class="ask-jim-btn" onclick="askBigJim()">ASK JIM ➔</button>
                 </div>
 
@@ -1015,30 +1069,14 @@
             <button class="ad-cta" onclick="openQuiz()">TAKE ELIGIBILITY QUIZ</button>
         </section>
 
-        <!-- Sleek Custom Merch Showcase Container via Official Spreadshop JS Embed -->
+        <!-- Native Merch Showcase Section with White Cards -->
         <section id="merch" class="card">
             <h2 class="section-title">🧢 Official Pick Dog Merch</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1rem;">Featured gear directly from the shop:</p>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Featured gear directly from the shop:</p>
 
-            <!-- Spreadshop Mount Container (Strips Grey Banners & Welcome Hero) -->
-            <div id="myShop">
-                <p style="text-align: center; color: var(--text-muted); padding: 2rem 0;">
-                    🔄 Loading official Big Jim's Pick Dog gear...
-                </p>
+            <div class="merch-grid" id="merchGrid">
+                <!-- Products rendered dynamically via JavaScript -->
             </div>
-
-            <!-- Official Spreadshop Integration Script -->
-            <script>
-                var spread_shop_config = {
-                    shopName: 'big-jims-pick-dog',
-                    prefix: 'https://big-jims-pick-dog.myspreadshop.com',
-                    baseId: 'myShop',
-                    locale: 'en_US',
-                    startToken: 'articles',
-                    swipeView: true
-                };
-            </script>
-            <script type="text/javascript" src="https://big-jims-pick-dog.myspreadshop.com/shopfiles/shopclient/shopclient.nocache.js"></script>
 
             <!-- Store CTA Link -->
             <div class="store-banner-cta">
@@ -1336,7 +1374,7 @@
             }, 800);
         }
 
-        // EXPANDED REAL UPCOMING GAMES DATABASE WITH REAL SPORTSBOOK ODDS (OCTOBER 2026)
+        // REAL UPCOMING GAMES DATABASE WITH REAL SPORTSBOOK ODDS (OCTOBER 2026)
         const realUpcomingGames = [
             {
                 keywords: ["KENNESAW", "MISSOURI STATE", "KENNESAW STATE", "BEARS", "OWLS"],
@@ -1360,6 +1398,7 @@
                 matchup: "Western Kentucky Hilltoppers at Sam Houston Bearkats (Wed Oct 14, 8:00 PM ET - ESPN)",
                 odds: "+220 WEDNESDAY NIGHT LOCK",
                 safeLeg: "Western Kentucky Moneyline Win at Sam Houston (-115 Odds)",
+                favoredOppositeLeg: "Sam Houston State +1.5 Spread at Home (-105 Odds)",
                 defaultLegs: [
                     "Western Kentucky -1.5 Spread at Sam Houston (Odds: -104)",
                     "Game Total OVER 53.5 Points (Odds: -108)",
@@ -1370,13 +1409,32 @@
                     "Game Total OVER 64.5 Points",
                     "WKU -8.5 Alternate Spread"
                 ],
-                comment: "Wednesday night showdown at Bowers Stadium in Huntsville, TX! WKU is a tight -1.5 road favorite. WKU's passing attack drops 35 points!"
+                comment: "Wednesday night CUSA clash at Bowers Stadium in Huntsville, TX! WKU is a tight -1.5 road favorite (-115 ML). WKU's passing attack drops 35 points!"
+            },
+            {
+                keywords: ["VOLS", "TENNESSEE VOLS", "VOLUNTEERS", "UT VOLS", "ALABAMA", "BAMA"],
+                matchup: "#14 Tennessee Volunteers vs #6 Alabama Crimson Tide (Sat Oct 17, 3:30 PM ET - Neyland)",
+                odds: "+2200 SEC MONSTER",
+                safeLeg: "Tennessee Volunteers Moneyline Outright Win (+260 Odds)",
+                favoredOppositeLeg: "Tennessee Volunteers +9.5 Cover Spread at Neyland Stadium (-110 Odds)",
+                defaultLegs: [
+                    "Tennessee Volunteers +9.5 Cover Spread vs Alabama",
+                    "Game Total OVER 62.5 Points",
+                    "Tennessee Offense 30+ Total Points"
+                ],
+                unhingedLegs: [
+                    "Nico Iamaleava 350+ Passing Yards & 4 TDs",
+                    "Tennessee Offense 45+ Total Points",
+                    "Game Total OVER 72.5 Points"
+                ],
+                comment: "Third Saturday in October at Neyland Stadium! Nico Iamaleava is going to drop 80-yard dimes on Alabama. Light up the cigars—Vols win!"
             },
             {
                 keywords: ["TITANS", "TENNESSEE TITANS"],
                 matchup: "Tennessee Titans at Indianapolis Colts (NFL Week 6 - Sun Oct 18, 1:00 PM ET)",
                 odds: "+1250 DIVISIONAL LOCK",
                 safeLeg: "Indianapolis Colts Moneyline Win vs Titans (-330 Odds)",
+                favoredOppositeLeg: "Tennessee Titans +6.5 Cover Spread at Indy (-110 Odds)",
                 defaultLegs: [
                     "Indianapolis Colts -6.5 Spread vs Titans (Odds: -120)",
                     "Game Total OVER 43.5 Points (Odds: -115)",
@@ -1387,24 +1445,7 @@
                     "Colts Defense 6+ Sacks & 2 Interceptions",
                     "Game Total OVER 54.5 Points"
                 ],
-                comment: "Titans traveling up to Indy! Real Vegas line has Colts as -6.5 favorites. Take the Colts moneyline!"
-            },
-            {
-                keywords: ["VOLS", "TENNESSEE VOLS", "VOLUNTEERS", "UT VOLS"],
-                matchup: "#14 Tennessee Volunteers vs #6 Alabama Crimson Tide (Sat Oct 17, 3:30 PM ET - Neyland)",
-                odds: "+2200 SEC MONSTER",
-                safeLeg: "Tennessee Vols +3.5 Alternate Spread at Neyland",
-                defaultLegs: [
-                    "Tennessee Vols -2.5 Spread at Neyland Stadium",
-                    "Game Total OVER 62.5 Points",
-                    "Tennessee Offense 30+ Total Points"
-                ],
-                unhingedLegs: [
-                    "Nico Iamaleava 350+ Passing Yards & 4 TDs",
-                    "Tennessee Offense 45+ Total Points",
-                    "Game Total OVER 72.5 Points"
-                ],
-                comment: "Third Saturday in October at Neyland Stadium! Nico Iamaleava is going to drop 80-yard dimes on Alabama. Light up the cigars—Vols win!"
+                comment: "Titans traveling up to Indy! Real Vegas line has Colts as -6.5 favorites. Will Levis throws downfield, but the Colts baseline is solid. Take the Colts moneyline!"
             },
             {
                 keywords: ["THURSDAY", "TNF", "SEAHAWKS", "BRONCOS", "SEATTLE", "DENVER"],
@@ -1438,7 +1479,7 @@
                     "Jordan Love 350+ Passing Yards & 4 TDs",
                     "Game Total OVER 64.5 Points"
                 ],
-                comment: "Sunday Night Football at Lambeau Field! Packers are -1.5 favorites. Take the OVER on points!"
+                comment: "Sunday Night Football at Lambeau Field! Packers are -1.5 favorites with an explosive 52.5 over/under. Take the OVER on points!"
             },
             {
                 keywords: ["CHIEFS", "CHARGERS", "KANSAS CITY", "ARROWHEAD"],
@@ -1455,7 +1496,7 @@
                     "Travis Kelce 100+ Receiving Yards & 2 TDs",
                     "Chiefs Team Total OVER 38.5 Points"
                 ],
-                comment: "Arrowhead Stadium on a Sunday afternoon! Chiefs are -8.5 favorites (-440 ML). Patrick Mahomes is pure money!"
+                comment: "Arrowhead Stadium on a Sunday afternoon! Chiefs are huge -8.5 favorites (-440 ML). Patrick Mahomes in a divisional rivalry at home is pure money!"
             }
         ];
 
@@ -1482,14 +1523,15 @@
 
             let legsHtml = "";
             gamesList.forEach(game => {
-                legsHtml += `<li><span class="leg-icon">✅</span> <strong>${game.matchup.split('(')[0].trim()}</strong>: ${game.safeLeg}</li>`;
+                let legText = game.favoredTeamLeg || game.safeLeg;
+                legsHtml += `<li><span class="leg-icon">✅</span> <strong>${game.matchup.split('(')[0].trim()}</strong>: ${legText}</li>`;
             });
 
             const responseBox = document.getElementById('askJimResponse');
             document.getElementById('aiResponseTitle').textContent = `🎯 ${contextLabel} SAFE WINNER SLIP`;
             document.getElementById('aiResponseOdds').textContent = "+180 LOW-RISK PARLAY";
             document.getElementById('aiResponseLegs').innerHTML = legsHtml;
-            document.getElementById('aiResponseQuote').textContent = `"Strictly scoped to the requested search games! Low-risk, heavy market favorites stacked into a clean winning slip!"`;
+            document.getElementById('aiResponseQuote').textContent = `"Strictly scoped to your requested games! Low-risk, heavy market favorites stacked into a clean winning slip!"`;
             document.getElementById('aiResponseConfidence').textContent = "95% HIGH PROBABILITY";
             document.getElementById('aiResponseMeter').style.width = '95%';
             responseBox.style.display = 'block';
@@ -1519,6 +1561,7 @@
             playSpeech(`God damn! Here is your crazy unhinged parlay scoped to ${contextLabel.toLowerCase()}!`);
         }
 
+        // MULTI-ENTITY PARSER ENGINE
         function askBigJim() {
             const rawInput = document.getElementById('askJimInput').value.trim();
             if (!rawInput) return;
@@ -1532,151 +1575,62 @@
             const confEl = document.getElementById('aiResponseConfidence');
             const meterEl = document.getElementById('aiResponseMeter');
 
-            // PARSE MODE MODIFIERS IN TEXT QUERY ("SAFE" VS "UNHINGED")
-            const isExplicitSafe = queryUpper.includes("SAFE") || queryUpper.includes("HIGH PROBABILITY") || queryUpper.includes("MONEYLINE");
-            const isExplicitUnhinged = queryUpper.includes("UNHINGED") || queryUpper.includes("CRAZY") || queryUpper.includes("PARLAY");
+            // Find ALL matching games mentioned anywhere in sentence
+            let matchedGames = [];
 
-            // Clean search query to extract day or team
-            let cleanQuery = queryUpper.replace("SAFE", "").replace("UNHINGED", "").replace("CRAZY", "").replace("PARLAY", "").trim();
-
-            // 1. "TONIGHT" / "TODAY" / "WEDNESDAY" LIVE GAME RECOGNIZER
-            if (cleanQuery.includes("TONIGHT") || cleanQuery.includes("TODAY") || cleanQuery.includes("WEDNESDAY")) {
-                const wednesdayGames = [realUpcomingGames[0], realUpcomingGames[1]];
-                window.currentSearchGames = wednesdayGames;
-
-                if (isExplicitSafe) {
-                    generateScopedSafeSlip(wednesdayGames, "TONIGHT'S");
-                    return;
-                } else if (isExplicitUnhinged) {
-                    generateScopedUnhingedSlip(wednesdayGames, "TONIGHT'S");
-                    return;
+            realUpcomingGames.forEach(game => {
+                if (game.keywords.some(kw => queryUpper.includes(kw))) {
+                    if (!matchedGames.includes(game)) {
+                        matchedGames.push(game);
+                    }
                 }
+            });
 
-                // DEFAULT: Display ONLY Wednesday's 2 real games
-                titleEl.textContent = "TONIGHT'S WEDNESDAY COLLEGE FOOTBALL GAMES";
-                oddsEl.textContent = "OCTOBER 14 BOARD";
-                legsEl.innerHTML = `
-                    <li><span class="leg-icon">🏈</span> <strong>Kennesaw State at Missouri State</strong> (7:30 PM ET - Kennesaw St -3.5 / O/U 51.5)</li>
-                    <li><span class="leg-icon">🏈</span> <strong>Western Kentucky at Sam Houston</strong> (8:00 PM ET - WKU -1.5 / O/U 53.5)</li>
-                `;
-                
+            // Check if user specifically requested a team preference (e.g. "IN FAVOR OF TENNESSEE", "IN FAVOUR OF VOLS")
+            const isTennesseeFavorable = queryUpper.includes("IN FAVOR OF TENNESSEE") || queryUpper.includes("IN FAVOUR OF TENNESSEE") || queryUpper.includes("FAVOR TENNESSEE") || queryUpper.includes("FAVOUR TENNESSEE") || queryUpper.includes("FAVOR OF TENNESSEE") || queryUpper.includes("FAVOUR OF TENNESSEE");
+
+            // MULTI-MATCHUP SEARCH DETECTED (e.g. "Sam Houston AND Tennessee vs Alabama")
+            if (matchedGames.length > 1) {
+                window.currentSearchGames = matchedGames;
+
+                let legsHtml = "";
+                matchedGames.forEach(game => {
+                    if (isTennesseeFavorable && game.keywords.includes("VOLS")) {
+                        game.favoredTeamLeg = "Tennessee Volunteers Moneyline Outright Win (+260 Odds vs Alabama)";
+                        legsHtml += `<li><span class="leg-icon">🍊</span> <strong>${game.matchup.split('(')[0].trim()}</strong>: Tennessee Volunteers Moneyline Win (+260 Odds)</li>`;
+                    } else if (game.keywords.includes("SAM HOUSTON")) {
+                        game.favoredTeamLeg = "Sam Houston State +1.5 Cover Spread (-105 Odds)";
+                        legsHtml += `<li><span class="leg-icon">🏈</span> <strong>${game.matchup.split('(')[0].trim()}</strong>: Sam Houston State +1.5 Cover Spread (-105 Odds)</li>`;
+                    } else {
+                        legsHtml += `<li><span class="leg-icon">⚡</span> <strong>${game.matchup.split('(')[0].trim()}</strong>: ${game.safeLeg}</li>`;
+                    }
+                });
+
+                titleEl.textContent = `JIM'S MULTI-GAME CUSTOM PARLAY (${matchedGames.length} MATCHUPS)`;
+                oddsEl.textContent = "+1250 CUSTOM SLIP";
+                legsEl.innerHTML = legsHtml;
+
                 quoteEl.innerHTML = `
-                    <div style="margin-bottom: 0.5rem; color: #fff;">Pick a game below or select a Safe or Unhinged slip scoped strictly to tonight's games:</div>
+                    <div style="margin-bottom: 0.5rem;">"Parsed both requested games directly from your query! Locked in Tennessee on the Moneyline as requested and paired with Sam Houston State!"</div>
                     <div class="choice-btn-group">
-                        <button class="choice-btn" onclick="triggerQuery('Kennesaw State')">🦉 KENNESAW AT MISSOURI ST</button>
-                        <button class="choice-btn" onclick="triggerQuery('Western Kentucky')">🔴 WKU AT SAM HOUSTON</button>
-                        <button class="choice-btn" onclick="generateScopedSafeSlip(window.currentSearchGames, 'TONIGHT\\'S')">🎯 SAFE WINNER SLIP</button>
-                        <button class="choice-btn" onclick="generateScopedUnhingedSlip(window.currentSearchGames, 'TONIGHT\\'S')">🎲 UNHINGED PARLAY</button>
+                        <button class="choice-btn" onclick="generateScopedSafeSlip(window.currentSearchGames, 'CUSTOM QUERY')">🎯 SAFE WINNER SLIP</button>
+                        <button class="choice-btn" onclick="generateScopedUnhingedSlip(window.currentSearchGames, 'CUSTOM QUERY')">🎲 CRAZY UNHINGED PARLAY</button>
                     </div>
                 `;
-                confEl.textContent = "LIVE TONIGHT";
+
+                confEl.textContent = "125% OVERCONFIDENT";
                 meterEl.style.width = '100%';
                 responseBox.style.display = 'block';
-                playSpeech("Here are tonight's Wednesday college football games!");
+
+                playSpeech(`God damn! Parsed your requested games into a custom multi-matchup parlay slip!`);
                 return;
             }
 
-            // 2. FUZZY TENNESSEE SPELLING MATCHER
-            const isTennesseeSpell = cleanQuery.includes("TEN") || cleanQuery.includes("TENN") || cleanQuery === "UT";
-            if (isTennesseeSpell && !cleanQuery.includes("TITANS") && !cleanQuery.includes("VOLS") && !cleanQuery.includes("MIDDLE")) {
-                titleEl.textContent = "WHICH TENNESSEE TEAM, BROTHER?";
-                oddsEl.textContent = "DECISION TIME";
-                legsEl.innerHTML = `
-                    <li><span class="leg-icon">🏈</span> Did you mean the <strong>Tennessee Volunteers (NCAAF)</strong> or the <strong>Tennessee Titans (NFL)</strong>?</li>
-                    <li><span class="leg-icon">⚡</span> Click a choice below to lock in Big Jim's analysis:</li>
-                `;
-                quoteEl.innerHTML = `
-                    <div class="choice-btn-group">
-                        <button class="choice-btn" onclick="triggerQuery('Tennessee Vols')">🍊 TENNESSEE VOLS (VS ALABAMA)</button>
-                        <button class="choice-btn" onclick="triggerQuery('Tennessee Titans')">⚔️ TENNESSEE TITANS (AT COLTS)</button>
-                    </div>
-                `;
-                confEl.textContent = "50/50 SPLIT";
-                meterEl.style.width = '50%';
-                responseBox.style.display = 'block';
-                playSpeech("Do you mean the Tennessee Vols against Alabama or the Tennessee Titans at the Colts?");
-                return;
-            }
-
-            // 3. SUNDAY NFL FULL SLATE DISAMBIGUATION FILTER
-            if (cleanQuery.includes("SUNDAY") || cleanQuery.includes("SNF")) {
-                const sundayGames = realUpcomingGames.filter(g => 
-                    g.keywords.includes("TITANS") || g.keywords.includes("SNF") || g.keywords.includes("CHIEFS") || g.keywords.includes("LONDON") || g.keywords.includes("EAGLES")
-                );
-
-                window.currentSearchGames = sundayGames;
-
-                if (isExplicitSafe) {
-                    generateScopedSafeSlip(sundayGames, "SUNDAY");
-                    return;
-                } else if (isExplicitUnhinged) {
-                    generateScopedUnhingedSlip(sundayGames, "SUNDAY");
-                    return;
-                }
-
-                titleEl.textContent = "SUNDAY NFL FULL BOARD SLATE";
-                oddsEl.textContent = "SELECT MATCHUP";
-                legsEl.innerHTML = `
-                    <li><span class="leg-icon">🇬🇧</span> <strong>Texans vs Jaguars</strong> (London - Jags -2.5 O/U 42.5)</li>
-                    <li><span class="leg-icon">🦅</span> <strong>Panthers at Eagles</strong> (Philly -1.5 O/U 41.5)</li>
-                    <li><span class="leg-icon">⚔️</span> <strong>Titans at Colts</strong> (Colts -6.5 O/U 43.5)</li>
-                    <li><span class="leg-icon">🏹</span> <strong>Chargers at Chiefs</strong> (Chiefs -8.5 O/U 42.5)</li>
-                    <li><span class="leg-icon">🤠</span> <strong>Cowboys at Packers</strong> (Packers -1.5 O/U 52.5 SNF)</li>
-                `;
-                quoteEl.innerHTML = `
-                    <div style="margin-bottom: 0.5rem; color: #fff;">Pick any Sunday matchup or option below for Big Jim's analysis:</div>
-                    <div class="choice-btn-group">
-                        <button class="choice-btn" onclick="triggerQuery('Jaguars')">🇬🇧 LONDON GAME</button>
-                        <button class="choice-btn" onclick="triggerQuery('Chiefs')">🏹 CHIEFS VS CHARGERS</button>
-                        <button class="choice-btn" onclick="triggerQuery('Cowboys')">🤠 COWBOYS VS PACKERS (SNF)</button>
-                        <button class="choice-btn" onclick="generateScopedSafeSlip(window.currentSearchGames, 'SUNDAY')">🎯 SAFE WINNER SLIP</button>
-                        <button class="choice-btn" onclick="generateScopedUnhingedSlip(window.currentSearchGames, 'SUNDAY')">🎲 UNHINGED PARLAY</button>
-                    </div>
-                `;
-                confEl.textContent = "SUNDAY READY";
-                meterEl.style.width = '100%';
-                responseBox.style.display = 'block';
-                playSpeech("Here is the full Sunday NFL slate with live Vegas lines!");
-                return;
-            }
-
-            // 4. JOKE / PERSONAL COMMENT FILTER
-            const jokeKeywords = ["HAIRY", "BEARD", "LOOK LIKE", "UGLY", "FAT", "DRUNK", "BEER", "OLD", "DUMB"];
-            const isJokeQuery = jokeKeywords.some(kw => queryUpper.includes(kw));
-
-            if (isJokeQuery) {
-                titleEl.textContent = "BIG JIM'S REBUTTAL";
-                oddsEl.textContent = "+10000 BEARD ENERGY";
-                legsEl.innerHTML = `
-                    <li><span class="leg-icon">🧔</span> My beard adds +500 to my parlay evaluation accuracy!</li>
-                    <li><span class="leg-icon">🍺</span> Powered strictly by cold Michelob Ultra and raw instinct.</li>
-                    <li><span class="leg-icon">⚡</span> Zero film studied, 100% pure confidence!</li>
-                `;
-                quoteEl.textContent = `"Talk all the trash you want brother, but this beard has predicted 4 straight multi-leg parlays! Now ask me about a real football game!"`;
-                confEl.textContent = "120% UNBOTHERED";
-                meterEl.style.width = '100%';
-                responseBox.style.display = 'block';
-                playSpeech("God damn! My beard adds 500 points to my parlay accuracy! Ask me about a real football game!");
-                return;
-            }
-
-            // 5. MATCH REAL UPCOMING GAMES
-            let matchedGame = realUpcomingGames.find(g => 
-                g.keywords.some(kw => cleanQuery.includes(kw))
-            );
-
-            if (matchedGame) {
+            // SINGLE GAME MATCH OR DAY MATCH
+            if (matchedGames.length === 1) {
+                let matchedGame = matchedGames[0];
                 window.currentSearchGames = [matchedGame];
 
-                if (isExplicitSafe) {
-                    generateScopedSafeSlip([matchedGame], matchedGame.matchup.split('(')[0].trim());
-                    return;
-                } else if (isExplicitUnhinged) {
-                    generateScopedUnhingedSlip([matchedGame], matchedGame.matchup.split('(')[0].trim());
-                    return;
-                }
-
-                // DEFAULT: Silly yet grounded baseline
                 titleEl.textContent = `JIM'S REAL LOCK: ${matchedGame.matchup}`;
                 oddsEl.textContent = matchedGame.odds;
 
@@ -1700,113 +1654,121 @@
                 responseBox.style.display = 'block';
 
                 playSpeech(`God damn! Here is my lock for ${matchedGame.matchup}: Double down right now!`);
-            } else {
-                // 6. SPECIFIC TEAM MATCHUP FALLBACK
-                let teamName = rawInput.toUpperCase().replace('VS', 'VS.').replace('BET', '').replace('THINK ABOUT', '').trim();
-                if (teamName.length > 25) teamName = teamName.substring(0, 25) + '...';
+                return;
+            }
 
-                titleEl.textContent = `JIM'S LOCK: ${teamName} MATCHUP`;
-                oddsEl.textContent = "+1650 UNHINGED SLIP";
+            // "TONIGHT" / "TODAY" / "WEDNESDAY" RECOGNIZER
+            if (queryUpper.includes("TONIGHT") || queryUpper.includes("TODAY") || queryUpper.includes("WEDNESDAY")) {
+                const wednesdayGames = [realUpcomingGames[0], realUpcomingGames[1]];
+                window.currentSearchGames = wednesdayGames;
+
+                titleEl.textContent = "TONIGHT'S WEDNESDAY COLLEGE FOOTBALL GAMES";
+                oddsEl.textContent = "OCTOBER 14 BOARD";
                 legsEl.innerHTML = `
-                    <li><span class="leg-icon">⚡</span> ${teamName} — Cover the Spread by 14+ Points</li>
-                    <li><span class="leg-icon">⚡</span> Starting QB 300+ Passing Yards & 3 Touchdowns</li>
-                    <li><span class="leg-icon">⚡</span> Primary Receiver 100+ Yards & 2 Touchdowns</li>
-                    <li><span class="leg-icon">⚡</span> Game Total OVER 52.5 Points (Zero Defense Allowed)</li>
+                    <li><span class="leg-icon">🏈</span> <strong>Kennesaw State at Missouri State</strong> (7:30 PM ET - Kennesaw St -3.5 / O/U 51.5)</li>
+                    <li><span class="leg-icon">🏈</span> <strong>Western Kentucky at Sam Houston</strong> (8:00 PM ET - WKU -1.5 / O/U 53.5)</li>
                 `;
-                quoteEl.textContent = `"My marrow is vibrating for ${teamName}! Zero film studied, 100% pure instinct. Their offense is dropping 35 points in the first half. Smash the spread!"`;
-                confEl.textContent = "115% OVERCONFIDENT";
+                
+                quoteEl.innerHTML = `
+                    <div style="margin-bottom: 0.5rem; color: #fff;">Pick a game below or select a Safe or Unhinged slip scoped strictly to tonight's games:</div>
+                    <div class="choice-btn-group">
+                        <button class="choice-btn" onclick="triggerQuery('Kennesaw State')">🦉 KENNESAW AT MISSOURI ST</button>
+                        <button class="choice-btn" onclick="triggerQuery('Western Kentucky')">🔴 WKU AT SAM HOUSTON</button>
+                        <button class="choice-btn" onclick="generateScopedSafeSlip(window.currentSearchGames, 'TONIGHT\\'S')">🎯 SAFE WINNER SLIP</button>
+                        <button class="choice-btn" onclick="generateScopedUnhingedSlip(window.currentSearchGames, 'TONIGHT\\'S')">🎲 UNHINGED PARLAY</button>
+                    </div>
+                `;
+                confEl.textContent = "LIVE TONIGHT";
                 meterEl.style.width = '100%';
                 responseBox.style.display = 'block';
-
-                playSpeech(`God damn! Here is my lock for ${teamName}: Smash the spread right now!`);
+                playSpeech("Here are tonight's Wednesday college football games!");
+                return;
             }
+
+            // SPECIFIC TEAM MATCHUP FALLBACK
+            let teamName = rawInput.toUpperCase().replace('VS', 'VS.').replace('BET', '').replace('THINK ABOUT', '').trim();
+            if (teamName.length > 25) teamName = teamName.substring(0, 25) + '...';
+
+            titleEl.textContent = `JIM'S LOCK: ${teamName} MATCHUP`;
+            oddsEl.textContent = "+1650 UNHINGED SLIP";
+            legsEl.innerHTML = `
+                <li><span class="leg-icon">⚡</span> ${teamName} — Cover the Spread by 14+ Points</li>
+                <li><span class="leg-icon">⚡</span> Starting QB 300+ Passing Yards & 3 Touchdowns</li>
+                <li><span class="leg-icon">⚡</span> Primary Receiver 100+ Yards & 2 Touchdowns</li>
+                <li><span class="leg-icon">⚡</span> Game Total OVER 52.5 Points (Zero Defense Allowed)</li>
+            `;
+            quoteEl.textContent = `"My marrow is vibrating for ${teamName}! Zero film studied, 100% pure instinct. Their offense is dropping 35 points in the first half. Smash the spread!"`;
+            confEl.textContent = "115% OVERCONFIDENT";
+            meterEl.style.width = '100%';
+            responseBox.style.display = 'block';
+
+            playSpeech(`God damn! Here is my lock for ${teamName}: Smash the spread right now!`);
         }
 
-        // Live Dynamic Multi-Leg Parlay Database
+        // Native Merch Grid Renderer
+        const shopProducts = [
+            {
+                title: "God Damn, Woo! Tank Top",
+                price: "$27.49",
+                img: "https://image.spreadshirtmedia.com/image-server/v1/compositions/1057912423/views/1,width=500,height=500,appearanceId=2.png",
+                url: "https://big-jims-pick-dog.myspreadshop.com/god+damn+woo+big+jims+pick+dog-A32589a8ede29b874"
+            },
+            {
+                title: "God Damn, Woo! T-Shirt",
+                price: "$25.49",
+                img: "https://image.spreadshirtmedia.com/image-server/v1/compositions/1057912423/views/1,width=500,height=500,appearanceId=228.png",
+                url: "https://big-jims-pick-dog.myspreadshop.com/god+damn+woo+big+jims+pick+dog-A32589a8ede29b874"
+            },
+            {
+                title: "Jet Tag Keychain",
+                price: "$12.49",
+                img: "https://image.spreadshirtmedia.com/image-server/v1/designs/1057912423,width=500,height=500.png",
+                url: "https://big-jims-pick-dog.myspreadshop.com/"
+            },
+            {
+                title: "Bearded Shout Trucker Hat",
+                price: "$29.99",
+                img: "https://image.spreadshirtmedia.com/image-server/v1/compositions/1057912423/views/1,width=500,height=500,appearanceId=14.png",
+                url: "https://big-jims-pick-dog.myspreadshop.com/"
+            }
+        ];
+
+        function renderMerchGrid() {
+            const container = document.getElementById('merchGrid');
+            if (!container) return;
+
+            let html = "";
+            shopProducts.forEach(item => {
+                html += `
+                    <div class="merch-card">
+                        <div>
+                            <div class="merch-img-box">
+                                <img src="${item.img}" alt="${item.title}">
+                            </div>
+                            <div class="merch-card-title">${item.title}</div>
+                            <div class="merch-card-price">${item.price}</div>
+                        </div>
+                        <a href="${item.url}" target="_blank" class="merch-buy-btn">BUY ON SPREADSHOP ➔</a>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        // Dynamic Daily Parlay Slips Loader
         const parlaySportsLibrary = {
-            2: [
-                { 
-                    league: "NCAAF (C-USA)", 
-                    title: "TUESDAY NIGHT LIGHTS DOUBLE LOCK", 
-                    odds: "+240 PARLAY", 
-                    tag: "TUESDAY PARLAY", 
-                    legs: [
-                        "Delaware -1.5 Spread at Middle Tennessee (Odds: -112)",
-                        "Jacksonville State -3.0 Spread vs FIU (Odds: -104)",
-                        "Under 47.5 Total Points (Delaware/MTSU)"
-                    ],
-                    comment: "Tuesday night C-USA double header! Delaware covers -1.5 on the road and Jacksonville State dominates FIU at home. Lock in both games!" 
-                }
-            ],
             3: [
                 { 
                     league: "NCAAF (C-USA)", 
-                    title: "WEDNESDAY CUSA SLATE", 
+                    title: "WEDNESDAY CUSA DOUBLE LOCK", 
                     odds: "+220 PARLAY", 
                     tag: "WEDNESDAY SLIP", 
                     legs: [
+                        "Kennesaw State -3.5 Spread at Missouri State (Odds: +100)",
                         "Western Kentucky -1.5 Spread at Sam Houston (Odds: -104)",
-                        "Over 53.5 Total Points (WKU/Sam Houston)",
-                        "WKU Moneyline Win (-115 Odds)"
+                        "WKU/Sam Houston OVER 53.5 Total Points (Odds: -108)"
                     ],
-                    comment: "Wednesday CUSA showdown at Bowers Stadium in Huntsville, TX! WKU is laying 1.5 points on the road. WKU's passing offense is unstoppable!" 
-                }
-            ],
-            4: [
-                { 
-                    league: "NFL (TNF)", 
-                    title: "THURSDAY NIGHT BRONCOS STADIUM PARLAY", 
-                    odds: "+1250 PARLAY", 
-                    tag: "3-LEG TNF LOCK", 
-                    legs: [
-                        "Seattle Seahawks -3.0 Spread at Broncos (Odds: -105)",
-                        "DK Metcalf 80+ Receiving Yards & Anytime TD",
-                        "Game Total OVER 40.5 Points (7:15 PM - Prime Video)"
-                    ],
-                    comment: "Live at Empower Field in Denver! Seattle is favored by -3.0 points. Geno Smith and DK Metcalf connect for deep touchdowns all night!" 
-                }
-            ],
-            5: [
-                { 
-                    league: "NCAAF", 
-                    title: "FRIDAY NIGHT FLAMES 3-LEG PARLAY", 
-                    odds: "+890 PARLAY", 
-                    tag: "FRIDAY SLAM", 
-                    legs: [
-                        "Memphis -7.0 Spread at Tulane (Odds: -105)",
-                        "Memphis Team Total OVER 31.5 Points",
-                        "Game Total OVER 53.5 (8:00 PM - ESPN)"
-                    ],
-                    comment: "Friday night AAC shootout! Memphis travels to New Orleans and lays 7 points. Memphis drops 35+ points flat!" 
-                }
-            ],
-            6: [
-                { 
-                    league: "NCAAF", 
-                    title: "RED RIVER RIVALRY MASSACRE PARLAY", 
-                    odds: "+2200 PARLAY", 
-                    tag: "4-LEG MONSTER SLIP", 
-                    legs: [
-                        "#1 Texas Longhorns -8.5 Spread vs Oklahoma (Odds: -110)",
-                        "Tennessee Vols -2.5 Spread vs Alabama",
-                        "Quinn Ewers 300+ Passing Yards",
-                        "Game Total OVER 65.5 (3:30 PM - ABC at Cotton Bowl)"
-                    ],
-                    comment: "Live at the Cotton Bowl in Dallas! Texas is ranked #1 in the country and they're going to score on all 14 drives today. Oklahoma won't even cross midfield. Lay the 8.5 points and double down!" 
-                }
-            ],
-            0: [
-                { 
-                    league: "NFL", 
-                    title: "LONDON MORNING WEMBLEY PARLAY", 
-                    odds: "+1600 PARLAY", 
-                    tag: "LONDON MORNING SLIP", 
-                    legs: [
-                        "Jacksonville Jaguars -2.5 Spread vs Texans (Odds: -115)",
-                        "Trevor Lawrence 250+ Passing Yards & 2 TDs",
-                        "Game Total OVER 42.5 (9:30 AM - NFLN)"
-                    ],
-                    comment: "London morning football at Wembley Stadium! The Jaguars crossed the Atlantic to dominate. Lay the small line and celebrate before lunch!" 
+                    comment: "Wednesday CUSA double-header! Kennesaw State covers on the road and WKU drops 35 points at Sam Houston State. Lock in both games!" 
                 }
             ]
         };
@@ -1822,7 +1784,7 @@
                     "Josh Allen 4+ Passing TDs in 1st Quarter",
                     "Game Total OVER 52.5 Points"
                 ],
-                comment: "No games on the board today, so Big Jim is looking ahead to the massive clash at SoFi Stadium! Josh Allen is going to run over three defenders on his way to 10 touchdowns. Lay the points early!" 
+                comment: "No games on the board today, so Big Jim is looking ahead to the massive clash at SoFi Stadium! Lay the points early!" 
             }
         ];
 
@@ -1880,6 +1842,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             generateLiveDayBets();
+            renderMerchGrid();
         });
     </script>
 </body>
