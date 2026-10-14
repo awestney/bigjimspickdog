@@ -1454,33 +1454,55 @@
             generateScopedUnhingedSlip(shuffled, "WEEKLY TOP");
         }
 
+        // UNHINGED MODE: TRANSFORM & AUTOMATICALLY STACK WILD PROPS
+        // SAFE MODE: TRIM BLOATED PARLAYS DOWN TO 1-2 CLEAN LOCKS
         function setParlayMode(mode) {
             window.activeParlayMode = mode;
             
-            if (!window.activeLegsList || window.activeLegsList.length === 0) return;
+            if (!window.currentSearchGames || window.currentSearchGames.length === 0) {
+                window.currentSearchGames = [realUpcomingGames[0]];
+            }
 
-            window.activeLegsList = window.activeLegsList.map(legObj => {
-                let matchedGame = window.currentSearchGames.find(g => 
-                    g.matchup && g.matchup.includes(legObj.game)
-                ) || realUpcomingGames[0];
+            let activeGames = window.currentSearchGames;
 
-                let newText = "";
-                if (mode === "UNHINGED") {
-                    let unhingedPool = matchedGame.unhingedProps || matchedGame.unhingedLegs || [
-                        `${legObj.game} Outright Win Moneyline`,
+            if (mode === "UNHINGED") {
+                // Build an aggressive 4-6 leg unhinged parlay automatically
+                let unhingedLegs = [];
+
+                activeGames.forEach(game => {
+                    let pool = game.unhingedProps || game.unhingedLegs || [
+                        `${game.matchup ? game.matchup.split('(')[0].trim() : 'Team'} Moneyline Win`,
                         `Starting QB 300+ Passing Yards & 3 TDs`,
                         `Game Total OVER 62.5 Points`
                     ];
-                    newText = unhingedPool[Math.floor(Math.random() * unhingedPool.length)];
-                } else {
-                    newText = matchedGame.safeLeg || (matchedGame.safeProps ? matchedGame.safeProps[0] : legObj.text);
-                }
 
-                return { game: legObj.game, text: newText };
-            });
+                    let gameTitle = game.matchup ? game.matchup.split('(')[0].trim() : "Active Game";
 
-            renderActiveLegsResponse(`JIM'S ${window.activeLegsList.length}-LINE ${mode} PARLAY`);
-            playSpeech(`Switched slip to ${mode.toLowerCase()} mode!`);
+                    // Add main unhinged line + 1 or 2 props per game
+                    pool.forEach(propText => {
+                        if (unhingedLegs.length < 6) {
+                            unhingedLegs.push({ game: gameTitle, text: propText });
+                        }
+                    });
+                });
+
+                window.activeLegsList = unhingedLegs;
+                renderActiveLegsResponse(`🎲 UNHINGED ${window.activeLegsList.length}-LINE MEGA PARLAY`);
+                playSpeech(`Unhinged mode activated! Automatically stacked wild props to turn this into a lottery ticket!`);
+
+            } else {
+                // SAFE MODE: Trim down parlay to 1 or 2 clean probability locks
+                window.activeLegsList = [];
+
+                activeGames.slice(0, 2).forEach(game => {
+                    let safeText = game.safeLeg || (game.safeProps ? game.safeProps[0] : "Moneyline Win");
+                    let gameTitle = game.matchup ? game.matchup.split('(')[0].trim() : "Active Game";
+                    window.activeLegsList.push({ game: gameTitle, text: safeText });
+                });
+
+                renderActiveLegsResponse(`🎯 SAFE MODE: ${window.activeLegsList.length}-LINE CLEAN LOCK`);
+                playSpeech(`Safe mode activated! Trimmed down slip to high probability locks.`);
+            }
         }
 
         function expandParlayLegs() {
