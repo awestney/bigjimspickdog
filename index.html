@@ -1539,32 +1539,32 @@
             // Clean search query to extract day or team
             let cleanQuery = queryUpper.replace("SAFE", "").replace("UNHINGED", "").replace("CRAZY", "").replace("PARLAY", "").trim();
 
-            // 1. "TONIGHT" / "TODAY" / "TUESDAY" LIVE GAME RECOGNIZER
-            if (cleanQuery.includes("TONIGHT") || cleanQuery.includes("TODAY") || cleanQuery.includes("TUESDAY")) {
-                const tuesdayGames = [realUpcomingGames[0], realUpcomingGames[1]];
-                window.currentSearchGames = tuesdayGames;
+            // 1. "TONIGHT" / "TODAY" / "WEDNESDAY" LIVE GAME RECOGNIZER
+            if (cleanQuery.includes("TONIGHT") || cleanQuery.includes("TODAY") || cleanQuery.includes("WEDNESDAY")) {
+                const wednesdayGames = [realUpcomingGames[0], realUpcomingGames[1]];
+                window.currentSearchGames = wednesdayGames;
 
                 if (isExplicitSafe) {
-                    generateScopedSafeSlip(tuesdayGames, "TONIGHT'S");
+                    generateScopedSafeSlip(wednesdayGames, "TONIGHT'S");
                     return;
                 } else if (isExplicitUnhinged) {
-                    generateScopedUnhingedSlip(tuesdayGames, "TONIGHT'S");
+                    generateScopedUnhingedSlip(wednesdayGames, "TONIGHT'S");
                     return;
                 }
 
-                // DEFAULT: Grounded with a touch of Big Jim energy
-                titleEl.textContent = "TONIGHT'S TUESDAY COLLEGE FOOTBALL GAMES";
-                oddsEl.textContent = "OCTOBER 13 BOARD";
+                // DEFAULT: Display ONLY Wednesday's 2 real games
+                titleEl.textContent = "TONIGHT'S WEDNESDAY COLLEGE FOOTBALL GAMES";
+                oddsEl.textContent = "OCTOBER 14 BOARD";
                 legsEl.innerHTML = `
-                    <li><span class="leg-icon">🏈</span> <strong>Delaware at Middle Tennessee</strong> (7:00 PM ET - Delaware -1.5 / O/U 47.5)</li>
-                    <li><span class="leg-icon">🏈</span> <strong>FIU at Jacksonville State</strong> (8:00 PM ET - Jax State -3.0 / O/U 43.5)</li>
+                    <li><span class="leg-icon">🏈</span> <strong>Kennesaw State at Missouri State</strong> (7:30 PM ET - Kennesaw St -3.5 / O/U 51.5)</li>
+                    <li><span class="leg-icon">🏈</span> <strong>Western Kentucky at Sam Houston</strong> (8:00 PM ET - WKU -1.5 / O/U 53.5)</li>
                 `;
                 
                 quoteEl.innerHTML = `
                     <div style="margin-bottom: 0.5rem; color: #fff;">Pick a game below or select a Safe or Unhinged slip scoped strictly to tonight's games:</div>
                     <div class="choice-btn-group">
-                        <button class="choice-btn" onclick="triggerQuery('Delaware')">🐔 DELAWARE AT MTSU</button>
-                        <button class="choice-btn" onclick="triggerQuery('Jacksonville State')">🐔 JAX STATE VS FIU</button>
+                        <button class="choice-btn" onclick="triggerQuery('Kennesaw State')">🦉 KENNESAW AT MISSOURI ST</button>
+                        <button class="choice-btn" onclick="triggerQuery('Western Kentucky')">🔴 WKU AT SAM HOUSTON</button>
                         <button class="choice-btn" onclick="generateScopedSafeSlip(window.currentSearchGames, 'TONIGHT\\'S')">🎯 SAFE WINNER SLIP</button>
                         <button class="choice-btn" onclick="generateScopedUnhingedSlip(window.currentSearchGames, 'TONIGHT\\'S')">🎲 UNHINGED PARLAY</button>
                     </div>
@@ -1572,7 +1572,7 @@
                 confEl.textContent = "LIVE TONIGHT";
                 meterEl.style.width = '100%';
                 responseBox.style.display = 'block';
-                playSpeech("Here are tonight's Tuesday college football games!");
+                playSpeech("Here are tonight's Wednesday college football games!");
                 return;
             }
 
