@@ -1101,7 +1101,7 @@
 
         <!-- Daily Betting Tips Section -->
         <section id="tips" class="card">
-            <div class="live-banner" id="currentDateBanner">🔴 LIVE TODAY'S PARLAY SLIPS — Oct 14, 2026</div>
+            <div class="live-banner" id="currentDateBanner">🔴 LIVE TODAY'S PARLAY SLIPS — Oct 15, 2026</div>
             <h2 class="section-title" style="margin-top: 0.2rem;">📊 Big Jim's Unreliable Parlays & Locks</h2>
             
             <!-- ASK BIG JIM AI QUESTION WIDGET -->
@@ -1375,6 +1375,8 @@
                 playSpeech("Tennessee Pride turned off. Back to standard market odds.");
             }
 
+            generateLiveDayBets();
+
             if (document.getElementById('askJimInput').value.trim()) {
                 askBigJim();
             }
@@ -1445,16 +1447,14 @@
                 let qbName = "Starting QB";
                 let wrName = "Primary Receiver";
 
-                if (homeTeam.includes("Army") || awayTeam.includes("Army")) { qbName = "Cale Hellums"; wrName = "Brady Anderson"; }
+                if (homeTeam.includes("Seahawks") || awayTeam.includes("Seahawks")) { qbName = "Geno Smith"; wrName = "DK Metcalf"; }
+                else if (homeTeam.includes("Broncos") || awayTeam.includes("Broncos")) { qbName = "Bo Nix"; wrName = "Courtland Sutton"; }
+                else if (homeTeam.includes("Army") || awayTeam.includes("Army")) { qbName = "Cale Hellums"; wrName = "Brady Anderson"; }
                 else if (homeTeam.includes("Bowling Green") || awayTeam.includes("Bowling Green")) { qbName = "Jarin Mock"; wrName = "Winn Sharp"; }
                 else if (homeTeam.includes("Tennessee") || awayTeam.includes("Tennessee")) { qbName = "Nico Iamaleava"; wrName = "Braylon Staley"; }
                 else if (homeTeam.includes("Titans") || awayTeam.includes("Titans")) { qbName = "Will Levis"; wrName = "Calvin Ridley"; }
                 else if (homeTeam.includes("Texas") || awayTeam.includes("Texas")) { qbName = "Quinn Ewers"; wrName = "Johntay Cook"; }
                 else if (homeTeam.includes("Ohio State") || awayTeam.includes("Ohio State")) { qbName = "Will Howard"; wrName = "Jeremiah Smith"; }
-                else if (homeTeam.includes("Colts") || awayTeam.includes("Colts")) { qbName = "Anthony Richardson"; wrName = "Michael Pittman Jr."; }
-                else if (homeTeam.includes("Steelers") || awayTeam.includes("Steelers")) { qbName = "Russell Wilson"; wrName = "George Pickens"; }
-                else if (homeTeam.includes("Chiefs") || awayTeam.includes("Chiefs")) { qbName = "Patrick Mahomes"; wrName = "Travis Kelce"; }
-                else if (homeTeam.includes("Eagles") || awayTeam.includes("Eagles")) { qbName = "Jalen Hurts"; wrName = "AJ Brown"; }
 
                 return {
                     league: leagueTitle,
@@ -1497,8 +1497,27 @@
             });
         }
 
-        // FALLBACK DATABASE WITH REAL SUNDAY NFL & SATURDAY NCAA MATCHUPS
+        // FALLBACK DATABASE WITH REAL THURSDAY NIGHT NFL & WEEKEND MATCHUPS
         const realUpcomingGames = [
+            {
+                keywords: ["SEAHAWKS", "BRONCOS", "SEATTLE", "DENVER", "THURSDAY", "TONIGHT"],
+                matchup: "Seattle Seahawks at Denver Broncos (Thu Oct 15, 8:15 PM ET - Prime Video)",
+                odds: "-110 THURSDAY NIGHT LOCK",
+                commenceDate: new Date("2026-10-16T00:15:00Z"),
+                safeLeg: "Seattle Seahawks -2.5 Cover Spread at Denver Broncos (-110)",
+                safeProps: [
+                    "Seattle Seahawks -2.5 Cover Spread at Denver Broncos (-110)",
+                    "Game Total OVER 42.5 Points (-108)",
+                    "Geno Smith 225+ Passing Yards"
+                ],
+                unhingedProps: [
+                    "Seattle Seahawks -7.5 Alternate Spread",
+                    "Geno Smith 300+ Passing Yards & 3 TDs",
+                    "DK Metcalf 90+ Receiving Yards & Anytime TD",
+                    "Courtland Sutton 75+ Receiving Yards"
+                ],
+                comment: "Thursday Night Football at Empower Field at Mile High!"
+            },
             {
                 keywords: ["VOLS", "TENNESSEE VOLS", "VOLUNTEERS", "UT VOLS", "ALABAMA", "BAMA", "TENNESSEE", "TN"],
                 matchup: "#14 Tennessee Volunteers vs #6 Alabama Crimson Tide (Sat Oct 17, 3:30 PM ET - Neyland)",
@@ -1530,61 +1549,9 @@
                 ],
                 unhingedProps: [
                     "Calvin Ridley 80+ Receiving Yards & Anytime TD",
-                    "Will Levis 300+ Passing Yards & 3 TDs",
-                    "Game Total OVER 54.5 Points"
+                    "Will Levis 300+ Passing Yards & 3 TDs"
                 ],
-                comment: "Titans traveling up to Indy! Line has Colts as -6.5 favorites."
-            },
-            {
-                keywords: ["ARMY", "BLACK KNIGHTS", "FLORIDA ATLANTIC", "FAU"],
-                matchup: "Florida Atlantic Owls at Army Black Knights (Sat Oct 17, 11:00 AM ET)",
-                odds: "+173 LIVE LINE",
-                commenceDate: new Date("2026-10-17T15:00:00Z"),
-                safeLeg: "Army Black Knights Moneyline Win vs Florida Atlantic",
-                safeProps: [
-                    "Army Black Knights Moneyline Win vs Florida Atlantic",
-                    "Game Total OVER 45.5 Points",
-                    "Cale Hellums 180+ Passing Yards"
-                ],
-                unhingedProps: [
-                    "Army Black Knights -10.5 Alternate Spread",
-                    "Cale Hellums 250+ Passing Yards & 3 TDs",
-                    "Brady Anderson 80+ Receiving Yards & Anytime TD"
-                ],
-                comment: "Army Black Knights at Michie Stadium!"
-            },
-            {
-                keywords: ["BOWLING GREEN", "FALCONS", "BALL STATE", "CARDINALS"],
-                matchup: "Ball State Cardinals at Bowling Green Falcons (Sat Oct 17, 11:00 AM ET)",
-                odds: "+136 LIVE LINE",
-                commenceDate: new Date("2026-10-17T15:00:00Z"),
-                safeLeg: "Bowling Green Falcons Moneyline Win vs Ball State",
-                safeProps: [
-                    "Bowling Green Falcons Moneyline Win vs Ball State",
-                    "Game Total OVER 48.5 Points"
-                ],
-                unhingedProps: [
-                    "Bowling Green -12.5 Alternate Spread",
-                    "Winn Sharp 90+ Receiving Yards & Anytime TD"
-                ],
-                comment: "MAC Conference Action!"
-            },
-            {
-                keywords: ["RAIDERS", "LAS VEGAS RAIDERS", "STEELERS", "PITTSBURGH"],
-                matchup: "Las Vegas Raiders at Pittsburgh Steelers (Sun Oct 18, 1:00 PM ET)",
-                odds: "+1150 AFC SHOWDOWN",
-                commenceDate: new Date("2026-10-18T17:00:00Z"),
-                safeLeg: "Pittsburgh Steelers Moneyline Win vs Raiders (-210)",
-                safeProps: [
-                    "Pittsburgh Steelers -4.5 Spread vs Raiders (-110)",
-                    "Game Total UNDER 41.5 Points (-112)",
-                    "George Pickens 60+ Receiving Yards"
-                ],
-                unhingedProps: [
-                    "Steelers Defense Pick-Six Touchdown Scored",
-                    "Russell Wilson 275+ Passing Yards & 3 TDs"
-                ],
-                comment: "Steelers -4.5 favorites at home!"
+                comment: "Titans traveling up to Indy!"
             }
         ];
 
@@ -1688,7 +1655,6 @@
             playSpeech(`Expanded your slip to a ${window.activeLegsList.length}-line ${window.activeParlayMode.toLowerCase()} parlay!`);
         }
 
-        // ACCURATE STRICTLY CAPPED SIMPLIFIER (MAX 3-4 LEGS OF MONEYLINES / SPREADS ONLY)
         function simplifyParlayLegs() {
             if (!window.currentSearchGames || window.currentSearchGames.length === 0) {
                 window.currentSearchGames = [realUpcomingGames[0]];
@@ -1864,7 +1830,7 @@
             playSpeech(`Generated your custom parlay from your checked Saturday games!`);
         }
 
-        // GLOBAL SEARCH ENGINE WITH STRICT INFORMATIONAL VS PARLAY ROUTING & TENNESSEE PRIDE
+        // GLOBAL SEARCH ENGINE WITH INFORMATIONAL CHECKBOX ROUTING
         async function askBigJim() {
             const rawInput = document.getElementById('askJimInput').value.trim();
             if (!rawInput) return;
@@ -1912,7 +1878,7 @@
                 requestedLegsCount = parseInt(digitMatch[1], 10);
             }
 
-            // 5. CHECK INFORMATIONAL INTENT ("WHAT GAMES ARE HAPPENING ON SATURDAY")
+            // 5. INFORMATIONAL ROUTE ("WHAT GAMES ARE HAPPENING ON SATURDAY")
             const isInformationalQuery = (queryUpper.includes("WHAT GAMES") || queryUpper.includes("WHATS HAPPENING") || queryUpper.includes("GAMES ARE HAPPENING") || queryUpper.includes("SHOW GAMES") || queryUpper.includes("LIST GAMES")) && requestedLegsCount === 0;
 
             if (isInformationalQuery && queryUpper.includes("SATURDAY")) {
@@ -1935,16 +1901,11 @@
                 g.keywords && g.keywords.some(kw => tennesseeKeywords.includes(kw))
             );
 
-            // 7. SPECIFIC MATCHUP / TEAM SEARCH
-            let matchedGames = activeGamesDatabase.filter(game => 
-                game.keywords && game.keywords.some(kw => queryUpper.includes(kw))
-            );
-
-            // 8. DAY SLATE / PARLAY GENERATOR ROUTE
+            // 7. DAY SLATE / PARLAY GENERATOR ROUTE
             const isDaySlateQuery = queryUpper.includes("SUNDAY") || queryUpper.includes("SATURDAY") || queryUpper.includes("WEEK") || queryUpper.includes("PARLAY");
 
-            if (isDaySlateQuery || matchedGames.length > 0) {
-                let slateGames = matchedGames.length > 0 ? matchedGames : activeGamesDatabase;
+            if (isDaySlateQuery) {
+                let slateGames = activeGamesDatabase;
 
                 if (queryUpper.includes("SATURDAY")) {
                     slateGames = activeGamesDatabase.filter(g => !g.commenceDate || g.commenceDate.getDay() === 6);
@@ -1954,7 +1915,6 @@
 
                 if (slateGames.length === 0) slateGames = realUpcomingGames;
 
-                // MANDATORY TENNESSEE PRIDE PRIORITIZATION INTO LEG 1
                 if (forceTennesseeBias && tnSportGames.length > 0) {
                     slateGames = [...tnSportGames, ...slateGames.filter(g => !tnSportGames.includes(g))];
                 }
@@ -1995,18 +1955,85 @@
                 return;
             }
 
-            // FALLBACK MATCHUP FOR UNMATCHED RAW PHRASES
+            // FALLBACK
             let fallbackTitle = isNFL ? "SUNDAY NFL SLATE" : "SATURDAY NCAA SLATE";
 
             window.activeLegsList = [
+                { game: "Seattle Seahawks at Denver Broncos", text: "Seattle Seahawks -2.5 Cover Spread (-110)" },
                 { game: "Tennessee Titans vs Indianapolis Colts", text: "Tennessee Titans +6.5 Cover Spread (-110)" },
                 { game: "Kansas City Chiefs at San Francisco 49ers", text: "Kansas City Chiefs -1.5 Cover Spread (-108)" },
-                { game: "Philadelphia Eagles at Dallas Cowboys", text: "Philadelphia Eagles -3.5 Spread (-112)" },
-                { game: "Buffalo Bills at LA Rams", text: "Buffalo Bills -3.5 Cover Spread (-110)" }
+                { game: "Philadelphia Eagles at Dallas Cowboys", text: "Philadelphia Eagles -3.5 Spread (-112)" }
             ].slice(0, requestedLegsCount > 0 ? requestedLegsCount : 4);
 
             renderActiveLegsResponse(`JIM'S ${fallbackTitle} PARLAY`);
             playSpeech(`Generated your custom parlay slip!`);
+        }
+
+        // ASYNCHRONOUS BOTTOM CARD GENERATOR FOR TODAY'S LIVE MATCHUPS
+        async function generateLiveDayBets() {
+            const today = new Date();
+            const fullDateString = today.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+            
+            document.getElementById("currentDateBanner").innerText = `🔴 LIVE TODAY'S PARLAY SLIPS — ${fullDateString}`;
+
+            const picksContainer = document.getElementById("dynamicPicksContainer");
+            picksContainer.innerHTML = `<div style="text-align: center; padding: 2rem 0; color: var(--text-muted);">🔄 Fetching today's live sportsbook lines...</div>`;
+
+            // Try Live API Fetch for Today's NFL & College Football Games
+            let liveNCAA = await fetchLiveSportsbookOdds("americanfootball_ncaaf");
+            let liveNFL = await fetchLiveSportsbookOdds("americanfootball_nfl");
+
+            let allLive = [...(liveNFL || []), ...(liveNCAA || []), ...realUpcomingGames];
+
+            // Filter for Today's / Immediate Next Matchups
+            let todaysMatchups = allLive.slice(0, 3);
+
+            if (todaysMatchups.length === 0) {
+                todaysMatchups = realUpcomingGames;
+                document.getElementById("scheduleNoticeText").innerText = "No live game schedules today! Big Jim is looking ahead to upcoming parlay slips:";
+            } else {
+                document.getElementById("scheduleNoticeText").innerText = "Live game schedules actively tracking. Unreliable, high-energy parlay slips generated for today's matchups:";
+            }
+
+            picksContainer.innerHTML = "";
+
+            todaysMatchups.forEach((match, idx) => {
+                const card = document.createElement("div");
+                card.className = `pick-card ${idx === 0 ? "premium" : ""}`;
+                
+                const confidence = 88 + (idx * 4);
+
+                let matchTitle = match.matchup ? match.matchup : "LIVE GAME LOCK";
+                let legs = match.safeProps || match.defaultLegs || [match.safeLeg || "Moneyline Win"];
+
+                if (window.isTennesseePrideActive && match.keywords && match.keywords.some(kw => ["VOLS", "TENNESSEE", "TITANS"].includes(kw))) {
+                    matchTitle = `🍊 ${matchTitle} (TENNESSEE PRIDE)`;
+                }
+
+                let legsHtml = '<ul class="parlay-legs-list">';
+                legs.slice(0, 3).forEach(leg => {
+                    legsHtml += `<li><span class="leg-icon">⚡</span> ${leg}</li>`;
+                });
+                legsHtml += '</ul>';
+
+                card.innerHTML = `
+                    <div class="pick-header">
+                        <span class="pick-title">${match.league || 'LIVE'}: ${matchTitle}</span>
+                        <span class="pick-odds">${match.odds || '+180 LOCK'}</span>
+                        <span class="pick-tag ${idx === 0 ? "live-highlight" : "parlay"}">${idx === 0 ? "TODAY'S MAIN LOCK" : "LIVE SLIP"}</span>
+                    </div>
+                    ${legsHtml}
+                    <p class="pick-quote">"${match.comment || 'Smash the spread right now!'}"</p>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--accent-gold); font-weight: 700;">
+                        <span>BIG JIM'S OVERCONFIDENT RATING</span>
+                        <span>${confidence}% VIBES & ZERO FILM</span>
+                    </div>
+                    <div class="confidence-meter">
+                        <div class="confidence-fill" style="width: ${confidence}%"></div>
+                    </div>
+                `;
+                picksContainer.appendChild(card);
+            });
         }
 
         // Native Merch Grid Renderer
@@ -2057,91 +2084,6 @@
                 `;
             });
             container.innerHTML = html;
-        }
-
-        // Dynamic Daily Parlay Slips Loader
-        const parlaySportsLibrary = {
-            3: [
-                { 
-                    league: "NCAAF (C-USA)", 
-                    title: "WEDNESDAY CUSA DOUBLE LOCK", 
-                    odds: "+220 PARLAY", 
-                    tag: "WEDNESDAY SLIP", 
-                    legs: [
-                        "Kennesaw State -3.5 Spread at Missouri State (Odds: +100)",
-                        "Western Kentucky -1.5 Spread at Sam Houston (Odds: -104)",
-                        "WKU/Sam Houston OVER 53.5 Total Points (Odds: -108)"
-                    ],
-                    comment: "Wednesday CUSA double-header! Kennesaw State covers on the road and WKU drops 35 points at Sam Houston State. Lock in both games!" 
-                }
-            ]
-        };
-
-        const parlayFallback = [
-            { 
-                league: "NFL LOOKAHEAD", 
-                title: "SOFI STADIUM MEGA-PARLAY", 
-                odds: "+1450 PARLAY", 
-                tag: "WEEKEND LOOKAHEAD", 
-                legs: [
-                    "Buffalo Bills -3.5 Spread at LA Rams",
-                    "Josh Allen 4+ Passing TDs in 1st Quarter",
-                    "Game Total OVER 52.5 Points"
-                ],
-                comment: "No games on the board today, so Big Jim is looking ahead to the massive clash at SoFi Stadium! Lay the points early!" 
-            }
-        ];
-
-        function generateLiveDayBets() {
-            const today = new Date();
-            const fullDateString = today.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
-            
-            document.getElementById("currentDateBanner").innerText = `🔴 LIVE TODAY'S PARLAY SLIPS — ${fullDateString}`;
-
-            const dayOfWeek = today.getDay();
-            const picksContainer = document.getElementById("dynamicPicksContainer");
-            picksContainer.innerHTML = "";
-
-            let matchups = parlaySportsLibrary[dayOfWeek] || [];
-
-            if (matchups.length === 0) {
-                matchups = parlayFallback;
-                document.getElementById("scheduleNoticeText").innerText = "No game schedules today! Big Jim is looking ahead to the next upcoming parlay slips:";
-            } else {
-                document.getElementById("scheduleNoticeText").innerText = "Game schedules actively tracking live. Unreliable, high-energy multi-leg parlay slips on today's/upcoming games:";
-            }
-
-            matchups.forEach((match, idx) => {
-                const card = document.createElement("div");
-                card.className = `pick-card ${idx === 0 ? "premium" : ""}`;
-                
-                const seedVal = today.getDate() + idx;
-                const confidence = 85 + ((seedVal * 13) % 15);
-
-                let legsHtml = '<ul class="parlay-legs-list">';
-                match.legs.forEach(leg => {
-                    legsHtml += `<li><span class="leg-icon">⚡</span> ${leg}</li>`;
-                });
-                legsHtml += '</ul>';
-
-                card.innerHTML = `
-                    <div class="pick-header">
-                        <span class="pick-title">${match.league}: ${match.title}</span>
-                        <span class="pick-odds">${match.odds}</span>
-                        <span class="pick-tag ${idx === 1 ? "parlay" : idx === 2 ? "live-highlight" : ""}">${match.tag}</span>
-                    </div>
-                    ${legsHtml}
-                    <p class="pick-quote">"${match.comment}"</p>
-                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--accent-gold); font-weight: 700;">
-                        <span>BIG JIM'S OVERCONFIDENT RATING</span>
-                        <span>${confidence}% VIBES & ZERO FILM</span>
-                    </div>
-                    <div class="confidence-meter">
-                        <div class="confidence-fill" style="width: ${confidence}%"></div>
-                    </div>
-                `;
-                picksContainer.appendChild(card);
-            });
         }
 
         document.addEventListener('DOMContentLoaded', () => {
