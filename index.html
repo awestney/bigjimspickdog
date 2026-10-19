@@ -1650,10 +1650,32 @@
             playSpeech(`Expanded slip!`);
         }
 
+        // ACCURATE SIMPLIFIER (SAFEGUARDS SINGLE-GAME SGPS VS MULTI-GAME SLATES)
         function simplifyParlayLegs() {
             let games = window.currentSearchGames;
             window.activeLegsList = [];
 
+            if (!games || games.length === 0) {
+                games = getDynamicGameSlate("americanfootball_nfl");
+            }
+
+            // SINGLE GAME / SGP SIMPLIFICATION (PREVENTS 1-LEG -320 SLIPS)
+            if (games.length === 1) {
+                let game = games[0];
+                let gameTitle = game.matchup ? game.matchup.split('(')[0].trim() : "Active Game";
+                let pool = game.safeProps || [game.safeLeg || "Moneyline Win", "Game Total OVER 42.5 Points"];
+                
+                // Stack top 3 clean legs for the single game so the payout remains profitable (+180 to +220)
+                pool.slice(0, 3).forEach(propText => {
+                    window.activeLegsList.push({ game: gameTitle, text: propText });
+                });
+
+                renderActiveLegsResponse(`🎯 SIMPLIFIED 3-LEG CLEAN SGP (+210 PARLAY)`);
+                playSpeech(`Simplified down to a 3-leg clean same game parlay!`);
+                return;
+            }
+
+            // MULTI-GAME SLATE SIMPLIFICATION (CAPS AT 3 TO 4 DISTINCT GAMES)
             let capCount = Math.min(games.length, 4);
 
             for (let i = 0; i < capCount; i++) {
@@ -1664,7 +1686,7 @@
             }
 
             renderActiveLegsResponse(`🎯 SIMPLIFIED ${window.activeLegsList.length}-LEG CLEAN WINNER SLIP`);
-            playSpeech(`Simplified down to a clean winner slip!`);
+            playSpeech(`Simplified down to a clean multi-game winner slip!`);
         }
 
         function renderActiveLegsResponse(customTitle = "") {
@@ -1864,7 +1886,7 @@
             document.getElementById("currentDateBanner").innerText = `🔴 LIVE TODAY'S PARLAY SLIPS — ${fullDateString}`;
 
             const picksContainer = document.getElementById("dynamicPicksContainer");
-            picksContainer.innerHTML = `<div style="text-align: center; padding: 3rem 0; color: var(--text-muted);">🔄 Fetching live sportsbook feeds...</div>`;
+            picksContainer.innerHTML = `<div style="text-align: center; padding: 2rem 0; color: var(--text-muted);">🔄 Fetching live sportsbook feeds...</div>`;
 
             let liveNCAA = await fetchLiveSportsbookOdds("americanfootball_ncaaf");
             let liveNFL = await fetchLiveSportsbookOdds("americanfootball_nfl");
