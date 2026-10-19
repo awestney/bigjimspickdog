@@ -1402,7 +1402,7 @@
             }
         }
 
-        // DYNAMIC GAME SLATE GENERATOR (DYNAMIC FALLBACK ENGINE)
+        // DYNAMIC GAME SLATE GENERATOR (NON-REDUNDANT DYNAMIC PROPS ENGINE)
         function getDynamicGameSlate(sportKey = "americanfootball_nfl") {
             const isNFL = sportKey.includes("nfl");
             const now = new Date();
@@ -1420,10 +1420,10 @@
                         odds: "San Francisco 49ers -7.5 Cover Spread (-110)",
                         safeLeg: "San Francisco 49ers Moneyline Win (-320)",
                         safeProps: [
-                            "San Francisco 49ers Moneyline Win (-320)",
                             "San Francisco 49ers -7.5 Cover Spread (-110)",
                             "Game Total OVER 44.5 Points (-110)",
-                            "Starting QB 225+ Passing Yards (-115)"
+                            "Starting QB 225+ Passing Yards (-115)",
+                            "Primary WR 60+ Receiving Yards (-110)"
                         ],
                         unhingedProps: [
                             "San Francisco 49ers -13.5 Alternate Spread (+190)",
@@ -1460,9 +1460,9 @@
                         odds: "Kansas City Chiefs -1.5 Cover Spread (-108)",
                         safeLeg: "Kansas City Chiefs Moneyline Win (-125)",
                         safeProps: [
-                            "Kansas City Chiefs Moneyline Win (-125)",
                             "Kansas City Chiefs -1.5 Cover Spread (-108)",
-                            "Game Total OVER 46.5 Points (-110)"
+                            "Game Total OVER 46.5 Points (-110)",
+                            "Starting QB 250+ Passing Yards (-120)"
                         ],
                         unhingedProps: [
                             "Kansas City Chiefs -7.5 Alternate Spread (+180)",
@@ -1499,11 +1499,11 @@
                         keywords: ["TEXAS", "LONGHORNS", "FLORIDA", "GATORS"],
                         matchup: `[NCAAF] Florida Gators at Texas Longhorns (Sat ${satStr})`,
                         odds: "Texas Longhorns -10.5 Cover Spread (-110)",
-                        safeLeg: "Texas Longhorns Moneyline Win (-400)",
+                        safeLeg: "Texas Longhorns -10.5 Cover Spread (-110)",
                         safeProps: [
-                            "Texas Longhorns Moneyline Win (-400)",
                             "Texas Longhorns -10.5 Cover Spread (-110)",
-                            "Game Total OVER 53.5 Points (-108)"
+                            "Game Total OVER 53.5 Points (-108)",
+                            "Starting QB 225+ Passing Yards (-125)"
                         ],
                         unhingedProps: [
                             "Texas Longhorns -17.5 Alternate Spread (+185)",
@@ -1515,7 +1515,7 @@
             }
         }
 
-        // FULLY DYNAMIC PARSER
+        // FULLY DYNAMIC PARSER WITH NON-REDUNDANT PROPS
         function parseLiveFanDuelOdds(rawGames) {
             if (!rawGames || !Array.isArray(rawGames)) return [];
 
@@ -1559,12 +1559,12 @@
                     keywords: [homeTeam.toUpperCase(), awayTeam.toUpperCase()],
                     matchup: `[${leagueTitle}] ${awayTeam} at ${homeTeam} (${commenceTime})`,
                     odds: spread,
-                    safeLeg: moneyline,
+                    safeLeg: spread,
                     safeProps: [
-                        moneyline,
                         spread,
                         total,
-                        `${homeTeam} Team Total OVER 20.5 Points`
+                        `${homeTeam} Team Total OVER 20.5 Points`,
+                        `Starting QB 225+ Passing Yards`
                     ],
                     unhingedProps: [
                         `${homeTeam} Outright Win Moneyline`,
@@ -1650,7 +1650,7 @@
             playSpeech(`Expanded slip!`);
         }
 
-        // ACCURATE SIMPLIFIER (SAFEGUARDS SINGLE-GAME SGPS VS MULTI-GAME SLATES)
+        // ACCURATE SIMPLIFIER (NON-REDUNDANT LEGS)
         function simplifyParlayLegs() {
             let games = window.currentSearchGames;
             window.activeLegsList = [];
@@ -1659,13 +1659,17 @@
                 games = getDynamicGameSlate("americanfootball_nfl");
             }
 
-            // SINGLE GAME / SGP SIMPLIFICATION (PREVENTS 1-LEG -320 SLIPS)
+            // SINGLE GAME / SGP SIMPLIFICATION (CLEAN NON-REDUNDANT LEGS)
             if (games.length === 1) {
                 let game = games[0];
                 let gameTitle = game.matchup ? game.matchup.split('(')[0].trim() : "Active Game";
-                let pool = game.safeProps || [game.safeLeg || "Moneyline Win", "Game Total OVER 42.5 Points"];
+                let pool = game.safeProps || [
+                    game.safeLeg || "San Francisco 49ers -7.5 Cover Spread (-110)", 
+                    "Game Total OVER 44.5 Points (-110)",
+                    "Starting QB 225+ Passing Yards (-115)"
+                ];
                 
-                // Stack top 3 clean legs for the single game so the payout remains profitable (+180 to +220)
+                // Stack 3 distinct, valid legs (Spread + Over/Under + Player Prop) so bet returns +210
                 pool.slice(0, 3).forEach(propText => {
                     window.activeLegsList.push({ game: gameTitle, text: propText });
                 });
@@ -1886,7 +1890,7 @@
             document.getElementById("currentDateBanner").innerText = `🔴 LIVE TODAY'S PARLAY SLIPS — ${fullDateString}`;
 
             const picksContainer = document.getElementById("dynamicPicksContainer");
-            picksContainer.innerHTML = `<div style="text-align: center; padding: 2rem 0; color: var(--text-muted);">🔄 Fetching live sportsbook feeds...</div>`;
+            picksContainer.innerHTML = `<div style="text-align: center; padding: 3rem 0; color: var(--text-muted);">🔄 Fetching live sportsbook feeds...</div>`;
 
             let liveNCAA = await fetchLiveSportsbookOdds("americanfootball_ncaaf");
             let liveNFL = await fetchLiveSportsbookOdds("americanfootball_nfl");
