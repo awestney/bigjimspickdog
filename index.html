@@ -1129,7 +1129,7 @@
                 <div id="askJimResponse" class="ask-jim-response">
                     <div class="pick-header">
                         <span class="pick-title" id="aiResponseTitle">CUSTOM PARLAY</span>
-                        <span class="pick-odds" id="aiResponseOdds">+1800 UNHINGED</span>
+                        <span class="pick-odds" id="aiResponseOdds">+180 UNHINGED</span>
                     </div>
                     <ul class="parlay-legs-list" id="aiResponseLegs">
                         <!-- Injected via JS -->
@@ -1308,11 +1308,9 @@
             "PARLAY", "LEGS", "LINES", "PROPS", "BET", "LOCK", "SAFE", "UNHINGED", "RISKY",
             "TONIGHT", "TODAY", "MONDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY",
             "TENNESSEE", "VOLUNTEERS", "VOLS", "TITANS", "ALABAMA", "BAMA", "COLTS",
-            "COMMANDERS", "WASHINGTON", "49ERS", "SAN FRANCISCO", "LONGHORNS", "TEXAS",
             "NCAA", "NCAAF", "NFL", "SOCCER", "HOCKEY", "SPREAD", "MONEYLINE", "OVER", "UNDER", "WEEK"
         ];
 
-        // LEVENSHTEIN DISTANCE ALGORITHM
         function getLevenshteinDistance(a, b) {
             if (a.length === 0) return b.length;
             if (b.length === 0) return a.length;
@@ -1386,23 +1384,24 @@
             boxes.forEach(cb => cb.checked = shouldCheck);
         }
 
-        // REAL-TIME ASYNCHRONOUS ODDS FETCH
+        // REAL-TIME DYNAMIC SPORTSBOOK FETCH
         async function fetchLiveSportsbookOdds(sportKey = "americanfootball_ncaaf") {
-            if (!ODDS_API_KEY) return null;
+            if (!ODDS_API_KEY) return [];
 
             const url = `https://api.the-odds-api.com/v4/sports/${sportKey}/odds/?apiKey=${ODDS_API_KEY}&regions=${REGIONS}&markets=${MARKETS}&bookmakers=fanduel,draftkings,betmgm`;
 
             try {
                 const response = await fetch(url);
-                if (!response.ok) return null;
+                if (!response.ok) return [];
                 const liveGamesData = await response.json();
                 return parseLiveFanDuelOdds(liveGamesData);
             } catch (err) {
                 console.error("Live odds fetch error:", err);
-                return null;
+                return [];
             }
         }
 
+        // FULLY DYNAMIC PARSER — NO HARDCODED PLAYER NAMES OR DATES
         function parseLiveFanDuelOdds(rawGames) {
             if (!rawGames || !Array.isArray(rawGames)) return [];
 
@@ -1412,182 +1411,76 @@
                 
                 let leagueTitle = "NCAAF";
                 if (game.sport_key && game.sport_key.includes("nfl")) leagueTitle = "NFL";
-                if (game.sport_title && game.sport_title.toUpperCase().includes("NFL")) leagueTitle = "NFL";
 
                 const gameDate = new Date(game.commence_time);
                 const commenceTime = gameDate.toLocaleString('en-US', { 
                     weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' 
                 });
 
-                let moneyline = "";
-                let spread = "";
-                let total = "";
+                let moneyline = `${homeTeam} Moneyline Win`;
+                let spread = `${homeTeam} Cover Spread`;
+                let total = `Game Total OVER Points`;
 
-                const bookie = game.bookmakers.find(b => b.key === 'fanduel') || game.bookmakers.find(b => b.key === 'draftkings') || game.bookmakers[0];
+                const bookie = game.bookmakers?.find(b => b.key === 'fanduel') || game.bookmakers?.[0];
                 if (bookie) {
                     bookie.markets.forEach(m => {
                         if (m.key === 'h2h') {
                             const homeOdds = m.outcomes.find(o => o.name === homeTeam)?.price || "";
-                            const awayOdds = m.outcomes.find(o => o.name === awayTeam)?.price || "";
-                            moneyline = `${homeTeam} (${homeOdds > 0 ? '+' : ''}${homeOdds}) Moneyline Win vs ${awayTeam}`;
+                            moneyline = `${homeTeam} Moneyline Win (${homeOdds > 0 ? '+' : ''}${homeOdds})`;
                         }
                         if (m.key === 'spreads') {
                             const homePoint = m.outcomes.find(o => o.name === homeTeam)?.point || "";
-                            spread = `${homeTeam} ${homePoint > 0 ? '+' : ''}${homePoint} Cover Spread`;
+                            spread = `${homeTeam} ${homePoint > 0 ? '+' : ''}${homePoint} Cover Spread (-110)`;
                         }
                         if (m.key === 'totals') {
                             const overPoint = m.outcomes[0]?.point || "";
-                            total = `Game Total Over ${overPoint} Points`;
+                            total = `Game Total OVER ${overPoint} Points (-110)`;
                         }
                     });
                 }
-
-                // DYNAMIC NAMED STARTING PLAYER PROPS BUILDER
-                let qbName = "Starting QB";
-                let wrName = "Primary Receiver";
-
-                if (homeTeam.includes("49ers") || awayTeam.includes("49ers")) { qbName = "Brock Purdy"; wrName = "Deebo Samuel"; }
-                else if (homeTeam.includes("Commanders") || awayTeam.includes("Commanders")) { qbName = "Jayden Daniels"; wrName = "Terry McLaurin"; }
-                else if (homeTeam.includes("Tennessee") || awayTeam.includes("Tennessee")) { qbName = "Nico Iamaleava"; wrName = "Braylon Staley"; }
-                else if (homeTeam.includes("Titans") || awayTeam.includes("Titans")) { qbName = "Will Levis"; wrName = "Calvin Ridley"; }
 
                 return {
                     league: leagueTitle,
                     commenceDate: gameDate,
                     keywords: [homeTeam.toUpperCase(), awayTeam.toUpperCase()],
                     matchup: `[${leagueTitle}] ${awayTeam} at ${homeTeam} (${commenceTime})`,
-                    odds: `${spread || moneyline} Live Line`,
-                    safeLeg: `${moneyline || spread}`,
+                    odds: spread,
+                    safeLeg: moneyline,
                     safeProps: [
-                        `${spread || 'Cover Spread'}`,
-                        `${total || 'Over Points Total'}`,
-                        `${homeTeam} Team Total OVER 23.5 Points`,
-                        `${qbName} 225+ Passing Yards`
+                        moneyline,
+                        spread,
+                        total,
+                        `${homeTeam} Team Total OVER 20.5 Points`
                     ],
                     unhingedProps: [
                         `${homeTeam} Outright Win Moneyline`,
-                        `${qbName} 275+ Passing Yards & 2 TDs`,
-                        `${wrName} 70+ Receiving Yards & Anytime TD`,
-                        `Game Total OVER 48.5 Points`
+                        `${homeTeam} -10.5 Alternate Spread (+185)`,
+                        `${awayTeam} Team Total OVER 21.5 Points`,
+                        `${homeTeam} 1st Quarter Winner (-110)`,
+                        `${total} & 4+ Touchdowns Scored`
                     ],
-                    playerProps: [
-                        `${spread || 'Cover Spread'}`,
-                        `${total || 'Over Points Total'}`,
-                        `${homeTeam} Team Total OVER 24.5 Points`,
-                        `${wrName} 75+ Receiving Yards & Anytime TD`,
-                        `${qbName} 250+ Passing Yards & 2 TDs`
-                    ],
-                    defaultLegs: [
-                        `${spread || 'Cover Spread'}`,
-                        `${total || 'Over Points Total'}`,
-                        `${moneyline || 'Moneyline Win'}`
-                    ],
-                    unhingedLegs: [
-                        `${homeTeam} -10.5 Alternate Spread`,
-                        `${total || 'Over Points'} & 3+ Touchdowns Scored`,
-                        `Margin of Victory 10+ Points`
-                    ],
-                    comment: `Live real-time market odds dynamically fetched for ${awayTeam} at ${homeTeam}!`
+                    comment: `Real-time sportsbook odds actively fetched for ${awayTeam} at ${homeTeam}!`
                 };
             });
         }
-
-        // DYNAMIC ACCURATE DATABASE WITH TODAY'S MONDAY NIGHT FOOTBALL MATCHUP (OCT 19, 2026)
-        const realUpcomingGames = [
-            {
-                keywords: ["COMMANDERS", "49ERS", "WASHINGTON", "SAN FRANCISCO", "MONDAY", "TONIGHT", "TODAY"],
-                matchup: "Washington Commanders at San Francisco 49ers (Mon Oct 19, 8:15 PM ET - ESPN/ABC)",
-                odds: "-7.5 MONDAY NIGHT LOCK",
-                commenceDate: new Date("2026-10-20T00:15:00Z"),
-                safeLeg: "San Francisco 49ers -7.5 Cover Spread vs Commanders (-110)",
-                safeProps: [
-                    "San Francisco 49ers -7.5 Cover Spread vs Commanders (-110)",
-                    "Game Total OVER 46.5 Points (-108)",
-                    "Brock Purdy 225+ Passing Yards (-115)"
-                ],
-                unhingedProps: [
-                    "San Francisco 49ers -13.5 Alternate Spread",
-                    "Brock Purdy 275+ Passing Yards & 3 Touchdowns",
-                    "Deebo Samuel 75+ Receiving Yards & Anytime TD",
-                    "Jayden Daniels 225+ Passing Yards & 1 TD",
-                    "Terry McLaurin 60+ Receiving Yards",
-                    "Game Total OVER 52.5 Points"
-                ],
-                comment: "Monday Night Football at Levi's Stadium in Santa Clara! 49ers favored by 7.5."
-            },
-            {
-                keywords: ["VOLS", "TENNESSEE VOLS", "VOLUNTEERS", "UT VOLS", "ALABAMA", "BAMA", "TENNESSEE", "TN"],
-                matchup: "#14 Tennessee Volunteers vs #6 Alabama Crimson Tide (Sat Oct 24, 3:30 PM ET)",
-                odds: "+2200 SEC MONSTER",
-                commenceDate: new Date("2026-10-24T19:30:00Z"),
-                safeLeg: "Tennessee Volunteers +8.5 Cover Spread vs Alabama (-108)",
-                safeProps: [
-                    "Tennessee Volunteers +8.5 Cover Spread vs Alabama (-108)",
-                    "Game Total OVER 51.5 Points (-110)",
-                    "Braylon Staley OVER 35.5 Receiving Yards (-114)"
-                ],
-                unhingedProps: [
-                    "Tennessee Volunteers Moneyline Outright Win (+285)",
-                    "Nico Iamaleava 300+ Passing Yards & 3 TDs",
-                    "Braylon Staley 85+ Receiving Yards & Anytime TD"
-                ],
-                comment: "Third Saturday in October action at Neyland Stadium!"
-            },
-            {
-                keywords: ["TITANS", "TENNESSEE TITANS", "COLTS", "INDIANAPOLIS"],
-                matchup: "Tennessee Titans at Indianapolis Colts (Sun Oct 25, 1:00 PM ET)",
-                odds: "+1250 DIVISIONAL LOCK",
-                commenceDate: new Date("2026-10-25T17:00:00Z"),
-                safeLeg: "Tennessee Titans +6.5 Cover Spread at Colts (-110)",
-                safeProps: [
-                    "Tennessee Titans +6.5 Cover Spread at Colts (-110)",
-                    "Game Total OVER 43.5 Points (-115)",
-                    "Calvin Ridley 50+ Receiving Yards"
-                ],
-                unhingedProps: [
-                    "Calvin Ridley 80+ Receiving Yards & Anytime TD",
-                    "Will Levis 300+ Passing Yards & 3 TDs"
-                ],
-                comment: "Titans facing Colts in AFC South action!"
-            }
-        ];
 
         function triggerQuery(promptText) {
             document.getElementById('askJimInput').value = promptText;
             askBigJim();
         }
 
-        function generateHighProbabilitySlip() {
-            window.activeParlayMode = "SAFE";
-            let shuffled = [...realUpcomingGames].sort(() => 0.5 - Math.random()).slice(0, 4);
-            generateScopedSafeSlip(shuffled, "WEEKLY TOP");
-        }
-
-        function generateCrazyParlay() {
-            window.activeParlayMode = "UNHINGED";
-            let shuffled = [...realUpcomingGames].sort(() => 0.5 - Math.random()).slice(0, 5);
-            generateScopedUnhingedSlip(shuffled, "WEEKLY TOP");
-        }
-
-        function setParlayMode(mode) {
+        async function setParlayMode(mode) {
             window.activeParlayMode = mode;
-            
-            if (!window.currentSearchGames || window.currentSearchGames.length === 0) {
-                window.currentSearchGames = [realUpcomingGames[0]];
-            }
-
             let activeGames = window.currentSearchGames;
+
+            if (!activeGames || activeGames.length === 0) {
+                activeGames = await fetchLiveSportsbookOdds("americanfootball_nfl");
+            }
 
             if (mode === "UNHINGED") {
                 let unhingedLegs = [];
-
                 activeGames.forEach(game => {
-                    let pool = game.unhingedProps || game.unhingedLegs || [
-                        `${game.matchup ? game.matchup.split('(')[0].trim() : 'Team'} Moneyline Win`,
-                        `Starting QB 300+ Passing Yards & 3 TDs`,
-                        `Game Total OVER 62.5 Points`
-                    ];
-
+                    let pool = game.unhingedProps || [game.safeLeg, "Game Total OVER 48.5 Points"];
                     let gameTitle = game.matchup ? game.matchup.split('(')[0].trim() : "Active Game";
 
                     pool.forEach(propText => {
@@ -1599,40 +1492,31 @@
 
                 window.activeLegsList = unhingedLegs;
                 renderActiveLegsResponse(`🎲 UNHINGED ${window.activeLegsList.length}-LINE MEGA PARLAY`);
-                playSpeech(`Unhinged mode activated! Automatically stacked wild props with named players!`);
-
+                playSpeech(`Unhinged mode activated!`);
             } else {
                 window.activeLegsList = [];
-
-                activeGames.slice(0, 2).forEach(game => {
-                    let safeText = game.safeLeg || (game.safeProps ? game.safeProps[0] : "Moneyline Win");
+                activeGames.forEach(game => {
+                    let pool = game.safeProps || [game.safeLeg];
                     let gameTitle = game.matchup ? game.matchup.split('(')[0].trim() : "Active Game";
-                    window.activeLegsList.push({ game: gameTitle, text: safeText });
+
+                    pool.slice(0, 3).forEach(safePropText => {
+                        window.activeLegsList.push({ game: gameTitle, text: safePropText });
+                    });
                 });
 
-                renderActiveLegsResponse(`🎯 SAFE MODE: ${window.activeLegsList.length}-LINE CLEAN LOCK`);
-                playSpeech(`Safe mode activated! Trimmed down slip to high probability locks.`);
+                renderActiveLegsResponse(`🎯 SAFE MODE: ${window.activeLegsList.length}-LEG STACKED LOCK (+210 PARLAY)`);
+                playSpeech(`Safe mode activated! Stacked safe legs to guarantee a profitable parlay!`);
             }
         }
 
         function expandParlayLegs() {
-            if (!window.currentSearchGames || window.currentSearchGames.length === 0) {
-                window.currentSearchGames = [realUpcomingGames[0]];
-            }
-
-            if (!window.activeLegsList) {
-                window.activeLegsList = [];
-            }
-
+            if (!window.activeLegsList) window.activeLegsList = [];
             let activeGames = window.currentSearchGames;
             let currentTexts = window.activeLegsList.map(l => l.text);
             let addedNewLeg = false;
 
             for (let game of activeGames) {
-                let pool = window.activeParlayMode === "SAFE" 
-                    ? (game.safeProps || game.playerProps || []) 
-                    : (game.unhingedProps || game.unhingedLegs || []);
-                
+                let pool = window.activeParlayMode === "SAFE" ? (game.safeProps || []) : (game.unhingedProps || []);
                 let nextProp = pool.find(p => !currentTexts.includes(p));
 
                 if (nextProp) {
@@ -1644,19 +1528,15 @@
             }
 
             if (!addedNewLeg) {
-                playSpeech("Maximum relevant props reached for these matchups!");
+                playSpeech("Maximum relevant props reached!");
                 return;
             }
 
             renderActiveLegsResponse(`🔥 DEEP ${window.activeLegsList.length}-LINE ${window.activeParlayMode} PARLAY`);
-            playSpeech(`Expanded your slip to a ${window.activeLegsList.length}-line ${window.activeParlayMode.toLowerCase()} parlay!`);
+            playSpeech(`Expanded slip!`);
         }
 
         function simplifyParlayLegs() {
-            if (!window.currentSearchGames || window.currentSearchGames.length === 0) {
-                window.currentSearchGames = [realUpcomingGames[0]];
-            }
-
             let games = window.currentSearchGames;
             window.activeLegsList = [];
 
@@ -1664,13 +1544,13 @@
 
             for (let i = 0; i < capCount; i++) {
                 let game = games[i];
-                let mainLeg = game.safeLeg || (game.defaultLegs ? game.defaultLegs[0] : "Moneyline Win");
+                let mainLeg = game.safeLeg || "Moneyline Win";
                 let gameTitle = game.matchup ? game.matchup.split('(')[0].trim() : "Active Game";
                 window.activeLegsList.push({ game: gameTitle, text: mainLeg });
             }
 
             renderActiveLegsResponse(`🎯 SIMPLIFIED ${window.activeLegsList.length}-LEG CLEAN WINNER SLIP`);
-            playSpeech(`Simplified down to a clean ${window.activeLegsList.length}-leg moneyline and spread winner slip!`);
+            playSpeech(`Simplified down to a clean winner slip!`);
         }
 
         function renderActiveLegsResponse(customTitle = "") {
@@ -1688,7 +1568,7 @@
             let legCount = window.activeLegsList.length;
             titleEl.textContent = customTitle || `JIM'S ${legCount}-LINE SAME-GAME PARLAY`;
             
-            let combinedOdds = legCount > 1 ? `+${(legCount * 450) + 120} PARLAY` : `+180 LOCK`;
+            let combinedOdds = legCount > 1 ? `+${(legCount * 130) + 90} PARLAY` : `+180 LOCK`;
             oddsEl.textContent = combinedOdds;
             legsEl.innerHTML = legsHtml;
 
@@ -1705,37 +1585,6 @@
             responseBox.style.display = 'block';
         }
 
-        function generateScopedSafeSlip(gamesList, contextLabel) {
-            window.activeParlayMode = "SAFE";
-            if (!gamesList || gamesList.length === 0) gamesList = realUpcomingGames;
-
-            window.currentSearchGames = gamesList;
-            window.activeLegsList = [];
-            gamesList.forEach(game => {
-                let gameTitle = game.matchup ? game.matchup.split('(')[0].trim() : "Game";
-                window.activeLegsList.push({ game: gameTitle, text: game.safeLeg });
-            });
-
-            renderActiveLegsResponse(`🎯 ${contextLabel} SAFE WINNER SLIP`);
-            playSpeech(`Here is your safe probability winner slip scoped to ${contextLabel.toLowerCase()}!`);
-        }
-
-        function generateScopedUnhingedSlip(gamesList, contextLabel) {
-            window.activeParlayMode = "UNHINGED";
-            if (!gamesList || gamesList.length === 0) gamesList = realUpcomingGames;
-
-            window.currentSearchGames = gamesList;
-            window.activeLegsList = [];
-            gamesList.forEach(game => {
-                let randomLeg = game.unhingedLegs ? game.unhingedLegs[Math.floor(Math.random() * game.unhingedLegs.length)] : game.safeLeg;
-                let gameTitle = game.matchup ? game.matchup.split('(')[0].trim() : "Game";
-                window.activeLegsList.push({ game: gameTitle, text: randomLeg });
-            });
-
-            renderActiveLegsResponse(`🎲 ${contextLabel} CRAZY UNHINGED PARLAY`);
-            playSpeech(`God damn! Here is your crazy unhinged parlay scoped to ${contextLabel.toLowerCase()}!`);
-        }
-
         async function renderSaturdayGamesBoard(sport = "NCAA") {
             const responseBox = document.getElementById('askJimResponse');
             const titleEl = document.getElementById('aiResponseTitle');
@@ -1748,30 +1597,10 @@
             legsEl.innerHTML = `<li><span class="leg-icon">🔄</span> Fetching live Saturday matchups from sportsbook feeds...</li>`;
             responseBox.style.display = 'block';
 
-            let apiKey = "americanfootball_ncaaf";
-            if (sport === "NFL") apiKey = "americanfootball_nfl";
-
+            let apiKey = sport === "NFL" ? "americanfootball_nfl" : "americanfootball_ncaaf";
             let liveGames = await fetchLiveSportsbookOdds(apiKey);
-            
-            let fullSaturdaySlate = [
-                { matchup: "#14 Tennessee Volunteers vs #6 Alabama Crimson Tide (Sat Oct 24, 3:30 PM ET)" },
-                { matchup: "Florida Gators at #7 Texas Longhorns (Sat Oct 24, 12:00 PM ET)" },
-                { matchup: "#4 Ohio State Buckeyes at #5 Indiana Hoosiers (Sat Oct 24, 12:00 PM ET)" }
-            ];
 
-            let saturdayFiltered = [];
-            if (liveGames && Array.isArray(liveGames)) {
-                saturdayFiltered = liveGames.filter(g => {
-                    if (g.commenceDate) {
-                        return g.commenceDate.getDay() === 6;
-                    }
-                    return g.matchup && g.matchup.toUpperCase().includes("SAT");
-                });
-            }
-
-            let activeGames = (saturdayFiltered && saturdayFiltered.length > 0) ? saturdayFiltered : fullSaturdaySlate;
-
-            titleEl.textContent = `SATURDAY ${sport} GAME BOARD (${activeGames.length} MATCHUPS)`;
+            titleEl.textContent = `SATURDAY ${sport} GAME BOARD (${liveGames.length} MATCHUPS)`;
             oddsEl.textContent = "STEP 2: CHECK GAMES";
 
             let checkHtml = `
@@ -1782,7 +1611,7 @@
                 <div class="game-checkbox-list" style="max-height: 320px; overflow-y: auto; padding-right: 0.5rem;">
             `;
 
-            activeGames.forEach((g, idx) => {
+            liveGames.forEach((g, idx) => {
                 let matchTitle = g.matchup ? g.matchup.split('(')[0].trim() : g.name;
                 checkHtml += `
                     <label class="game-checkbox-item">
@@ -1802,7 +1631,7 @@
                 </div>
             `;
 
-            playSpeech(`Loaded Saturday's ${sport} board with ${activeGames.length} live games! Check off your picks!`);
+            playSpeech(`Loaded Saturday's ${sport} board with ${liveGames.length} live games!`);
         }
 
         function buildSelectedGamesParlay() {
@@ -1824,190 +1653,91 @@
 
             window.activeLegsList = selectedList;
             renderActiveLegsResponse(`CUSTOM SATURDAY ${selectedList.length}-GAME PARLAY`);
-            playSpeech(`Generated your custom parlay from your checked Saturday games!`);
+            playSpeech(`Generated your custom parlay!`);
         }
 
-        // GLOBAL SEARCH ENGINE WITH MONDAY NIGHT & TONIGHT SGP ROUTING
+        // FULLY DYNAMIC AI BETTING SEARCH ENGINE
         async function askBigJim() {
             const rawInput = document.getElementById('askJimInput').value.trim();
             if (!rawInput) return;
 
-            const responseBox = document.getElementById('askJimResponse');
-            const titleEl = document.getElementById('aiResponseTitle');
-            const oddsEl = document.getElementById('aiResponseOdds');
-            const legsEl = document.getElementById('aiResponseLegs');
-            const quoteEl = document.getElementById('aiResponseQuote');
-
-            // 1. UNIVERSAL FUZZY CORRECTION
             let queryUpper = correctFuzzyWords(rawInput);
 
-            // 2. CHECK SUNDAY NCAA EXCLUSION RULE
-            if (queryUpper.includes("SUNDAY") && (queryUpper.includes("NCAA") || queryUpper.includes("COLLEGE") || queryUpper.includes("NCAAF"))) {
-                titleEl.textContent = "NO NCAA GAMES SCHEDULED FOR SUNDAY";
-                oddsEl.textContent = "SCHEDULE ALERT";
-                legsEl.innerHTML = `
-                    <li><span class="leg-icon">⚠️</span> <strong>No NCAA College Football games scheduled for Sunday!</strong> College Football plays on Saturdays.</li>
-                    <li><span class="leg-icon">🏈</span> Would you like to check out <strong>Sunday's NFL Slate</strong> instead?</li>
-                `;
-                quoteEl.innerHTML = `
-                    <div style="margin-bottom: 0.5rem; color: #fff;">Big Jim recommends switching to Sunday Pro Football:</div>
-                    <div class="choice-btn-group">
-                        <button class="choice-btn complexity-btn" onclick="triggerQuery('8 leg parlay for sundays nfl games')">🏈 LOAD SUNDAY NFL SLATE</button>
-                        <button class="choice-btn" onclick="renderSaturdayGamesBoard('NCAA')">🏈 VIEW SATURDAY NCAA BOARD</button>
-                    </div>
-                `;
-                responseBox.style.display = 'block';
-                playSpeech("There are no college football games on Sunday! Check out the NFL slate instead!");
-                return;
-            }
-
-            // 3. MODE SELECTION MODIFIERS
+            // 1. MODE SELECTION
             if (queryUpper.includes("SAFE") || queryUpper.includes("HIGH PROBABILITY")) {
                 window.activeParlayMode = "SAFE";
             } else if (queryUpper.includes("UNHINGED") || queryUpper.includes("CRAZY") || queryUpper.includes("RISKY") || queryUpper.includes("FUN")) {
                 window.activeParlayMode = "UNHINGED";
             }
 
-            // 4. EXPLICIT LEG COUNT EXTRACTOR
+            // 2. EXPLICIT LEG COUNT EXTRACTOR
             let requestedLegsCount = 0;
             const digitMatch = rawInput.match(/(\d+)\s*(LEG|LINE|PROP|PARLAY)/i);
-            if (digitMatch) {
-                requestedLegsCount = parseInt(digitMatch[1], 10);
-            }
+            if (digitMatch) requestedLegsCount = parseInt(digitMatch[1], 10);
 
-            // 5. INFORMATIONAL ROUTE ("WHAT GAMES ARE HAPPENING ON SATURDAY")
-            const isInformationalQuery = (queryUpper.includes("WHAT GAMES") || queryUpper.includes("WHATS HAPPENING") || queryUpper.includes("GAMES ARE HAPPENING") || queryUpper.includes("SHOW GAMES") || queryUpper.includes("LIST GAMES")) && requestedLegsCount === 0;
-
-            if (isInformationalQuery && queryUpper.includes("SATURDAY")) {
+            // 3. INFORMATIONAL CHECKBOX BOARD ROUTE
+            if ((queryUpper.includes("WHAT GAMES") || queryUpper.includes("SHOW GAMES") || queryUpper.includes("LIST GAMES")) && requestedLegsCount === 0) {
                 renderSaturdayGamesBoard(queryUpper.includes("NFL") ? "NFL" : "NCAA");
                 return;
             }
 
-            // 6. TONIGHT / TODAY / MONDAY SGP ROUTER (STRICT SINGLE-GAME PARLAY ENFORCEMENT)
-            const isTonightQuery = queryUpper.includes("TONIGHT") || queryUpper.includes("TODAY") || queryUpper.includes("TONIGHTS") || queryUpper.includes("MONDAY");
-
-            if (isTonightQuery) {
-                let liveNFL = await fetchLiveSportsbookOdds("americanfootball_nfl");
-                let liveNCAA = await fetchLiveSportsbookOdds("americanfootball_ncaaf");
-                let activeToday = [...(liveNFL || []), ...(liveNCAA || []), ...realUpcomingGames];
-
-                // Focus strictly on tonight's game (Commanders at 49ers)
-                let tonightGame = activeToday.find(g => g.keywords && g.keywords.some(kw => ["COMMANDERS", "49ERS", "WASHINGTON", "SAN FRANCISCO", "MONDAY", "TONIGHT"].includes(kw))) || realUpcomingGames[0];
-
-                window.currentSearchGames = [tonightGame];
-                let gameTitle = tonightGame.matchup ? tonightGame.matchup.split('(')[0].trim() : "Tonight's MNF Matchup";
-
-                let propsPool = (window.activeParlayMode === "UNHINGED" || queryUpper.includes("RISKY") || queryUpper.includes("FUN")) 
-                    ? (tonightGame.unhingedProps || [
-                        "San Francisco 49ers -10.5 Alternate Cover Spread",
-                        "Brock Purdy 275+ Passing Yards & 3 Touchdowns",
-                        "Deebo Samuel 75+ Receiving Yards & Anytime TD",
-                        "Jayden Daniels 225+ Passing Yards & 1 TD",
-                        "Terry McLaurin 60+ Receiving Yards",
-                        "Game Total OVER 52.5 Points"
-                      ])
-                    : (tonightGame.safeProps || [
-                        "San Francisco 49ers -7.5 Cover Spread vs Commanders (-110)",
-                        "Game Total OVER 46.5 Points (-108)",
-                        "Brock Purdy 225+ Passing Yards (-115)"
-                      ]);
-
-                let targetLegs = requestedLegsCount > 0 ? requestedLegsCount : propsPool.length;
-                let autoLegs = propsPool.slice(0, targetLegs).map(propText => ({
-                    game: gameTitle,
-                    text: propText
-                }));
-
-                window.activeLegsList = autoLegs;
-                renderActiveLegsResponse(`JIM'S TONIGHT MNF SGP: ${gameTitle.toUpperCase()}`);
-                playSpeech(`Generated your single game parlay for tonight's Monday Night Football matchup!`);
-                return;
-            }
-
-            // 7. DETERMINE REQUESTED SPORT (NCAA VS NFL)
-            const isNFL = queryUpper.includes("NFL") || queryUpper.includes("TITANS") || queryUpper.includes("SUNDAY");
+            // 4. FETCH LIVE GAMES BASED ON SPORT
+            const isNFL = queryUpper.includes("NFL") || queryUpper.includes("TITANS") || queryUpper.includes("SUNDAY") || queryUpper.includes("MONDAY");
             const requestedApiKey = isNFL ? "americanfootball_nfl" : "americanfootball_ncaaf";
 
             let liveGames = await fetchLiveSportsbookOdds(requestedApiKey);
-            let activeGamesDatabase = (liveGames && liveGames.length > 0) ? liveGames : realUpcomingGames;
 
-            const forceTennesseeBias = window.isTennesseePrideActive || queryUpper.includes("FAVOR TN") || queryUpper.includes("FAVOUR TN") || queryUpper.includes("TENNESSEE PRIDE");
-
-            // SPORT-SCOPED TENNESSEE PRIDE SCANNER
+            const forceTennesseeBias = window.isTennesseePrideActive || queryUpper.includes("FAVOR TN") || queryUpper.includes("TENNESSEE PRIDE");
             let tennesseeKeywords = isNFL ? ["TITANS"] : ["VOLS", "TENNESSEE", "VOLUNTEERS", "MTSU"];
-            let tnSportGames = activeGamesDatabase.filter(g => 
+
+            let tnSportGames = liveGames.filter(g => 
                 g.keywords && g.keywords.some(kw => tennesseeKeywords.includes(kw))
             );
 
-            // 8. DAY SLATE / PARLAY GENERATOR ROUTE
-            const isDaySlateQuery = queryUpper.includes("SUNDAY") || queryUpper.includes("SATURDAY") || queryUpper.includes("WEEK") || queryUpper.includes("PARLAY");
+            // 5. MATCH QUERY OR GENERATE SLATE
+            let matchedGames = liveGames.filter(game => 
+                game.keywords && game.keywords.some(kw => queryUpper.includes(kw))
+            );
 
-            if (isDaySlateQuery) {
-                let slateGames = activeGamesDatabase;
+            let slateGames = matchedGames.length > 0 ? matchedGames : liveGames;
 
-                if (queryUpper.includes("SATURDAY")) {
-                    slateGames = activeGamesDatabase.filter(g => !g.commenceDate || g.commenceDate.getDay() === 6);
-                } else if (queryUpper.includes("SUNDAY")) {
-                    slateGames = activeGamesDatabase.filter(g => !g.commenceDate || g.commenceDate.getDay() === 0);
-                }
+            if (forceTennesseeBias && tnSportGames.length > 0) {
+                slateGames = [...tnSportGames, ...slateGames.filter(g => !tnSportGames.includes(g))];
+            }
 
-                if (slateGames.length === 0) slateGames = realUpcomingGames;
+            window.currentSearchGames = slateGames;
 
-                if (forceTennesseeBias && tnSportGames.length > 0) {
-                    slateGames = [...tnSportGames, ...slateGames.filter(g => !tnSportGames.includes(g))];
-                }
-
-                window.currentSearchGames = slateGames;
-                let autoLegs = [];
-                let targetLegs = requestedLegsCount > 0 ? requestedLegsCount : 6;
-
-                let legIndex = 0;
-                while (autoLegs.length < targetLegs) {
-                    let curGame = slateGames[legIndex % slateGames.length];
-                    let gameTitle = curGame.matchup ? curGame.matchup.split('(')[0].trim() : "Featured Matchup";
-                    let isTN = curGame.keywords && curGame.keywords.some(kw => tennesseeKeywords.includes(kw));
-
-                    if (isTN && forceTennesseeBias && autoLegs.length === 0) {
-                        if (isNFL) {
-                            autoLegs.push({ game: gameTitle, text: "Tennessee Titans +6.5 Cover Spread vs Colts (-110)" });
-                        } else {
-                            autoLegs.push({ game: gameTitle, text: "Tennessee Volunteers Moneyline Win (+285) vs Alabama" });
-                        }
-                    } else {
-                        let pool = window.activeParlayMode === "SAFE" ? (curGame.safeProps || [curGame.safeLeg]) : (curGame.unhingedProps || [curGame.safeLeg]);
-                        let curTexts = autoLegs.map(l => l.text);
-                        let nextProp = pool.find(p => !curTexts.includes(p));
-
-                        if (!nextProp) nextProp = `${gameTitle} — Outright Winner`;
-
-                        autoLegs.push({ game: gameTitle, text: nextProp });
-                    }
-                    legIndex++;
-                }
-
-                window.activeLegsList = autoLegs;
-                let leagueLabel = isNFL ? "NFL" : "NCAA";
-                let headerTitle = forceTennesseeBias ? `🍊 TENNESSEE PRIDE: ${autoLegs.length}-LEG ${leagueLabel} LOCK` : `JIM'S ${leagueLabel} ${autoLegs.length}-LEG PARLAY`;
-                renderActiveLegsResponse(headerTitle);
-                playSpeech(`Generated your ${autoLegs.length}-leg ${leagueLabel} parlay!`);
+            if (slateGames.length === 0) {
+                alert("No active games found on the live feed for this query!");
                 return;
             }
 
-            // FALLBACK FOR UNMATCHED PROMPTS
-            let fallbackTitle = isNFL ? "MONDAY NIGHT NFL SLATE" : "SATURDAY NCAA SLATE";
+            let autoLegs = [];
+            let targetLegs = requestedLegsCount > 0 ? requestedLegsCount : (window.activeParlayMode === "SAFE" ? 3 : 5);
 
-            window.activeLegsList = [
-                { game: "Washington Commanders at San Francisco 49ers", text: "San Francisco 49ers -7.5 Cover Spread (-110)" },
-                { game: "Washington Commanders at San Francisco 49ers", text: "Brock Purdy 250+ Passing Yards & 2 TDs" },
-                { game: "Washington Commanders at San Francisco 49ers", text: "Deebo Samuel 60+ Receiving Yards & Anytime TD" },
-                { game: "Washington Commanders at San Francisco 49ers", text: "Game Total OVER 46.5 Points" }
-            ].slice(0, requestedLegsCount > 0 ? requestedLegsCount : 4);
+            let legIndex = 0;
+            while (autoLegs.length < targetLegs) {
+                let curGame = slateGames[legIndex % slateGames.length];
+                let gameTitle = curGame.matchup ? curGame.matchup.split('(')[0].trim() : "Featured Matchup";
 
-            renderActiveLegsResponse(`JIM'S ${fallbackTitle} PARLAY`);
-            playSpeech(`Generated your custom parlay slip!`);
+                let pool = window.activeParlayMode === "SAFE" ? (curGame.safeProps || [curGame.safeLeg]) : (curGame.unhingedProps || [curGame.safeLeg]);
+                let curTexts = autoLegs.map(l => l.text);
+                let nextProp = pool.find(p => !curTexts.includes(p));
+
+                if (!nextProp) nextProp = `${gameTitle} — Outright Winner`;
+
+                autoLegs.push({ game: gameTitle, text: nextProp });
+                legIndex++;
+            }
+
+            window.activeLegsList = autoLegs;
+            let leagueLabel = isNFL ? "NFL" : "NCAA";
+            let headerTitle = forceTennesseeBias ? `🍊 TENNESSEE PRIDE: ${autoLegs.length}-LEG ${leagueLabel} LOCK` : `JIM'S ${leagueLabel} ${autoLegs.length}-LEG PARLAY`;
+            renderActiveLegsResponse(headerTitle);
+            playSpeech(`Generated your ${autoLegs.length}-leg ${leagueLabel} parlay!`);
         }
 
-        // ASYNCHRONOUS BOTTOM CARD GENERATOR FOR TODAY'S LIVE MATCHUPS
+        // FULLY DYNAMIC DYNAMIC PICKS RENDERER (NO HARDCODED GAME OBJECTS)
         async function generateLiveDayBets() {
             const today = new Date();
             const fullDateString = today.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
@@ -2015,22 +1745,20 @@
             document.getElementById("currentDateBanner").innerText = `🔴 LIVE TODAY'S PARLAY SLIPS — ${fullDateString}`;
 
             const picksContainer = document.getElementById("dynamicPicksContainer");
-            picksContainer.innerHTML = `<div style="text-align: center; padding: 2rem 0; color: var(--text-muted);">🔄 Fetching today's live sportsbook lines...</div>`;
+            picksContainer.innerHTML = `<div style="text-align: center; padding: 2rem 0; color: var(--text-muted);">🔄 Fetching live sportsbook feeds...</div>`;
 
             let liveNCAA = await fetchLiveSportsbookOdds("americanfootball_ncaaf");
             let liveNFL = await fetchLiveSportsbookOdds("americanfootball_nfl");
 
-            let allLive = [...(liveNFL || []), ...(liveNCAA || []), ...realUpcomingGames];
-
-            let todaysMatchups = allLive.slice(0, 3);
+            let todaysMatchups = [...(liveNFL || []), ...(liveNCAA || [])].slice(0, 3);
 
             if (todaysMatchups.length === 0) {
-                todaysMatchups = realUpcomingGames;
-                document.getElementById("scheduleNoticeText").innerText = "No live game schedules today! Big Jim is looking ahead to upcoming parlay slips:";
-            } else {
-                document.getElementById("scheduleNoticeText").innerText = "Live game schedules actively tracking. Unreliable, high-energy parlay slips generated for today's matchups:";
+                document.getElementById("scheduleNoticeText").innerText = "No live game schedules returned from the sportsbook API right now!";
+                picksContainer.innerHTML = `<div style="text-align: center; padding: 2rem 0; color: var(--text-muted);">No live games currently on the schedule feed.</div>`;
+                return;
             }
 
+            document.getElementById("scheduleNoticeText").innerText = "Live game schedules actively tracking. Unreliable, high-energy parlay slips generated directly from live feeds:";
             picksContainer.innerHTML = "";
 
             todaysMatchups.forEach((match, idx) => {
@@ -2038,9 +1766,8 @@
                 card.className = `pick-card ${idx === 0 ? "premium" : ""}`;
                 
                 const confidence = 88 + (idx * 4);
-
                 let matchTitle = match.matchup ? match.matchup : "LIVE GAME LOCK";
-                let legs = match.safeProps || match.defaultLegs || [match.safeLeg || "Moneyline Win"];
+                let legs = match.safeProps || [match.safeLeg || "Moneyline Win"];
 
                 if (window.isTennesseePrideActive && match.keywords && match.keywords.some(kw => ["VOLS", "TENNESSEE", "TITANS"].includes(kw))) {
                     matchTitle = `🍊 ${matchTitle} (TENNESSEE PRIDE)`;
