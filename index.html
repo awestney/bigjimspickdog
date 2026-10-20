@@ -1130,7 +1130,7 @@
                     Got a specific matchup or prop bet in mind? Type any team or game below for Big Jim's instantaneous analysis:
                 </p>
                 <div class="ask-jim-input-group">
-                    <input type="text" id="askJimInput" class="ask-jim-input" placeholder="e.g. basketball bets" onkeypress="if(event.key==='Enter') askBigJim()">
+                    <input type="text" id="askJimInput" class="ask-jim-input" placeholder="e.g. only thursday night football game" onkeypress="if(event.key==='Enter') askBigJim()">
                     <button class="ask-jim-btn" onclick="askBigJim()">ASK JIM ➔</button>
                 </div>
 
@@ -1243,7 +1243,7 @@
         window.isTennesseePrideActive = false;
         window.currentSearchGames = [];
 
-        // ODDS CONVERTOR: DECIMAL TO AMERICAN MONEYLINE
+        // ODDS CONVERTOR
         function convertDecimalToAmerican(decimalOdds) {
             let num = parseFloat(decimalOdds);
             if (isNaN(num) || num <= 1.0) return "-110";
@@ -1342,7 +1342,7 @@
         const FUZZY_DICTIONARY = [
             "PARLAY", "LEGS", "LINES", "PROPS", "BET", "LOCK", "SAFE", "UNHINGED", "RISKY",
             "TONIGHT", "TODAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY",
-            "TENNESSEE", "VOLUNTEERS", "VOLS", "TITANS", "ALABAMA", "BAMA", "COLTS",
+            "TENNESSEE", "VOLUNTEERS", "VOLS", "TITANS", "ALABAMA", "BAMA", "COLTS", "BEARS", "PATRIOTS",
             "NCAA", "NCAAF", "NFL", "SOCCER", "HOCKEY", "SPREAD", "MONEYLINE", "OVER", "UNDER", "WEEK",
             "BASKETBALL", "NBA", "NCAAB", "HOOPS", "KNICKS", "CELTICS", "LAKERS", "WARRIORS", "SPURS", "THUNDER", "BASEBALL", "MLB"
         ];
@@ -1452,10 +1452,10 @@
                         commenceDate: now,
                         keywords: ["KNICKS", "76ERS", "NEW YORK", "PHILADELPHIA", "TONIGHT", "TODAY", "BASKETBALL"],
                         matchup: "[NBA] Philadelphia 76ers at New York Knicks (Tonight 7:00 PM ET)",
-                        odds: "New York Knicks -4.5 Cover Spread (-115)",
-                        safeLeg: "New York Knicks -4.5 Cover Spread (-115)",
+                        odds: "New York Knicks -4.5 Cover Spread (-110)",
+                        safeLeg: "New York Knicks -4.5 Cover Spread (-110)",
                         safeProps: [
-                            "New York Knicks -4.5 Cover Spread (-115)",
+                            "New York Knicks -4.5 Cover Spread (-110)",
                             "Game Total OVER 218.5 Points (-110)",
                             "Starting PG 20+ Points & 6 Assists (-120)"
                         ],
@@ -1465,84 +1465,30 @@
                             "Game Total OVER 228.5 Points (+195)"
                         ],
                         comment: "NBA Action at MSG!"
-                    },
-                    {
-                        league: "NBA",
-                        commenceDate: now,
-                        keywords: ["CELTICS", "PISTONS", "BOSTON", "DETROIT"],
-                        matchup: "[NBA] Boston Celtics at Detroit Pistons (Tonight 7:30 PM ET)",
-                        odds: "Detroit Pistons +1.5 Cover Spread (-108)",
-                        safeLeg: "Detroit Pistons +1.5 Cover Spread (-108)",
-                        safeProps: [
-                            "Detroit Pistons +1.5 Cover Spread (-108)",
-                            "Game Total OVER 214.5 Points (-108)",
-                            "Primary Forward 22+ Points (-115)"
-                        ],
-                        unhingedProps: [
-                            "Detroit Pistons Moneyline Outright Win (+105)",
-                            "Primary Forward 35+ Points & 10+ Rebounds (+260)"
-                        ],
-                        comment: "Celtics Eastern Battle!"
-                    },
-                    {
-                        league: "NBA",
-                        commenceDate: now,
-                        keywords: ["SPURS", "THUNDER", "SAN ANTONIO", "OKLAHOMA CITY"],
-                        matchup: "[NBA] Oklahoma City Thunder at San Antonio Spurs (Tonight 9:30 PM ET)",
-                        odds: "San Antonio Spurs +1.5 Cover Spread (-114)",
-                        safeLeg: "San Antonio Spurs +1.5 Cover Spread (-114)",
-                        safeProps: [
-                            "San Antonio Spurs +1.5 Cover Spread (-114)",
-                            "Game Total OVER 222.5 Points (-110)",
-                            "Primary Guard 24+ Points (-118)"
-                        ],
-                        unhingedProps: [
-                            "San Antonio Spurs Moneyline Outright Win (+110)",
-                            "Game Total OVER 232.5 Points (+210)"
-                        ],
-                        comment: "Western Conference Opening Battle!"
-                    }
-                ];
-            } else if (sportKey.includes("icehockey")) {
-                return [
-                    {
-                        league: "NHL",
-                        commenceDate: now,
-                        keywords: ["RANGERS", "BRUINS", "HOCKEY", "TONIGHT"],
-                        matchup: "[NHL] Boston Bruins at New York Rangers (Tonight 7:00 PM ET)",
-                        odds: "New York Rangers Puck Line -1.5 (+170)",
-                        safeLeg: "New York Rangers Moneyline Win (-140)",
-                        safeProps: [
-                            "New York Rangers Moneyline Win (-140)",
-                            "Game Total OVER 5.5 Goals (-115)"
-                        ],
-                        unhingedProps: [
-                            "New York Rangers -1.5 Puck Line (+170)",
-                            "Primary Center Anytime Goal Scorer (+185)"
-                        ],
-                        comment: "Original Six NHL Battle!"
                     }
                 ];
             } else if (sportKey.includes("nfl")) {
                 return [
                     {
                         league: "NFL",
-                        commenceDate: now,
-                        keywords: ["COMMANDERS", "49ERS", "WASHINGTON", "SAN FRANCISCO", "TONIGHT", "TODAY", "MONDAY"],
-                        matchup: "[NFL] Washington Commanders at San Francisco 49ers (Mon Oct 19, 8:15 PM ET)",
-                        odds: "San Francisco 49ers -7.5 Cover Spread (-110)",
-                        safeLeg: "San Francisco 49ers -7.5 Cover Spread (-110)",
+                        commenceDate: new Date("2026-10-22T20:15:00-04:00"),
+                        keywords: ["PATRIOTS", "BEARS", "CHICAGO", "NEW ENGLAND", "THURSDAY", "TNF"],
+                        matchup: "[NFL] New England Patriots at Chicago Bears (Thu Oct 22, 8:15 PM ET)",
+                        odds: "Chicago Bears -3 Cover Spread (-105)",
+                        safeLeg: "Chicago Bears -3 Cover Spread (-105)",
                         safeProps: [
-                            "San Francisco 49ers -7.5 Cover Spread (-110)",
-                            "Game Total OVER 44.5 Points (-110)",
-                            "Starting QB 225+ Passing Yards (-115)"
+                            "Chicago Bears -3 Cover Spread (-105)",
+                            "Game Total OVER 43.5 Points (-110)",
+                            "Starting QB 225+ Passing Yards (-115)",
+                            "Primary WR 60+ Receiving Yards (-110)"
                         ],
                         unhingedProps: [
-                            "San Francisco 49ers -13.5 Alternate Spread (+190)",
+                            "Chicago Bears -9.5 Alternate Spread (+195)",
                             "Starting QB 275+ Passing Yards & 3 TDs (+240)",
-                            "Game Total OVER 52.5 Points (+180)"
+                            "Primary WR 75+ Receiving Yards & Anytime TD (+185)",
+                            "Game Total OVER 51.5 Points (+180)"
                         ],
-                        comment: "Featured NFL Game of the Week!"
+                        comment: "Thursday Night Football at Soldier Field!"
                     }
                 ];
             } else {
@@ -1569,7 +1515,7 @@
             }
         }
 
-        // FULLY DYNAMIC PARSER WITH AMERICAN ODDS CONVERSION
+        // FULLY DYNAMIC PARSER
         function parseLiveFanDuelOdds(rawGames, sportKey = "americanfootball_ncaaf") {
             if (!rawGames || !Array.isArray(rawGames)) return [];
 
@@ -1579,9 +1525,6 @@
                 
                 let leagueTitle = "NCAAF";
                 if (sportKey.includes("basketball_nba")) leagueTitle = "NBA";
-                else if (sportKey.includes("basketball_ncaab")) leagueTitle = "NCAAB";
-                else if (sportKey.includes("icehockey_nhl")) leagueTitle = "NHL";
-                else if (sportKey.includes("baseball_mlb")) leagueTitle = "MLB";
                 else if (sportKey.includes("americanfootball_nfl")) leagueTitle = "NFL";
 
                 const gameDate = new Date(game.commence_time);
@@ -1620,17 +1563,6 @@
                     });
                 }
 
-                let propStat1 = "225+ Passing Yards (-115)";
-                let propStat2 = "60+ Receiving Yards (-110)";
-
-                if (leagueTitle === "NBA" || leagueTitle === "NCAAB") {
-                    propStat1 = "20+ Points Scored (-120)";
-                    propStat2 = "6+ Assists (-110)";
-                } else if (leagueTitle === "NHL") {
-                    propStat1 = "3+ Shots on Goal (-125)";
-                    propStat2 = "Over 5.5 Total Goals (-110)";
-                }
-
                 return {
                     league: leagueTitle,
                     commenceDate: gameDate,
@@ -1641,14 +1573,14 @@
                     safeProps: [
                         spread,
                         total,
-                        `${homeTeam} ${propStat1}`,
-                        `Primary Player ${propStat2}`
+                        `${homeTeam} Team Total OVER Points (-115)`,
+                        `Primary Player Milestone Prop (-110)`
                     ],
                     unhingedProps: [
                         moneyline,
                         `${homeTeam} Alternate Spread (+185)`,
                         `Game Total OVER Points (+180)`,
-                        `Primary Player 30+ Points / 3+ TDs (+240)`
+                        `Primary Player Milestone Prop (+240)`
                     ],
                     comment: `Real-time sportsbook odds actively fetched for ${awayTeam} at ${homeTeam}!`
                 };
@@ -1665,7 +1597,7 @@
             let activeGames = window.currentSearchGames;
 
             if (!activeGames || activeGames.length === 0) {
-                activeGames = await fetchLiveSportsbookOdds("basketball_nba");
+                activeGames = await fetchLiveSportsbookOdds("americanfootball_nfl");
             }
 
             if (mode === "UNHINGED") {
@@ -1732,7 +1664,7 @@
             window.activeLegsList = [];
 
             if (!games || games.length === 0) {
-                games = getDynamicGameSlate("basketball_nba");
+                games = getDynamicGameSlate("americanfootball_nfl");
             }
 
             if (games.length === 1) {
@@ -1740,8 +1672,8 @@
                 let gameTitle = game.matchup ? game.matchup.split('(')[0].trim() : "Active Game";
                 let pool = game.safeProps || [
                     game.safeLeg || "Cover Spread (-110)", 
-                    "Game Total OVER Points (-110)",
-                    "Primary Player 20+ Points (-115)"
+                    "Game Total OVER 44.5 Points (-110)",
+                    "Primary Player Milestone Prop (-115)"
                 ];
                 
                 pool.slice(0, 3).forEach(propText => {
@@ -1766,7 +1698,7 @@
             playSpeech(`Simplified down to a clean multi-game winner slip!`);
         }
 
-        // REAL-TIME COMBINED PARLAY CALCULATOR (EXACT FANDUEL DECIMALS)
+        // REAL-TIME COMBINED PARLAY CALCULATOR
         function renderActiveLegsResponse(customTitle = "") {
             const responseBox = document.getElementById('askJimResponse');
             const titleEl = document.getElementById('aiResponseTitle');
@@ -1780,20 +1712,18 @@
             window.activeLegsList.forEach(legObj => {
                 legsHtml += `<li><span class="leg-icon">⚡</span> <strong>${legObj.game}</strong>: ${legObj.text}</li>`;
 
-                // Extract American or Decimal price inside parenthesis
                 const priceMatch = legObj.text.match(/\(([+\-]?\d+(?:\.\d+)?)\)/);
                 if (priceMatch) {
                     let decVal = parseAmericanToDecimal(priceMatch[1]);
                     combinedDecimalMultiplier *= decVal;
                 } else {
-                    combinedDecimalMultiplier *= 1.909; // Default -110 line
+                    combinedDecimalMultiplier *= 1.909;
                 }
             });
 
             let legCount = window.activeLegsList.length;
             titleEl.textContent = customTitle || `JIM'S ${legCount}-LINE PARLAY`;
             
-            // CONVERT COMBINED DECIMALS INTO TRUE AMERICAN PARLAY ODDS
             let totalAmericanParlayOdds = convertDecimalToAmerican(combinedDecimalMultiplier);
 
             oddsEl.textContent = `${totalAmericanParlayOdds} PARLAY`;
@@ -1883,14 +1813,12 @@
             playSpeech(`Generated your custom parlay!`);
         }
 
-        // ACCURATE DAY-AWARE & MULTI-SPORT AI BETTING SEARCH ENGINE
+        // STRICT SINGLE-GAME THURSDAY NIGHT FOOTBALL ROUTER
         async function askBigJim() {
             const rawInput = document.getElementById('askJimInput').value.trim();
             if (!rawInput) return;
 
             let queryUpper = correctFuzzyWords(rawInput);
-            const now = new Date();
-            const currentDayOfWeek = now.getDay(); // 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
 
             // 1. MODE SELECTION MODIFIERS
             if (queryUpper.includes("SAFE") || queryUpper.includes("HIGH PROBABILITY")) {
@@ -1910,7 +1838,41 @@
                 return;
             }
 
-            // 4. MULTI-SPORT DYNAMIC KEYWORD ROUTER
+            // 4. STRICT THURSDAY NIGHT FOOTBALL SINGLE GAME TRAPPER
+            const isThursdayQuery = queryUpper.includes("THURSDAY") || queryUpper.includes("TNF") || queryUpper.includes("THURSDAYS");
+
+            if (isThursdayQuery) {
+                let liveNFL = await fetchLiveSportsbookOdds("americanfootball_nfl");
+                let tnfGame = liveNFL.find(g => g.keywords && g.keywords.some(kw => ["PATRIOTS", "BEARS", "CHICAGO", "NEW ENGLAND", "THURSDAY"].includes(kw))) || getDynamicGameSlate("americanfootball_nfl")[0];
+
+                window.currentSearchGames = [tnfGame];
+                let gameTitle = tnfGame.matchup ? tnfGame.matchup.split('(')[0].trim() : "Thursday Night Football";
+
+                let pool = window.activeParlayMode === "SAFE" ? (tnfGame.safeProps || [tnfGame.safeLeg]) : (tnfGame.unhingedProps || [tnfGame.safeLeg]);
+                let targetLegs = requestedLegsCount > 0 ? requestedLegsCount : Math.min(pool.length, 3);
+
+                let autoLegs = pool.slice(0, targetLegs).map(propText => ({
+                    game: gameTitle,
+                    text: propText
+                }));
+
+                window.activeLegsList = autoLegs;
+
+                let hasTN = tnfGame.keywords && tnfGame.keywords.some(kw => ["VOLS", "TENNESSEE", "TITANS"].includes(kw));
+                let headerTitle = "JIM'S THURSDAY NIGHT FOOTBALL SGP";
+
+                if (window.isTennesseePrideActive && !hasTN) {
+                    headerTitle = "🍊 TENNESSEE PRIDE ALERT: Neither UT nor Titans play on TNF! Big Jim's locking in the main TNF game anyway:";
+                } else if (window.isTennesseePrideActive && hasTN) {
+                    headerTitle = "🍊 TENNESSEE PRIDE: THURSDAY NIGHT LOCK";
+                }
+
+                renderActiveLegsResponse(headerTitle);
+                playSpeech("Generated your single game parlay for Thursday Night Football!");
+                return;
+            }
+
+            // 5. STANDARD MULTI-SPORT ROUTER
             let requestedApiKey = "americanfootball_nfl";
             let leagueLabel = "NFL Football";
 
@@ -1923,40 +1885,9 @@
             } else if (queryUpper.includes("HOCKEY") || queryUpper.includes("NHL")) {
                 requestedApiKey = "icehockey_nhl";
                 leagueLabel = "NHL Hockey";
-            } else if (queryUpper.includes("BASEBALL") || queryUpper.includes("MLB")) {
-                requestedApiKey = "baseball_mlb";
-                leagueLabel = "MLB Baseball";
             } else if (queryUpper.includes("NCAA") || queryUpper.includes("COLLEGE")) {
                 requestedApiKey = "americanfootball_ncaaf";
                 leagueLabel = "NCAA Football";
-            }
-
-            // 5. "TONIGHT" / "TODAY" CALENDAR CHECKER FOR FOOTBALL
-            const isTonightQuery = queryUpper.includes("TONIGHT") || queryUpper.includes("TODAY") || queryUpper.includes("TONIGHTS");
-
-            if (isTonightQuery && requestedApiKey.includes("americanfootball") && (currentDayOfWeek === 2 || currentDayOfWeek === 3)) {
-                const responseBox = document.getElementById('askJimResponse');
-                const titleEl = document.getElementById('aiResponseTitle');
-                const oddsEl = document.getElementById('aiResponseOdds');
-                const legsEl = document.getElementById('aiResponseLegs');
-                const quoteEl = document.getElementById('aiResponseQuote');
-
-                titleEl.textContent = "NO FOOTBALL GAMES SCHEDULED FOR TONIGHT";
-                oddsEl.textContent = "SCHEDULE ALERT";
-                legsEl.innerHTML = `
-                    <li><span class="leg-icon">⚠️</span> <strong>No NFL or major NCAA Football games scheduled for tonight!</strong></li>
-                    <li><span class="leg-icon">🏀</span> Check out <strong>Tonight's NBA Basketball Action</strong> or look ahead to Thursday Night Football!</li>
-                `;
-                quoteEl.innerHTML = `
-                    <div style="margin-bottom: 0.5rem; color: #fff;">Big Jim recommends switching to tonight's hoops or upcoming football:</div>
-                    <div class="choice-btn-group">
-                        <button class="choice-btn complexity-btn" onclick="triggerQuery('basketball bets')">🏀 LOAD TONIGHT'S NBA BASKETBALL</button>
-                        <button class="choice-btn" onclick="triggerQuery('8 leg parlay for sundays nfl games')">🏈 LOAD SUNDAY NFL SLATE</button>
-                    </div>
-                `;
-                responseBox.style.display = 'block';
-                playSpeech("Ain't no football games on tonight, boss! Check out tonight's NBA action instead!");
-                return;
             }
 
             let liveGames = await fetchLiveSportsbookOdds(requestedApiKey);
@@ -1976,10 +1907,6 @@
 
             if (forceTennesseeBias && tnSportGames.length > 0) {
                 slateGames = [...tnSportGames, ...slateGames.filter(g => !tnSportGames.includes(g))];
-            }
-
-            if (isTonightQuery) {
-                slateGames = [slateGames[0]];
             }
 
             window.currentSearchGames = slateGames;
@@ -2003,9 +1930,9 @@
             }
 
             window.activeLegsList = autoLegs;
-            let headerTitle = isTonightQuery 
-                ? `JIM'S TONIGHT ${leagueLabel.toUpperCase()} SGP: ${slateGames[0].matchup.split('(')[0].trim().toUpperCase()}` 
-                : (forceTennesseeBias ? `🍊 TENNESSEE PRIDE: ${autoLegs.length}-LEG ${leagueLabel.toUpperCase()} LOCK` : `JIM'S ${leagueLabel.toUpperCase()} ${autoLegs.length}-LEG PARLAY`);
+            let headerTitle = forceTennesseeBias 
+                ? `🍊 TENNESSEE PRIDE: ${autoLegs.length}-LEG ${leagueLabel.toUpperCase()} LOCK` 
+                : `JIM'S ${leagueLabel.toUpperCase()} ${autoLegs.length}-LEG PARLAY`;
 
             renderActiveLegsResponse(headerTitle);
             playSpeech(`Generated your ${autoLegs.length}-leg ${leagueLabel} parlay!`);
