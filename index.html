@@ -1256,6 +1256,19 @@
             }
         }
 
+        function parseAmericanToDecimal(americanStr) {
+            let str = String(americanStr).trim();
+            if (str.startsWith('+')) {
+                let num = parseFloat(str.replace('+', ''));
+                return 1 + (num / 100);
+            } else if (str.startsWith('-')) {
+                let num = parseFloat(str.replace('-', ''));
+                return 1 + (100 / num);
+            }
+            let directNum = parseFloat(str);
+            return isNaN(directNum) ? 1.909 : directNum;
+        }
+
         // SOUNDBOARD AUDIO ENGINE
         let currentAudio = null;
 
@@ -1439,10 +1452,10 @@
                         commenceDate: now,
                         keywords: ["KNICKS", "76ERS", "NEW YORK", "PHILADELPHIA", "TONIGHT", "TODAY", "BASKETBALL"],
                         matchup: "[NBA] Philadelphia 76ers at New York Knicks (Tonight 7:00 PM ET)",
-                        odds: "New York Knicks -4.5 Cover Spread (-110)",
-                        safeLeg: "New York Knicks -4.5 Cover Spread (-110)",
+                        odds: "New York Knicks -4.5 Cover Spread (-115)",
+                        safeLeg: "New York Knicks -4.5 Cover Spread (-115)",
                         safeProps: [
-                            "New York Knicks -4.5 Cover Spread (-110)",
+                            "New York Knicks -4.5 Cover Spread (-115)",
                             "Game Total OVER 218.5 Points (-110)",
                             "Starting PG 20+ Points & 6 Assists (-120)"
                         ],
@@ -1458,18 +1471,36 @@
                         commenceDate: now,
                         keywords: ["CELTICS", "PISTONS", "BOSTON", "DETROIT"],
                         matchup: "[NBA] Boston Celtics at Detroit Pistons (Tonight 7:30 PM ET)",
-                        odds: "Boston Celtics -8.5 Cover Spread (-110)",
-                        safeLeg: "Boston Celtics -8.5 Cover Spread (-110)",
+                        odds: "Detroit Pistons +1.5 Cover Spread (-108)",
+                        safeLeg: "Detroit Pistons +1.5 Cover Spread (-108)",
                         safeProps: [
-                            "Boston Celtics -8.5 Cover Spread (-110)",
+                            "Detroit Pistons +1.5 Cover Spread (-108)",
                             "Game Total OVER 214.5 Points (-108)",
                             "Primary Forward 22+ Points (-115)"
                         ],
                         unhingedProps: [
-                            "Boston Celtics -14.5 Alternate Spread (+185)",
+                            "Detroit Pistons Moneyline Outright Win (+105)",
                             "Primary Forward 35+ Points & 10+ Rebounds (+260)"
                         ],
                         comment: "Celtics Eastern Battle!"
+                    },
+                    {
+                        league: "NBA",
+                        commenceDate: now,
+                        keywords: ["SPURS", "THUNDER", "SAN ANTONIO", "OKLAHOMA CITY"],
+                        matchup: "[NBA] Oklahoma City Thunder at San Antonio Spurs (Tonight 9:30 PM ET)",
+                        odds: "San Antonio Spurs +1.5 Cover Spread (-114)",
+                        safeLeg: "San Antonio Spurs +1.5 Cover Spread (-114)",
+                        safeProps: [
+                            "San Antonio Spurs +1.5 Cover Spread (-114)",
+                            "Game Total OVER 222.5 Points (-110)",
+                            "Primary Guard 24+ Points (-118)"
+                        ],
+                        unhingedProps: [
+                            "San Antonio Spurs Moneyline Outright Win (+110)",
+                            "Game Total OVER 232.5 Points (+210)"
+                        ],
+                        comment: "Western Conference Opening Battle!"
                     }
                 ];
             } else if (sportKey.includes("icehockey")) {
@@ -1504,35 +1535,14 @@
                         safeProps: [
                             "San Francisco 49ers -7.5 Cover Spread (-110)",
                             "Game Total OVER 44.5 Points (-110)",
-                            "Starting QB 225+ Passing Yards (-115)",
-                            "Primary WR 60+ Receiving Yards (-110)"
+                            "Starting QB 225+ Passing Yards (-115)"
                         ],
                         unhingedProps: [
                             "San Francisco 49ers -13.5 Alternate Spread (+190)",
                             "Starting QB 275+ Passing Yards & 3 TDs (+240)",
-                            "Primary WR 75+ Receiving Yards & Anytime TD (+185)",
                             "Game Total OVER 52.5 Points (+180)"
                         ],
                         comment: "Featured NFL Game of the Week!"
-                    },
-                    {
-                        league: "NFL",
-                        commenceDate: satDate,
-                        keywords: ["TITANS", "COLTS", "TENNESSEE", "INDIANAPOLIS"],
-                        matchup: `[NFL] Tennessee Titans at Indianapolis Colts (Sun ${satStr})`,
-                        odds: "Tennessee Titans +6.5 Cover Spread (-110)",
-                        safeLeg: "Tennessee Titans +6.5 Cover Spread (-110)",
-                        safeProps: [
-                            "Tennessee Titans +6.5 Cover Spread (-110)",
-                            "Game Total OVER 42.5 Points (-112)",
-                            "Primary WR 50+ Receiving Yards (-115)"
-                        ],
-                        unhingedProps: [
-                            "Tennessee Titans Outright Moneyline Win (+220)",
-                            "Starting QB 250+ Passing Yards & 2 TDs (+190)",
-                            "Primary WR 80+ Receiving Yards & TD (+210)"
-                        ],
-                        comment: "AFC South Divisional Clash!"
                     }
                 ];
             } else {
@@ -1559,7 +1569,7 @@
             }
         }
 
-        // FULLY DYNAMIC PARSER WITH CONVERTED AMERICAN MONEYLINES
+        // FULLY DYNAMIC PARSER WITH AMERICAN ODDS CONVERSION
         function parseLiveFanDuelOdds(rawGames, sportKey = "americanfootball_ncaaf") {
             if (!rawGames || !Array.isArray(rawGames)) return [];
 
@@ -1579,9 +1589,9 @@
                     weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' 
                 });
 
-                let moneyline = `${homeTeam} Moneyline Win`;
-                let spread = `${homeTeam} Cover Spread`;
-                let total = `Game Total OVER Points`;
+                let moneyline = `${homeTeam} Moneyline Win (-110)`;
+                let spread = `${homeTeam} Cover Spread (-110)`;
+                let total = `Game Total OVER Points (-110)`;
 
                 const bookie = game.bookmakers?.find(b => b.key === 'fanduel') || game.bookmakers?.[0];
                 if (bookie) {
@@ -1594,25 +1604,31 @@
                             }
                         }
                         if (m.key === 'spreads') {
-                            const homePoint = m.outcomes.find(o => o.name === homeTeam)?.point || "";
-                            spread = `${homeTeam} ${homePoint > 0 ? '+' : ''}${homePoint} Cover Spread (-110)`;
+                            const outcomeObj = m.outcomes.find(o => o.name === homeTeam);
+                            const homePoint = outcomeObj?.point || "";
+                            const homePriceRaw = outcomeObj?.price;
+                            const priceStr = homePriceRaw ? convertDecimalToAmerican(homePriceRaw) : "-110";
+                            spread = `${homeTeam} ${homePoint > 0 ? '+' : ''}${homePoint} Cover Spread (${priceStr})`;
                         }
                         if (m.key === 'totals') {
-                            const overPoint = m.outcomes[0]?.point || "";
-                            total = `Game Total OVER ${overPoint} Points (-110)`;
+                            const outcomeObj = m.outcomes[0];
+                            const overPoint = outcomeObj?.point || "";
+                            const overPriceRaw = outcomeObj?.price;
+                            const priceStr = overPriceRaw ? convertDecimalToAmerican(overPriceRaw) : "-110";
+                            total = `Game Total OVER ${overPoint} Points (${priceStr})`;
                         }
                     });
                 }
 
-                let propStat1 = "225+ Passing Yards";
-                let propStat2 = "60+ Receiving Yards";
+                let propStat1 = "225+ Passing Yards (-115)";
+                let propStat2 = "60+ Receiving Yards (-110)";
 
                 if (leagueTitle === "NBA" || leagueTitle === "NCAAB") {
-                    propStat1 = "20+ Points Scored";
-                    propStat2 = "6+ Assists";
+                    propStat1 = "20+ Points Scored (-120)";
+                    propStat2 = "6+ Assists (-110)";
                 } else if (leagueTitle === "NHL") {
-                    propStat1 = "3+ Shots on Goal";
-                    propStat2 = "Over 5.5 Total Goals";
+                    propStat1 = "3+ Shots on Goal (-125)";
+                    propStat2 = "Over 5.5 Total Goals (-110)";
                 }
 
                 return {
@@ -1629,7 +1645,7 @@
                         `Primary Player ${propStat2}`
                     ],
                     unhingedProps: [
-                        `${homeTeam} Outright Win Moneyline`,
+                        moneyline,
                         `${homeTeam} Alternate Spread (+185)`,
                         `Game Total OVER Points (+180)`,
                         `Primary Player 30+ Points / 3+ TDs (+240)`
@@ -1655,7 +1671,7 @@
             if (mode === "UNHINGED") {
                 let unhingedLegs = [];
                 activeGames.forEach(game => {
-                    let pool = game.unhingedProps || [game.safeLeg, "Game Total OVER Points"];
+                    let pool = game.unhingedProps || [game.safeLeg, "Game Total OVER Points (-110)"];
                     let gameTitle = game.matchup ? game.matchup.split('(')[0].trim() : "Active Game";
 
                     pool.forEach(propText => {
@@ -1750,7 +1766,7 @@
             playSpeech(`Simplified down to a clean multi-game winner slip!`);
         }
 
-        // REALISTIC PARLAY ODDS CALCULATOR
+        // REAL-TIME COMBINED PARLAY CALCULATOR (EXACT FANDUEL DECIMALS)
         function renderActiveLegsResponse(customTitle = "") {
             const responseBox = document.getElementById('askJimResponse');
             const titleEl = document.getElementById('aiResponseTitle');
@@ -1759,21 +1775,28 @@
             const quoteEl = document.getElementById('aiResponseQuote');
 
             let legsHtml = "";
+            let combinedDecimalMultiplier = 1.0;
+
             window.activeLegsList.forEach(legObj => {
                 legsHtml += `<li><span class="leg-icon">⚡</span> <strong>${legObj.game}</strong>: ${legObj.text}</li>`;
+
+                // Extract American or Decimal price inside parenthesis
+                const priceMatch = legObj.text.match(/\(([+\-]?\d+(?:\.\d+)?)\)/);
+                if (priceMatch) {
+                    let decVal = parseAmericanToDecimal(priceMatch[1]);
+                    combinedDecimalMultiplier *= decVal;
+                } else {
+                    combinedDecimalMultiplier *= 1.909; // Default -110 line
+                }
             });
 
             let legCount = window.activeLegsList.length;
             titleEl.textContent = customTitle || `JIM'S ${legCount}-LINE PARLAY`;
             
-            // ACCURATE MULTI-LEG PARLAY ODDS CALCULATOR
-            let calculatedAmericanOdds = "+110";
-            if (legCount === 2) calculatedAmericanOdds = "+240";
-            else if (legCount === 3) calculatedAmericanOdds = "+380";
-            else if (legCount === 4) calculatedAmericanOdds = "+650";
-            else if (legCount >= 5) calculatedAmericanOdds = `+${(legCount * 220) + 100}`;
+            // CONVERT COMBINED DECIMALS INTO TRUE AMERICAN PARLAY ODDS
+            let totalAmericanParlayOdds = convertDecimalToAmerican(combinedDecimalMultiplier);
 
-            oddsEl.textContent = `${calculatedAmericanOdds} PARLAY`;
+            oddsEl.textContent = `${totalAmericanParlayOdds} PARLAY`;
             legsEl.innerHTML = legsHtml;
 
             quoteEl.innerHTML = `
@@ -1846,7 +1869,7 @@
                 let gameTitle = cb.value.split('(')[0].trim();
                 selectedList.push({
                     game: gameTitle,
-                    text: `${gameTitle} — Outright Winner & Cover Spread`
+                    text: `${gameTitle} — Outright Winner & Cover Spread (-110)`
                 });
             });
 
@@ -1973,7 +1996,7 @@
                 let curTexts = autoLegs.map(l => l.text);
                 let nextProp = pool.find(p => !curTexts.includes(p));
 
-                if (!nextProp) nextProp = `${gameTitle} — Outright Winner`;
+                if (!nextProp) nextProp = `${gameTitle} — Outright Winner (-110)`;
 
                 autoLegs.push({ game: gameTitle, text: nextProp });
                 legIndex++;
@@ -1988,7 +2011,7 @@
             playSpeech(`Generated your ${autoLegs.length}-leg ${leagueLabel} parlay!`);
         }
 
-        // DYNAMIC DAILY BETS RENDERER (FOOTBALL FIRST -> NBA FALLBACK -> OFF-NIGHT)
+        // DYNAMIC DAILY BETS RENDERER
         async function generateLiveDayBets() {
             const today = new Date();
             const fullDateString = today.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
@@ -1998,7 +2021,6 @@
             const picksContainer = document.getElementById("dynamicPicksContainer");
             picksContainer.innerHTML = `<div style="text-align: center; padding: 3rem 0; color: var(--text-muted);">🔄 Fetching live sportsbook feeds...</div>`;
 
-            // Football First Attempt
             let liveNFL = await fetchLiveSportsbookOdds("americanfootball_nfl");
             let liveNCAA = await fetchLiveSportsbookOdds("americanfootball_ncaaf");
             let footballMatchups = [...(liveNFL || []), ...(liveNCAA || [])];
@@ -2009,7 +2031,6 @@
                 todaysMatchups = footballMatchups.slice(0, 3);
                 document.getElementById("scheduleNoticeText").innerText = "Football is on the board, baby! Smell the grass, crack a cold one, and let's smash some gridiron locks!";
             } else {
-                // NBA/Basketball Fallback
                 let liveNBA = await fetchLiveSportsbookOdds("basketball_nba");
                 if (liveNBA.length > 0) {
                     todaysMatchups = liveNBA.slice(0, 3);
