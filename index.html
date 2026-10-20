@@ -1130,7 +1130,7 @@
                     Got a specific matchup or prop bet in mind? Type any team or game below for Big Jim's instantaneous analysis:
                 </p>
                 <div class="ask-jim-input-group">
-                    <input type="text" id="askJimInput" class="ask-jim-input" placeholder="e.g. only thursday night football game" onkeypress="if(event.key==='Enter') askBigJim()">
+                    <input type="text" id="askJimInput" class="ask-jim-input" placeholder="e.g. thursday night football" onkeypress="if(event.key==='Enter') askBigJim()">
                     <button class="ask-jim-btn" onclick="askBigJim()">ASK JIM ➔</button>
                 </div>
 
@@ -1813,12 +1813,14 @@
             playSpeech(`Generated your custom parlay!`);
         }
 
-        // STRICT SINGLE-GAME THURSDAY NIGHT FOOTBALL ROUTER
+        // DYNAMIC DAY-PRIORITIZED SEARCH ENGINE
         async function askBigJim() {
             const rawInput = document.getElementById('askJimInput').value.trim();
             if (!rawInput) return;
 
             let queryUpper = correctFuzzyWords(rawInput);
+            const now = new Date();
+            const currentDayOfWeek = now.getDay(); // 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
 
             // 1. MODE SELECTION MODIFIERS
             if (queryUpper.includes("SAFE") || queryUpper.includes("HIGH PROBABILITY")) {
@@ -1838,7 +1840,7 @@
                 return;
             }
 
-            // 4. STRICT THURSDAY NIGHT FOOTBALL SINGLE GAME TRAPPER
+            // 4. SPECIFIC DAY ROUTER TRAPS (EVALUATED BEFORE OFF-NIGHT CHECKS)
             const isThursdayQuery = queryUpper.includes("THURSDAY") || queryUpper.includes("TNF") || queryUpper.includes("THURSDAYS");
 
             if (isThursdayQuery) {
@@ -1862,7 +1864,7 @@
                 let headerTitle = "JIM'S THURSDAY NIGHT FOOTBALL SGP";
 
                 if (window.isTennesseePrideActive && !hasTN) {
-                    headerTitle = "🍊 TENNESSEE PRIDE ALERT: Neither UT nor Titans play on TNF! Big Jim's locking in the main TNF game anyway:";
+                    headerTitle = "🍊 TENNESSEE PRIDE ALERT: Neither UT nor the Titans play on Thursday Night Football this week! Big Jim's locking in the main TNF game anyway:";
                 } else if (window.isTennesseePrideActive && hasTN) {
                     headerTitle = "🍊 TENNESSEE PRIDE: THURSDAY NIGHT LOCK";
                 }
@@ -1872,7 +1874,9 @@
                 return;
             }
 
-            // 5. STANDARD MULTI-SPORT ROUTER
+            // 5. "TONIGHT" / "TODAY" CALENDAR CHECKER
+            const isTonightQuery = (queryUpper.includes("TONIGHT") || queryUpper.includes("TODAY") || queryUpper.includes("TONIGHTS")) && !isThursdayQuery;
+
             let requestedApiKey = "americanfootball_nfl";
             let leagueLabel = "NFL Football";
 
@@ -1888,6 +1892,32 @@
             } else if (queryUpper.includes("NCAA") || queryUpper.includes("COLLEGE")) {
                 requestedApiKey = "americanfootball_ncaaf";
                 leagueLabel = "NCAA Football";
+            }
+
+            // FOOTBALL TUESDAY/WEDNESDAY NO-GAME TRAP
+            if (isTonightQuery && requestedApiKey.includes("americanfootball") && (currentDayOfWeek === 2 || currentDayOfWeek === 3)) {
+                const responseBox = document.getElementById('askJimResponse');
+                const titleEl = document.getElementById('aiResponseTitle');
+                const oddsEl = document.getElementById('aiResponseOdds');
+                const legsEl = document.getElementById('aiResponseLegs');
+                const quoteEl = document.getElementById('aiResponseQuote');
+
+                titleEl.textContent = "NO FOOTBALL GAMES SCHEDULED FOR TONIGHT";
+                oddsEl.textContent = "SCHEDULE ALERT";
+                legsEl.innerHTML = `
+                    <li><span class="leg-icon">⚠️</span> <strong>No NFL or major NCAA Football games scheduled for tonight!</strong></li>
+                    <li><span class="leg-icon">🏀</span> Check out <strong>Tonight's NBA Basketball Action</strong> or look ahead to Thursday Night Football!</li>
+                `;
+                quoteEl.innerHTML = `
+                    <div style="margin-bottom: 0.5rem; color: #fff;">Big Jim recommends switching to tonight's hoops or upcoming football:</div>
+                    <div class="choice-btn-group">
+                        <button class="choice-btn complexity-btn" onclick="triggerQuery('basketball bets')">🏀 LOAD TONIGHT'S NBA BASKETBALL</button>
+                        <button class="choice-btn" onclick="triggerQuery('8 leg parlay for sundays nfl games')">🏈 LOAD SUNDAY NFL SLATE</button>
+                    </div>
+                `;
+                responseBox.style.display = 'block';
+                playSpeech("Ain't no football games on tonight, boss! Check out tonight's NBA action instead!");
+                return;
             }
 
             let liveGames = await fetchLiveSportsbookOdds(requestedApiKey);
@@ -1907,6 +1937,10 @@
 
             if (forceTennesseeBias && tnSportGames.length > 0) {
                 slateGames = [...tnSportGames, ...slateGames.filter(g => !tnSportGames.includes(g))];
+            }
+
+            if (isTonightQuery) {
+                slateGames = [slateGames[0]];
             }
 
             window.currentSearchGames = slateGames;
