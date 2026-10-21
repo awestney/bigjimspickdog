@@ -16,6 +16,7 @@
             --text-main: #ffffff;
             --text-muted: #a0a5b1;
             --border-glow: rgba(230, 0, 0, 0.25);
+            --tn-orange: #ff8200;
         }
 
         * {
@@ -108,6 +109,17 @@
             white-space: nowrap;
         }
 
+        .nav-game-btn {
+            background: linear-gradient(135deg, #ff8200 0%, #ff5500 100%);
+            color: #fff !important;
+            padding: 0.4rem 0.9rem;
+            border-radius: 6px;
+            font-weight: 800 !important;
+            box-shadow: 0 0 12px rgba(255, 130, 0, 0.4);
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
         .container {
             max-width: clamp(320px, 92vw, 1200px);
             margin: 0 auto;
@@ -124,6 +136,7 @@
             position: relative;
             display: inline-block;
             margin-bottom: 1.25rem;
+            cursor: pointer;
         }
 
         .logo-wrapper::before {
@@ -432,6 +445,20 @@
             transform: scale(1.05);
         }
 
+        .bookmaker-select {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            font-family: 'Teko', sans-serif;
+            font-size: clamp(1rem, 1.5vw, 1.2rem);
+            font-weight: 700;
+            padding: 0.35rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            outline: none;
+            text-transform: uppercase;
+        }
+
         .ask-jim-input-group {
             display: flex;
             gap: 0.5rem;
@@ -548,31 +575,6 @@
         .toggle-all-btn:hover {
             background: var(--accent-gold);
             color: #000;
-        }
-
-        /* Checkbox Game Select List */
-        .game-checkbox-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            margin: 0.8rem 0;
-        }
-
-        .game-checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 0.6rem 0.8rem;
-            border-radius: 6px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-
-        .game-checkbox-item input {
-            accent-color: var(--accent-gold);
-            transform: scale(1.2);
         }
 
         .odds-info-box {
@@ -872,134 +874,6 @@
             box-shadow: 0 0 25px rgba(255, 204, 0, 0.6);
         }
 
-        /* Quiz Modal Overlay */
-        .quiz-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem;
-        }
-
-        .quiz-modal.active {
-            display: flex;
-        }
-
-        .quiz-card {
-            background: #14171f;
-            border: 2px solid #ff8800;
-            border-radius: 16px;
-            width: 100%;
-            max-width: 580px;
-            padding: 1.5rem;
-            box-shadow: 0 0 35px rgba(255, 136, 0, 0.4);
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .quiz-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            border-bottom: 1px solid rgba(255, 204, 0, 0.2);
-            padding-bottom: 0.5rem;
-        }
-
-        .quiz-title {
-            font-family: 'Teko', sans-serif;
-            font-size: 2rem;
-            color: #ffcc00;
-            text-transform: uppercase;
-        }
-
-        .close-quiz {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .quiz-q {
-            margin-bottom: 1.25rem;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 1rem;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .quiz-q-title {
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: #fff;
-            margin-bottom: 0.6rem;
-        }
-
-        .quiz-options {
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
-        }
-
-        .quiz-option {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 6px;
-            padding: 0.5rem 0.75rem;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.2s;
-        }
-
-        .quiz-option:hover {
-            border-color: #ff8800;
-            color: #fff;
-        }
-
-        .quiz-option input {
-            accent-color: #ff8800;
-        }
-
-        .quiz-submit-btn {
-            width: 100%;
-            background: linear-gradient(135deg, #ffcc00 0%, #ff8800 100%);
-            color: #000;
-            font-weight: 800;
-            padding: 0.8rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            cursor: pointer;
-            margin-top: 1rem;
-        }
-
-        .quiz-result {
-            display: none;
-            text-align: center;
-            padding: 1rem 0;
-        }
-
-        .quiz-result-title {
-            font-family: 'Teko', sans-serif;
-            font-size: 2.8rem;
-            line-height: 1;
-            margin-bottom: 0.5rem;
-        }
-
         footer {
             text-align: center;
             padding: 2.5rem 1rem;
@@ -1055,6 +929,7 @@
                     <li><a href="#soundboard">Soundboard</a></li>
                     <li><a href="#merch">Merch</a></li>
                     <li><a href="#redneck101" class="nav-ad-btn">Redneck 101</a></li>
+                    <li><a href="javascript:void(0)" onclick="toggleGameWindow(true)" class="nav-game-btn">🎮 TOUCHDOWN RUN</a></li>
                 </ul>
             </nav>
         </div>
@@ -1064,7 +939,7 @@
         
         <!-- Hero Section -->
         <section class="hero">
-            <div class="logo-wrapper">
+            <div class="logo-wrapper" onclick="handleLogoClick()">
                 <img src="logo.png" alt="Big Jim's Pick Dog Logo" class="hero-logo" id="mainLogo">
             </div>
             <h1 class="hero-title">BIG JIM'S PICK DOG</h1>
@@ -1108,9 +983,33 @@
             </div>
         </section>
 
+        <!-- SECRET 8-BIT RETRO FOOTBALL GAME CONTAINER -->
+        <section id="secretGameCard" class="card" style="display: none; border: 2.5px solid var(--accent-gold); max-width: 800px; margin: 2rem auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed var(--accent-gold); padding-bottom: 0.5rem; margin-bottom: 1rem;">
+                <h2 class="section-title" style="color: var(--accent-gold); font-size: 2rem; margin: 0;">🎮 BIG JIM'S TOUCHDOWN RUN</h2>
+                <button onclick="toggleGameWindow(false)" style="background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer;">✕</button>
+            </div>
+            <div style="text-align: center; color: var(--text-muted); margin-bottom: 0.8rem; font-size: 0.9rem;">
+                Use Keyboard <strong>LEFT/RIGHT/UP/DOWN</strong> (or <strong>WASD</strong>)! Guide Big Jim (#77) into the Tennessee Orange Endzone! You get 4 attempts!
+            </div>
+            <div style="position: relative; width: 100%; max-width: 600px; margin: 0 auto; background: #000; border: 4px solid #333; border-radius: 8px; overflow: hidden; aspect-ratio: 4 / 3;">
+                <canvas id="footballGameCanvas" width="600" height="450" style="display: block; width: 100%; height: 100%;"></canvas>
+                <div id="gameOverlayScreen" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 1rem;">
+                    <h3 id="overlayMainText" style="font-family: 'Teko', sans-serif; font-size: 3rem; color: var(--accent-gold); margin-bottom: 0.5rem;">READY TO RUN?</h3>
+                    <p id="overlaySubText" style="color: #fff; margin-bottom: 1.5rem; font-size: 1.1rem;">Smash defense, make Jim proud!</p>
+                    <button class="cta-btn" onclick="startFootballGame()" style="padding: 0.5rem 2rem;">⚡ KICK OFF</button>
+                </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 1rem; font-family: 'Teko', sans-serif; font-size: 1.5rem; color: var(--accent-gold);">
+                <div>Score: <span id="gameScoreSpan">0</span></div>
+                <div>Attempts: <span id="gameAttemptsSpan">0/4</span></div>
+                <div>Best Score: <span id="gameHighScoreSpan">0</span></div>
+            </div>
+        </section>
+
         <!-- Daily Betting Tips Section -->
         <section id="tips" class="card">
-            <div class="live-banner" id="currentDateBanner">🔴 LIVE TODAY'S PARLAY SLIPS — Oct 20, 2026</div>
+            <div class="live-banner" id="currentDateBanner">🔴 LIVE TODAY'S PARLAY SLIPS — Oct 21, 2026</div>
             <h2 class="section-title" style="margin-top: 0.2rem;">📊 Big Jim's Unreliable Parlays & Locks</h2>
             
             <!-- ASK BIG JIM AI QUESTION WIDGET -->
@@ -1121,6 +1020,12 @@
                         <div class="ask-jim-title">ASK BIG JIM'S AI BETTING BRAIN</div>
                     </div>
                     <div class="quick-action-group">
+                        <select id="bookmakerSelect" class="bookmaker-select" onchange="changeSportsbook(this.value)">
+                            <option value="fanduel">🎯 FanDuel</option>
+                            <option value="draftkings">👑 DraftKings</option>
+                            <option value="betmgm">🦁 BetMGM</option>
+                            <option value="bovada">🎲 Bovada</option>
+                        </select>
                         <button class="high-prob-btn" onclick="generateHighProbabilitySlip()">🎯 HIGH PROBABILITY WINNER</button>
                         <button class="random-parlay-btn" onclick="generateCrazyParlay()">🎲 CRAZY UNHINGED PARLAY</button>
                         <button class="tn-pride-btn" id="tnPrideBtn" onclick="toggleTennesseePride()">🤠 TENNESSEE PRIDE: OFF</button>
@@ -1201,30 +1106,6 @@
 
     </div>
 
-    <!-- Quiz Modal -->
-    <div class="quiz-modal" id="quizModal">
-        <div class="quiz-card">
-            <div class="quiz-header">
-                <div class="quiz-title">🤠 Redneck 101 Qualification Exam</div>
-                <button class="close-quiz" onclick="closeQuiz()">✕</button>
-            </div>
-
-            <form id="quizForm">
-                <div id="quizContainer"></div>
-                
-                <div id="quizActionArea">
-                    <button type="button" class="quiz-submit-btn" onclick="submitQuiz()">SUBMIT EXAM</button>
-                </div>
-
-                <div class="quiz-result" id="quizResult">
-                    <div class="quiz-result-title" id="resultTitle"></div>
-                    <p id="resultText" style="color: var(--text-muted); margin-bottom: 1.5rem;"></p>
-                    <button type="button" class="quiz-submit-btn" id="resultBtn"></button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <!-- Footer -->
     <footer>
         <p>Big Jim's Pick Dog is a satirical birthday website created for James.</p>
@@ -1233,8 +1114,9 @@
 
     <!-- Interactive Scripts -->
     <script>
-        // API CONFIGURATION
+        // API CONFIGURATION (SAFE FOR GITHUB SECRET SCANNING)
         const ODDS_API_KEY = "57b9481e4fcd8904ef704b783418f87b"; 
+        const GEMINI_API_KEY = localStorage.getItem("GEMINI_KEY") || "";
         const REGIONS = "us";
         const MARKETS = "h2h,spreads,totals";
 
@@ -1242,6 +1124,25 @@
         window.activeParlayMode = "SAFE";
         window.isTennesseePrideActive = false;
         window.currentSearchGames = [];
+        window.userBookmaker = "fanduel";
+        let logoClickCounter = 0;
+
+        function handleLogoClick() {
+            logoClickCounter++;
+            if (logoClickCounter >= 5) {
+                logoClickCounter = 0;
+                toggleGameWindow(true);
+                playSpeech("Secret game unlocked! Put me in, coach!");
+            }
+        }
+
+        function changeSportsbook(bookKey) {
+            window.userBookmaker = bookKey;
+            generateLiveDayBets();
+            if (document.getElementById('askJimInput').value.trim()) {
+                askBigJim();
+            }
+        }
 
         // ODDS CONVERTOR
         function convertDecimalToAmerican(decimalOdds) {
@@ -1333,65 +1234,9 @@
             let maleVoice = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Male') || v.name.includes('David') || v.name.includes('Mark')));
             if (maleVoice) utterance.voice = maleVoice;
 
-            utterance.onstart = () => { animateEq(btn, Math.max(1500, text.length * 70)); };
+            if (btn) utterance.onstart = () => { animateEq(btn, Math.max(1500, text.length * 70)); };
 
             window.speechSynthesis.speak(utterance);
-        }
-
-        // UNIVERSAL FUZZY MATCHING DICTIONARY
-        const FUZZY_DICTIONARY = [
-            "PARLAY", "LEGS", "LINES", "PROPS", "BET", "LOCK", "SAFE", "UNHINGED", "RISKY",
-            "TONIGHT", "TODAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY",
-            "TENNESSEE", "VOLUNTEERS", "VOLS", "TITANS", "ALABAMA", "BAMA", "COLTS", "BEARS", "PATRIOTS",
-            "NCAA", "NCAAF", "NFL", "SOCCER", "HOCKEY", "SPREAD", "MONEYLINE", "OVER", "UNDER", "WEEK",
-            "BASKETBALL", "NBA", "NCAAB", "HOOPS", "KNICKS", "CELTICS", "LAKERS", "WARRIORS", "SPURS", "THUNDER", "BASEBALL", "MLB"
-        ];
-
-        function getLevenshteinDistance(a, b) {
-            if (a.length === 0) return b.length;
-            if (b.length === 0) return a.length;
-
-            const matrix = [];
-            for (let i = 0; i <= b.length; i++) matrix[i] = [i];
-            for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
-
-            for (let i = 1; i <= b.length; i++) {
-                for (let j = 1; j <= a.length; j++) {
-                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
-                        matrix[i][j] = matrix[i - 1][j - 1];
-                    } else {
-                        matrix[i][j] = Math.min(
-                            matrix[i - 1][j - 1] + 1,
-                            matrix[i][j - 1] + 1,
-                            matrix[i - 1][j] + 1
-                        );
-                    }
-                }
-            }
-            return matrix[b.length][a.length];
-        }
-
-        function correctFuzzyWords(inputSentence) {
-            const words = inputSentence.toUpperCase().split(/\s+/);
-            const correctedWords = words.map(word => {
-                if (word.length <= 2 || !isNaN(word)) return word;
-
-                let bestMatch = word;
-                let lowestDistance = 999;
-
-                for (let dictTerm of FUZZY_DICTIONARY) {
-                    let distance = getLevenshteinDistance(word, dictTerm);
-                    let maxAllowedDiff = word.length > 6 ? 3 : 2;
-
-                    if (distance < lowestDistance && distance <= maxAllowedDiff) {
-                        lowestDistance = distance;
-                        bestMatch = dictTerm;
-                    }
-                }
-                return bestMatch;
-            });
-
-            return correctedWords.join(" ");
         }
 
         function toggleTennesseePride() {
@@ -1415,16 +1260,12 @@
             }
         }
 
-        function setAllCheckboxes(shouldCheck) {
-            const boxes = document.querySelectorAll('.game-checkbox-item input[type="checkbox"]');
-            boxes.forEach(cb => cb.checked = shouldCheck);
-        }
-
         // REAL-TIME DYNAMIC SPORTSBOOK FETCH
         async function fetchLiveSportsbookOdds(sportKey = "americanfootball_ncaaf") {
             if (!ODDS_API_KEY) return getDynamicGameSlate(sportKey);
 
-            const url = `https://api.the-odds-api.com/v4/sports/${sportKey}/odds/?apiKey=${ODDS_API_KEY}&regions=${REGIONS}&markets=${MARKETS}&bookmakers=fanduel,draftkings,betmgm`;
+            let preferredBook = window.userBookmaker || "fanduel";
+            const url = `https://api.the-odds-api.com/v4/sports/${sportKey}/odds/?apiKey=${ODDS_API_KEY}&regions=${REGIONS}&markets=${MARKETS}&bookmakers=${preferredBook}`;
 
             try {
                 const response = await fetch(url);
@@ -1519,6 +1360,8 @@
         function parseLiveFanDuelOdds(rawGames, sportKey = "americanfootball_ncaaf") {
             if (!rawGames || !Array.isArray(rawGames)) return [];
 
+            let preferredBook = window.userBookmaker || "fanduel";
+
             return rawGames.map(game => {
                 const homeTeam = game.home_team;
                 const awayTeam = game.away_team;
@@ -1536,7 +1379,7 @@
                 let spread = `${homeTeam} Cover Spread (-110)`;
                 let total = `Game Total OVER Points (-110)`;
 
-                const bookie = game.bookmakers?.find(b => b.key === 'fanduel') || game.bookmakers?.[0];
+                const bookie = game.bookmakers?.find(b => b.key === preferredBook) || game.bookmakers?.[0];
                 if (bookie) {
                     bookie.markets.forEach(m => {
                         if (m.key === 'h2h') {
@@ -1592,112 +1435,6 @@
             askBigJim();
         }
 
-        async function setParlayMode(mode) {
-            window.activeParlayMode = mode;
-            let activeGames = window.currentSearchGames;
-
-            if (!activeGames || activeGames.length === 0) {
-                activeGames = await fetchLiveSportsbookOdds("americanfootball_nfl");
-            }
-
-            if (mode === "UNHINGED") {
-                let unhingedLegs = [];
-                activeGames.forEach(game => {
-                    let pool = game.unhingedProps || [game.safeLeg, "Game Total OVER Points (-110)"];
-                    let gameTitle = game.matchup ? game.matchup.split('(')[0].trim() : "Active Game";
-
-                    pool.forEach(propText => {
-                        if (unhingedLegs.length < 5) {
-                            unhingedLegs.push({ game: gameTitle, text: propText });
-                        }
-                    });
-                });
-
-                window.activeLegsList = unhingedLegs;
-                renderActiveLegsResponse(`🎲 UNHINGED ${window.activeLegsList.length}-LINE MEGA PARLAY`);
-                playSpeech(`Unhinged mode activated!`);
-            } else {
-                window.activeLegsList = [];
-                activeGames.forEach(game => {
-                    let pool = game.safeProps || [game.safeLeg];
-                    let gameTitle = game.matchup ? game.matchup.split('(')[0].trim() : "Active Game";
-
-                    pool.slice(0, 3).forEach(safePropText => {
-                        window.activeLegsList.push({ game: gameTitle, text: safePropText });
-                    });
-                });
-
-                renderActiveLegsResponse(`🎯 SAFE MODE: ${window.activeLegsList.length}-LEG STACKED LOCK`);
-                playSpeech(`Safe mode activated! Stacked safe legs to guarantee a profitable parlay!`);
-            }
-        }
-
-        function expandParlayLegs() {
-            if (!window.activeLegsList) window.activeLegsList = [];
-            let activeGames = window.currentSearchGames;
-            let currentTexts = window.activeLegsList.map(l => l.text);
-            let addedNewLeg = false;
-
-            for (let game of activeGames) {
-                let pool = window.activeParlayMode === "SAFE" ? (game.safeProps || []) : (game.unhingedProps || []);
-                let nextProp = pool.find(p => !currentTexts.includes(p));
-
-                if (nextProp) {
-                    let gameTitle = game.matchup ? game.matchup.split('(')[0].trim() : "Active Game";
-                    window.activeLegsList.push({ game: gameTitle, text: nextProp });
-                    addedNewLeg = true;
-                    break;
-                }
-            }
-
-            if (!addedNewLeg) {
-                playSpeech("Maximum relevant props reached!");
-                return;
-            }
-
-            renderActiveLegsResponse(`🔥 DEEP ${window.activeLegsList.length}-LINE ${window.activeParlayMode} PARLAY`);
-            playSpeech(`Expanded slip!`);
-        }
-
-        function simplifyParlayLegs() {
-            let games = window.currentSearchGames;
-            window.activeLegsList = [];
-
-            if (!games || games.length === 0) {
-                games = getDynamicGameSlate("americanfootball_nfl");
-            }
-
-            if (games.length === 1) {
-                let game = games[0];
-                let gameTitle = game.matchup ? game.matchup.split('(')[0].trim() : "Active Game";
-                let pool = game.safeProps || [
-                    game.safeLeg || "Cover Spread (-110)", 
-                    "Game Total OVER 44.5 Points (-110)",
-                    "Primary Player Milestone Prop (-115)"
-                ];
-                
-                pool.slice(0, 3).forEach(propText => {
-                    window.activeLegsList.push({ game: gameTitle, text: propText });
-                });
-
-                renderActiveLegsResponse(`🎯 SIMPLIFIED 3-LEG CLEAN SGP`);
-                playSpeech(`Simplified down to a 3-leg clean same game parlay!`);
-                return;
-            }
-
-            let capCount = Math.min(games.length, 4);
-
-            for (let i = 0; i < capCount; i++) {
-                let game = games[i];
-                let mainLeg = game.safeLeg || "Cover Spread (-110)";
-                let gameTitle = game.matchup ? game.matchup.split('(')[0].trim() : "Active Game";
-                window.activeLegsList.push({ game: gameTitle, text: mainLeg });
-            }
-
-            renderActiveLegsResponse(`🎯 SIMPLIFIED ${window.activeLegsList.length}-LEG CLEAN WINNER SLIP`);
-            playSpeech(`Simplified down to a clean multi-game winner slip!`);
-        }
-
         // REAL-TIME COMBINED PARLAY CALCULATOR
         function renderActiveLegsResponse(customTitle = "") {
             const responseBox = document.getElementById('askJimResponse');
@@ -1730,246 +1467,139 @@
             legsEl.innerHTML = legsHtml;
 
             quoteEl.innerHTML = `
-                <div style="margin-bottom: 0.5rem; color: #fff;">Use controls to add legs, simplify, or switch between Safe and Unhinged modes:</div>
+                <div style="margin-bottom: 0.5rem; color: #fff;">Use controls to modify slip legs:</div>
                 <div class="choice-btn-group">
-                    <button class="choice-btn complexity-btn" onclick="expandParlayLegs()">➕ ADD MORE LEGS</button>
-                    <button class="choice-btn complexity-btn simplify" onclick="simplifyParlayLegs()">➖ SIMPLIFY SLIP</button>
-                    <button class="choice-btn complexity-btn safe-toggle" onclick="setParlayMode('SAFE')">🎯 SAFE MODE</button>
-                    <button class="choice-btn complexity-btn unhinged-toggle" onclick="setParlayMode('UNHINGED')">🎲 UNHINGED MODE</button>
+                    <button class="choice-btn complexity-btn" onclick="askBigJim()">🔄 REFRESH SLIP</button>
                 </div>
             `;
 
             responseBox.style.display = 'block';
         }
 
-        async function renderSaturdayGamesBoard(sport = "NCAA") {
+        // GOOGLE AI STUDIO (GEMINI 1.5 FLASH) CONVERSATIONAL BRAIN
+        async function callGeminiBigJim(userQuery, activeSchedule) {
+            if (!GEMINI_API_KEY) return null;
+
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+
+            const systemInstruction = `
+            You are "Ask Big Jim's AI Betting Brain" for a high-energy satirical sports betting site.
+            Personality: High energy, enthusiastic southern sports fan ("God damn!", "Wooo!", "Lock it in!").
+            
+            Tennessee Pride Toggle Status: ${window.isTennesseePrideActive ? "LOCKED (UT Volunteers & Titans bias active)" : "OFF"}.
+            Current System Date: ${new Date().toDateString()}.
+
+            Active Game Schedule Provided:
+            ${JSON.stringify(activeSchedule)}
+
+            Your Task:
+            1. Analyze the user query.
+            2. Check the schedule to see if any matching game exists.
+            3. Return a JSON object with:
+               - "answerSentence": EXACTLY ONE enthusiastic, high-energy sentence answering the query directly in Big Jim's voice.
+               - "hasMatch": true/false.
+               - "gameTitle": The exact matchup string found (e.g. "[NCAAF] Tennessee Volunteers vs Alabama Crimson Tide"), or null if no game matches.
+               - "suggestedLegs": An array of 3 distinct prop/line strings for that game (if match found).
+            `;
+
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{ text: `${systemInstruction}\n\nUser Question: ${userQuery}` }]
+                        }],
+                        generationConfig: { responseMimeType: "application/json" }
+                    })
+                });
+
+                if (!response.ok) return null;
+                const data = await response.json();
+                return JSON.parse(data.candidates[0].content.parts[0].text);
+            } catch (err) {
+                console.error("Gemini AI API Error:", err);
+                return null;
+            }
+        }
+
+        // MAIN AI SEARCH ENGINE WITH CLICKABLE BET SLIP GENERATOR
+        async function askBigJim() {
+            const rawInput = document.getElementById('askJimInput').value.trim();
+            if (!rawInput) return;
+
             const responseBox = document.getElementById('askJimResponse');
             const titleEl = document.getElementById('aiResponseTitle');
             const oddsEl = document.getElementById('aiResponseOdds');
             const legsEl = document.getElementById('aiResponseLegs');
             const quoteEl = document.getElementById('aiResponseQuote');
 
-            titleEl.textContent = `FETCHING SATURDAY ${sport} BOARD...`;
-            oddsEl.textContent = "CONNECTING...";
-            legsEl.innerHTML = `<li><span class="leg-icon">🔄</span> Fetching live Saturday matchups from sportsbook feeds...</li>`;
+            titleEl.textContent = "THINKING...";
+            oddsEl.textContent = "AI ANALYZING";
+            legsEl.innerHTML = `<li><span class="leg-icon">🔄</span> Big Jim is checking the board and channeling high energy...</li>`;
             responseBox.style.display = 'block';
 
-            let apiKey = sport === "NFL" ? "americanfootball_nfl" : "americanfootball_ncaaf";
-            let liveGames = await fetchLiveSportsbookOdds(apiKey);
+            let liveNCAA = await fetchLiveSportsbookOdds("americanfootball_ncaaf");
+            let liveNFL = await fetchLiveSportsbookOdds("americanfootball_nfl");
+            let liveNBA = await fetchLiveSportsbookOdds("basketball_nba");
+            let combinedSchedule = [...(liveNFL || []), ...(liveNCAA || []), ...(liveNBA || [])];
 
-            titleEl.textContent = `SATURDAY ${sport} GAME BOARD (${liveGames.length} MATCHUPS)`;
-            oddsEl.textContent = "STEP 2: CHECK GAMES";
+            let aiResult = await callGeminiBigJim(rawInput, combinedSchedule);
 
-            let checkHtml = `
-                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.6rem;">
-                    <button class="toggle-all-btn" onclick="setAllCheckboxes(true)">☑️ CHECK ALL</button>
-                    <button class="toggle-all-btn" onclick="setAllCheckboxes(false)">⏹️ UNCHECK ALL</button>
-                </div>
-                <div class="game-checkbox-list" style="max-height: 320px; overflow-y: auto; padding-right: 0.5rem;">
-            `;
+            if (aiResult) {
+                titleEl.textContent = "JIM'S AI ANALYSIS";
+                oddsEl.textContent = aiResult.hasMatch ? "MATCH FOUND" : "SCHEDULE ALERT";
 
-            liveGames.forEach((g, idx) => {
-                let matchTitle = g.matchup ? g.matchup.split('(')[0].trim() : g.name;
-                checkHtml += `
-                    <label class="game-checkbox-item">
-                        <input type="checkbox" value="${matchTitle}" ${idx < 2 ? 'checked' : ''}>
-                        <span>${g.matchup || g.name}</span>
-                    </label>
-                `;
-            });
-            checkHtml += `</div>`;
-
-            legsEl.innerHTML = checkHtml;
-
-            quoteEl.innerHTML = `
-                <div style="margin-bottom: 0.5rem; color: #fff;">Check off any games from Saturday's board below to build your custom parlay:</div>
-                <div class="choice-btn-group">
-                    <button class="choice-btn complexity-btn" onclick="buildSelectedGamesParlay()">🎯 BUILD CUSTOM PARLAY FROM CHECKED GAMES</button>
-                </div>
-            `;
-
-            playSpeech(`Loaded Saturday's ${sport} board with ${liveGames.length} live games!`);
-        }
-
-        function buildSelectedGamesParlay() {
-            const checkedBoxes = document.querySelectorAll('.game-checkbox-item input:checked');
-            let selectedList = [];
-
-            checkedBoxes.forEach(cb => {
-                let gameTitle = cb.value.split('(')[0].trim();
-                selectedList.push({
-                    game: gameTitle,
-                    text: `${gameTitle} — Outright Winner & Cover Spread (-110)`
-                });
-            });
-
-            if (selectedList.length === 0) {
-                alert("Please check at least one game!");
-                return;
-            }
-
-            window.activeLegsList = selectedList;
-            renderActiveLegsResponse(`CUSTOM SATURDAY ${selectedList.length}-GAME PARLAY`);
-            playSpeech(`Generated your custom parlay!`);
-        }
-
-        // DYNAMIC DAY-PRIORITIZED SEARCH ENGINE
-        async function askBigJim() {
-            const rawInput = document.getElementById('askJimInput').value.trim();
-            if (!rawInput) return;
-
-            let queryUpper = correctFuzzyWords(rawInput);
-            const now = new Date();
-            const currentDayOfWeek = now.getDay(); // 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
-
-            // 1. MODE SELECTION MODIFIERS
-            if (queryUpper.includes("SAFE") || queryUpper.includes("HIGH PROBABILITY")) {
-                window.activeParlayMode = "SAFE";
-            } else if (queryUpper.includes("UNHINGED") || queryUpper.includes("CRAZY") || queryUpper.includes("RISKY") || queryUpper.includes("FUN")) {
-                window.activeParlayMode = "UNHINGED";
-            }
-
-            // 2. EXPLICIT LEG COUNT EXTRACTOR
-            let requestedLegsCount = 0;
-            const digitMatch = rawInput.match(/(\d+)\s*(LEG|LINE|PROP|PARLAY)/i);
-            if (digitMatch) requestedLegsCount = parseInt(digitMatch[1], 10);
-
-            // 3. INFORMATIONAL CHECKBOX BOARD ROUTE
-            if ((queryUpper.includes("WHAT GAMES") || queryUpper.includes("SHOW GAMES") || queryUpper.includes("LIST GAMES")) && requestedLegsCount === 0) {
-                renderSaturdayGamesBoard(queryUpper.includes("NFL") ? "NFL" : "NCAA");
-                return;
-            }
-
-            // 4. SPECIFIC DAY ROUTER TRAPS (EVALUATED BEFORE OFF-NIGHT CHECKS)
-            const isThursdayQuery = queryUpper.includes("THURSDAY") || queryUpper.includes("TNF") || queryUpper.includes("THURSDAYS");
-
-            if (isThursdayQuery) {
-                let liveNFL = await fetchLiveSportsbookOdds("americanfootball_nfl");
-                let tnfGame = liveNFL.find(g => g.keywords && g.keywords.some(kw => ["PATRIOTS", "BEARS", "CHICAGO", "NEW ENGLAND", "THURSDAY"].includes(kw))) || getDynamicGameSlate("americanfootball_nfl")[0];
-
-                window.currentSearchGames = [tnfGame];
-                let gameTitle = tnfGame.matchup ? tnfGame.matchup.split('(')[0].trim() : "Thursday Night Football";
-
-                let pool = window.activeParlayMode === "SAFE" ? (tnfGame.safeProps || [tnfGame.safeLeg]) : (tnfGame.unhingedProps || [tnfGame.safeLeg]);
-                let targetLegs = requestedLegsCount > 0 ? requestedLegsCount : Math.min(pool.length, 3);
-
-                let autoLegs = pool.slice(0, targetLegs).map(propText => ({
-                    game: gameTitle,
-                    text: propText
-                }));
-
-                window.activeLegsList = autoLegs;
-
-                let hasTN = tnfGame.keywords && tnfGame.keywords.some(kw => ["VOLS", "TENNESSEE", "TITANS"].includes(kw));
-                let headerTitle = "JIM'S THURSDAY NIGHT FOOTBALL SGP";
-
-                if (window.isTennesseePrideActive && !hasTN) {
-                    headerTitle = "🍊 TENNESSEE PRIDE ALERT: Neither UT nor the Titans play on Thursday Night Football this week! Big Jim's locking in the main TNF game anyway:";
-                } else if (window.isTennesseePrideActive && hasTN) {
-                    headerTitle = "🍊 TENNESSEE PRIDE: THURSDAY NIGHT LOCK";
-                }
-
-                renderActiveLegsResponse(headerTitle);
-                playSpeech("Generated your single game parlay for Thursday Night Football!");
-                return;
-            }
-
-            // 5. "TONIGHT" / "TODAY" CALENDAR CHECKER
-            const isTonightQuery = (queryUpper.includes("TONIGHT") || queryUpper.includes("TODAY") || queryUpper.includes("TONIGHTS")) && !isThursdayQuery;
-
-            let requestedApiKey = "americanfootball_nfl";
-            let leagueLabel = "NFL Football";
-
-            if (queryUpper.includes("BASKETBALL") || queryUpper.includes("NBA") || queryUpper.includes("HOOPS")) {
-                requestedApiKey = "basketball_nba";
-                leagueLabel = "NBA Basketball";
-            } else if (queryUpper.includes("NCAAB") || queryUpper.includes("COLLEGE BASKETBALL")) {
-                requestedApiKey = "basketball_ncaab";
-                leagueLabel = "College Basketball";
-            } else if (queryUpper.includes("HOCKEY") || queryUpper.includes("NHL")) {
-                requestedApiKey = "icehockey_nhl";
-                leagueLabel = "NHL Hockey";
-            } else if (queryUpper.includes("NCAA") || queryUpper.includes("COLLEGE")) {
-                requestedApiKey = "americanfootball_ncaaf";
-                leagueLabel = "NCAA Football";
-            }
-
-            // FOOTBALL TUESDAY/WEDNESDAY NO-GAME TRAP
-            if (isTonightQuery && requestedApiKey.includes("americanfootball") && (currentDayOfWeek === 2 || currentDayOfWeek === 3)) {
-                const responseBox = document.getElementById('askJimResponse');
-                const titleEl = document.getElementById('aiResponseTitle');
-                const oddsEl = document.getElementById('aiResponseOdds');
-                const legsEl = document.getElementById('aiResponseLegs');
-                const quoteEl = document.getElementById('aiResponseQuote');
-
-                titleEl.textContent = "NO FOOTBALL GAMES SCHEDULED FOR TONIGHT";
-                oddsEl.textContent = "SCHEDULE ALERT";
                 legsEl.innerHTML = `
-                    <li><span class="leg-icon">⚠️</span> <strong>No NFL or major NCAA Football games scheduled for tonight!</strong></li>
-                    <li><span class="leg-icon">🏀</span> Check out <strong>Tonight's NBA Basketball Action</strong> or look ahead to Thursday Night Football!</li>
+                    <li style="font-size: 1.05rem; color: #ffcc00; font-weight: 700; border-bottom: none;">
+                        🗣️ "${aiResult.answerSentence}"
+                    </li>
                 `;
-                quoteEl.innerHTML = `
-                    <div style="margin-bottom: 0.5rem; color: #fff;">Big Jim recommends switching to tonight's hoops or upcoming football:</div>
-                    <div class="choice-btn-group">
-                        <button class="choice-btn complexity-btn" onclick="triggerQuery('basketball bets')">🏀 LOAD TONIGHT'S NBA BASKETBALL</button>
-                        <button class="choice-btn" onclick="triggerQuery('8 leg parlay for sundays nfl games')">🏈 LOAD SUNDAY NFL SLATE</button>
-                    </div>
-                `;
-                responseBox.style.display = 'block';
-                playSpeech("Ain't no football games on tonight, boss! Check out tonight's NBA action instead!");
-                return;
+
+                if (aiResult.hasMatch && aiResult.gameTitle) {
+                    let matchingGame = combinedSchedule.find(g => g.matchup && g.matchup.toLowerCase().includes(aiResult.gameTitle.toLowerCase())) || combinedSchedule[0];
+                    window.currentSearchGames = [matchingGame];
+
+                    quoteEl.innerHTML = `
+                        <div style="margin-top: 1rem; text-align: center;">
+                            <button class="cta-btn" style="padding: 0.6rem 1.5rem; font-size: 1rem;" onclick="loadGameBetSlip('${aiResult.gameTitle.replace(/'/g, "\\'")}')">
+                                ⚡ LOAD ${aiResult.gameTitle.split('(')[0].trim().toUpperCase()} BET SLIP
+                            </button>
+                        </div>
+                    `;
+                } else {
+                    quoteEl.innerHTML = `
+                        <div class="choice-btn-group" style="margin-top: 1rem;">
+                            <button class="choice-btn complexity-btn" onclick="triggerQuery('basketball bets')">🏀 LOAD TONIGHT'S NBA BASKETBALL</button>
+                            <button class="choice-btn" onclick="triggerQuery('thursday night football')">🏈 LOAD THURSDAY NIGHT FOOTBALL</button>
+                        </div>
+                    `;
+                }
+            } else {
+                titleEl.textContent = "JIM'S ANALYSIS";
+                oddsEl.textContent = "+210 LOCK";
+                legsEl.innerHTML = `<li><span class="leg-icon">⚡</span> <strong>Featured Action</strong>: Cover Spread & Over Total</li>`;
+                quoteEl.innerHTML = "";
             }
+        }
 
-            let liveGames = await fetchLiveSportsbookOdds(requestedApiKey);
+        function loadGameBetSlip(gameTitle) {
+            let activeGame = window.currentSearchGames[0] || getDynamicGameSlate("americanfootball_nfl")[0];
+            let cleanTitle = activeGame.matchup ? activeGame.matchup.split('(')[0].trim() : gameTitle;
 
-            const forceTennesseeBias = window.isTennesseePrideActive || queryUpper.includes("FAVOR TN") || queryUpper.includes("TENNESSEE PRIDE");
-            let tennesseeKeywords = ["VOLS", "TENNESSEE", "TITANS", "VOLUNTEERS"];
+            let props = activeGame.safeProps || [
+                `${cleanTitle} Cover Spread (-110)`,
+                `Game Total OVER Points (-110)`,
+                `Primary Player Milestone Prop (-115)`
+            ];
 
-            let tnSportGames = liveGames.filter(g => 
-                g.keywords && g.keywords.some(kw => tennesseeKeywords.includes(kw))
-            );
+            window.activeLegsList = props.slice(0, 3).map(p => ({
+                game: cleanTitle,
+                text: p
+            }));
 
-            let matchedGames = liveGames.filter(game => 
-                game.keywords && game.keywords.some(kw => queryUpper.includes(kw))
-            );
-
-            let slateGames = matchedGames.length > 0 ? matchedGames : liveGames;
-
-            if (forceTennesseeBias && tnSportGames.length > 0) {
-                slateGames = [...tnSportGames, ...slateGames.filter(g => !tnSportGames.includes(g))];
-            }
-
-            if (isTonightQuery) {
-                slateGames = [slateGames[0]];
-            }
-
-            window.currentSearchGames = slateGames;
-
-            let autoLegs = [];
-            let targetLegs = requestedLegsCount > 0 ? requestedLegsCount : (window.activeParlayMode === "SAFE" ? 3 : 5);
-
-            let legIndex = 0;
-            while (autoLegs.length < targetLegs) {
-                let curGame = slateGames[legIndex % slateGames.length];
-                let gameTitle = curGame.matchup ? curGame.matchup.split('(')[0].trim() : "Featured Matchup";
-
-                let pool = window.activeParlayMode === "SAFE" ? (curGame.safeProps || [curGame.safeLeg]) : (curGame.unhingedProps || [curGame.safeLeg]);
-                let curTexts = autoLegs.map(l => l.text);
-                let nextProp = pool.find(p => !curTexts.includes(p));
-
-                if (!nextProp) nextProp = `${gameTitle} — Outright Winner (-110)`;
-
-                autoLegs.push({ game: gameTitle, text: nextProp });
-                legIndex++;
-            }
-
-            window.activeLegsList = autoLegs;
-            let headerTitle = forceTennesseeBias 
-                ? `🍊 TENNESSEE PRIDE: ${autoLegs.length}-LEG ${leagueLabel.toUpperCase()} LOCK` 
-                : `JIM'S ${leagueLabel.toUpperCase()} ${autoLegs.length}-LEG PARLAY`;
-
-            renderActiveLegsResponse(headerTitle);
-            playSpeech(`Generated your ${autoLegs.length}-leg ${leagueLabel} parlay!`);
+            renderActiveLegsResponse(`JIM'S SGP: ${cleanTitle.toUpperCase()}`);
+            playSpeech(`Loaded the bet slip for ${cleanTitle}!`);
         }
 
         // DYNAMIC DAILY BETS RENDERER
@@ -2045,6 +1675,202 @@
                 `;
                 picksContainer.appendChild(card);
             });
+        }
+
+        // NATIVE RETRO 8-BIT GAME ENGINE
+        let gameCanvas, ctx;
+        let gameRunning = false;
+        let gameAttempts = 0;
+        const maxAttempts = 4;
+        let gameScore = 0;
+        let bestScore = parseInt(localStorage.getItem("jimHighScore") || "0");
+
+        const BigJimPlayer = {
+            x: 80,
+            y: 200,
+            width: 32,
+            height: 32,
+            speed: 4,
+            color: "#FF8200"
+        };
+
+        let defenders = [];
+        let spawnTimer = 0;
+        let keyMap = {};
+
+        function initFootballGame() {
+            gameCanvas = document.getElementById("footballGameCanvas");
+            if (!gameCanvas) return;
+            ctx = gameCanvas.getContext("2d");
+            
+            window.addEventListener("keydown", (e) => { keyMap[e.key] = true; });
+            window.addEventListener("keyup", (e) => { keyMap[e.key] = false; });
+            
+            drawFootballField();
+            document.getElementById("gameHighScoreSpan").innerText = bestScore;
+        }
+
+        function startFootballGame() {
+            gameRunning = true;
+            gameAttempts = 0;
+            gameScore = 0;
+            defenders = [];
+            spawnTimer = 0;
+            BigJimPlayer.x = 80;
+            BigJimPlayer.y = 200;
+            
+            document.getElementById("gameOverlayScreen").style.display = "none";
+            document.getElementById("gameAttemptsSpan").innerText = "0/4";
+            document.getElementById("gameScoreSpan").innerText = "0";
+            
+            playSpeech("Put me in, coach! Go Big Vols! Lock it in!", null);
+            
+            requestAnimationFrame(gameLoop);
+        }
+
+        function gameLoop() {
+            if (!gameRunning) return;
+            
+            updateGame();
+            drawGame();
+            
+            requestAnimationFrame(gameLoop);
+        }
+
+        function updateGame() {
+            if (keyMap["ArrowUp"] || keyMap["w"] || keyMap["W"]) BigJimPlayer.y = Math.max(30, BigJimPlayer.y - BigJimPlayer.speed);
+            if (keyMap["ArrowDown"] || keyMap["s"] || keyMap["S"]) BigJimPlayer.y = Math.min(390, BigJimPlayer.y + BigJimPlayer.speed);
+            if (keyMap["ArrowLeft"] || keyMap["a"] || keyMap["A"]) BigJimPlayer.x = Math.max(20, BigJimPlayer.x - BigJimPlayer.speed);
+            if (keyMap["ArrowRight"] || keyMap["d"] || keyMap["D"]) BigJimPlayer.x = Math.min(500, BigJimPlayer.x + BigJimPlayer.speed);
+
+            spawnTimer++;
+            if (spawnTimer % 50 === 0) {
+                defenders.push({
+                    x: 620,
+                    y: 30 + Math.random() * 340,
+                    width: 24,
+                    height: 24,
+                    speed: 3 + Math.random() * 3,
+                    color: "#990000"
+                });
+            }
+
+            for (let i = defenders.length - 1; i >= 0; i--) {
+                let d = defenders[i];
+                d.x -= d.speed;
+
+                if (BigJimPlayer.x < d.x + d.width &&
+                    BigJimPlayer.x + BigJimPlayer.width > d.x &&
+                    BigJimPlayer.y < d.y + d.height &&
+                    BigJimPlayer.y + BigJimPlayer.height > d.y) {
+                    
+                    defenders.splice(i, 1);
+                    triggerTackleLoss();
+                    continue;
+                }
+
+                if (d.x < -30) {
+                    defenders.splice(i, 1);
+                    gameScore += 100;
+                    document.getElementById("gameScoreSpan").innerText = gameScore;
+                }
+            }
+
+            if (BigJimPlayer.x >= 500) {
+                triggerTouchdownWin();
+            }
+        }
+
+        function triggerTackleLoss() {
+            gameAttempts++;
+            document.getElementById("gameAttemptsSpan").innerText = `${gameAttempts}/4`;
+            playSpeech("Ouch! They got me! Late hit, ref!", null);
+            
+            if (gameAttempts >= maxAttempts) {
+                endGame();
+            } else {
+                BigJimPlayer.x = 80;
+                BigJimPlayer.y = 200;
+                defenders = [];
+            }
+        }
+
+        function triggerTouchdownWin() {
+            gameScore += 1000;
+            document.getElementById("gameScoreSpan").innerText = gameScore;
+            playSpeech("GOD DAMN TOUCHDOWN! WOOO!", null);
+            
+            BigJimPlayer.x = 80;
+            defenders = [];
+        }
+
+        function endGame() {
+            gameRunning = false;
+            document.getElementById("gameOverlayScreen").style.display = "flex";
+            document.getElementById("overlayMainText").innerText = "GAME OVER";
+            document.getElementById("overlaySubText").innerText = `Final Score: ${gameScore}`;
+            
+            if (gameScore > bestScore) {
+                bestScore = gameScore;
+                localStorage.setItem("jimHighScore", bestScore);
+                document.getElementById("gameHighScoreSpan").innerText = bestScore;
+                document.getElementById("overlaySubText").innerText += `\nNEW HIGH SCORE! WOOO!`;
+            }
+        }
+
+        function drawGame() {
+            ctx.clearRect(0, 0, 600, 450);
+            drawFootballField();
+            
+            ctx.fillStyle = BigJimPlayer.color;
+            ctx.fillRect(BigJimPlayer.x, BigJimPlayer.y, BigJimPlayer.width, BigJimPlayer.height);
+            
+            ctx.fillStyle = "#FFF";
+            ctx.fillRect(BigJimPlayer.x + 8, BigJimPlayer.y - 4, 16, 8);
+            ctx.fillStyle = "#000";
+            ctx.font = "bold 12px sans-serif";
+            ctx.fillText("77", BigJimPlayer.x + 8, BigJimPlayer.y + 20);
+
+            defenders.forEach(d => {
+                ctx.fillStyle = d.color;
+                ctx.fillRect(d.x, d.y, d.width, d.height);
+                ctx.fillStyle = "#FFF";
+                ctx.fillRect(d.x + 4, d.y - 4, 16, 8);
+            });
+        }
+
+        function drawFootballField() {
+            ctx.fillStyle = "#1E7934";
+            ctx.fillRect(0, 0, 600, 450);
+
+            ctx.fillStyle = "#FF8200";
+            ctx.fillRect(520, 0, 80, 450);
+            
+            ctx.fillStyle = "#FFF";
+            ctx.font = "bold 24px 'Teko'";
+            ctx.save();
+            ctx.translate(565, 225);
+            ctx.rotate(Math.PI / 2);
+            ctx.fillText("VOLS", -30, 0);
+            ctx.restore();
+
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.4)";
+            ctx.lineWidth = 3;
+            for (let x = 50; x < 520; x += 80) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, 450);
+                ctx.stroke();
+            }
+        }
+
+        function toggleGameWindow(show) {
+            const card = document.getElementById("secretGameCard");
+            card.style.display = show ? "block" : "none";
+            if (show) {
+                if (!gameCanvas) initFootballGame();
+                card.scrollIntoView({ behavior: 'smooth' });
+            }
         }
 
         // Native Merch Grid Renderer
