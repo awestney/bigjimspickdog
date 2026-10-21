@@ -1677,24 +1677,28 @@
             });
         }
 
-        // NATIVE RETRO 8-BIT GAME ENGINE
+        // UPGRADED 16-BIT RETRO ARCADE FOOTBALL ENGINE
         let gameCanvas, ctx;
         let gameRunning = false;
         let gameAttempts = 0;
         const maxAttempts = 4;
         let gameScore = 0;
         let bestScore = parseInt(localStorage.getItem("jimHighScore") || "0");
+        let waveLevel = 1;
 
         const BigJimPlayer = {
-            x: 80,
-            y: 200,
+            x: 60,
+            y: 210,
             width: 32,
             height: 32,
-            speed: 4,
+            speed: 3.8,
+            stamina: 100,
+            isDashing: false,
             color: "#FF8200"
         };
 
         let defenders = [];
+        let particles = [];
         let spawnTimer = 0;
         let keyMap = {};
 
@@ -1714,51 +1718,91 @@
             gameRunning = true;
             gameAttempts = 0;
             gameScore = 0;
+            waveLevel = 1;
             defenders = [];
+            particles = [];
             spawnTimer = 0;
-            BigJimPlayer.x = 80;
-            BigJimPlayer.y = 200;
+            BigJimPlayer.x = 60;
+            BigJimPlayer.y = 210;
+            BigJimPlayer.stamina = 100;
             
             document.getElementById("gameOverlayScreen").style.display = "none";
             document.getElementById("gameAttemptsSpan").innerText = "0/4";
             document.getElementById("gameScoreSpan").innerText = "0";
             
             playSpeech("Put me in, coach! Go Big Vols! Lock it in!", null);
-            
             requestAnimationFrame(gameLoop);
         }
 
         function gameLoop() {
             if (!gameRunning) return;
-            
             updateGame();
             drawGame();
-            
             requestAnimationFrame(gameLoop);
         }
 
         function updateGame() {
-            if (keyMap["ArrowUp"] || keyMap["w"] || keyMap["W"]) BigJimPlayer.y = Math.max(30, BigJimPlayer.y - BigJimPlayer.speed);
+            // Turbo Dash Mechanic (Spacebar / Shift)
+            if ((keyMap[" "] || keyMap["Shift"]) && BigJimPlayer.stamina > 5) {
+                BigJimPlayer.speed = 6.2;
+                BigJimPlayer.isDashing = true;
+                BigJimPlayer.stamina -= 1.8;
+                // Add speed particles
+                particles.push({
+                    x: BigJimPlayer.x,
+                    y: BigJimPlayer.y + 10 + Math.random() * 10,
+                    size: 3 + Math.random() * 3,
+                    color: "#FF8200",
+                    alpha: 1,
+                    vx: -2 - Math.random() * 2
+                });
+            } else {
+                BigJimPlayer.speed = 3.8;
+                BigJimPlayer.isDashing = false;
+                if (BigJimPlayer.stamina < 100) BigJimPlayer.stamina += 0.4;
+            }
+
+            // Movement
+            if (keyMap["ArrowUp"] || keyMap["w"] || keyMap["W"]) BigJimPlayer.y = Math.max(25, BigJimPlayer.y - BigJimPlayer.speed);
             if (keyMap["ArrowDown"] || keyMap["s"] || keyMap["S"]) BigJimPlayer.y = Math.min(390, BigJimPlayer.y + BigJimPlayer.speed);
             if (keyMap["ArrowLeft"] || keyMap["a"] || keyMap["A"]) BigJimPlayer.x = Math.max(20, BigJimPlayer.x - BigJimPlayer.speed);
             if (keyMap["ArrowRight"] || keyMap["d"] || keyMap["D"]) BigJimPlayer.x = Math.min(500, BigJimPlayer.x + BigJimPlayer.speed);
 
+            // Dynamic Wave Spawning
             spawnTimer++;
-            if (spawnTimer % 50 === 0) {
+            let spawnRate = Math.max(18, 45 - waveLevel * 4);
+            if (spawnTimer % spawnRate === 0) {
                 defenders.push({
                     x: 620,
-                    y: 30 + Math.random() * 340,
-                    width: 24,
-                    height: 24,
-                    speed: 3 + Math.random() * 3,
+                    y: 30 + Math.random() * 360,
+                    width: 26,
+                    height: 26,
+                    speed: 2.2 + Math.random() * (1.5 + waveLevel * 0.4),
+                    tracking: Math.random() > 0.35, // Aggressive Homing Defenders
                     color: "#990000"
                 });
             }
 
+            // Update Particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                let p = particles[i];
+                p.x += p.vx;
+                p.alpha -= 0.05;
+                if (p.alpha <= 0) particles.splice(i, 1);
+            }
+
+            // Update Defenders with Chase AI
             for (let i = defenders.length - 1; i >= 0; i--) {
                 let d = defenders[i];
                 d.x -= d.speed;
 
+                // Homing tracking logic towards Big Jim
+                if (d.tracking && d.x > BigJimPlayer.x) {
+                    if (d.y < BigJimPlayer.y) d.y += 0.9 + waveLevel * 0.2;
+                    else if (d.y > BigJimPlayer.y) d.y -= 0.9 + waveLevel * 0.2;
+                }
+
+                // Hitbox Collision Check
                 if (BigJimPlayer.x < d.x + d.width &&
                     BigJimPlayer.x + BigJimPlayer.width > d.x &&
                     BigJimPlayer.y < d.y + d.height &&
@@ -1769,14 +1813,16 @@
                     continue;
                 }
 
+                // Offscreen clearance
                 if (d.x < -30) {
                     defenders.splice(i, 1);
-                    gameScore += 100;
+                    gameScore += 150;
                     document.getElementById("gameScoreSpan").innerText = gameScore;
                 }
             }
 
-            if (BigJimPlayer.x >= 500) {
+            // Touchdown Check!
+            if (BigJimPlayer.x >= 510) {
                 triggerTouchdownWin();
             }
         }
@@ -1789,18 +1835,19 @@
             if (gameAttempts >= maxAttempts) {
                 endGame();
             } else {
-                BigJimPlayer.x = 80;
-                BigJimPlayer.y = 200;
+                BigJimPlayer.x = 60;
+                BigJimPlayer.y = 210;
                 defenders = [];
             }
         }
 
         function triggerTouchdownWin() {
-            gameScore += 1000;
+            gameScore += 1200;
+            waveLevel++;
             document.getElementById("gameScoreSpan").innerText = gameScore;
             playSpeech("GOD DAMN TOUCHDOWN! WOOO!", null);
             
-            BigJimPlayer.x = 80;
+            BigJimPlayer.x = 60;
             defenders = [];
         }
 
@@ -1808,7 +1855,7 @@
             gameRunning = false;
             document.getElementById("gameOverlayScreen").style.display = "flex";
             document.getElementById("overlayMainText").innerText = "GAME OVER";
-            document.getElementById("overlaySubText").innerText = `Final Score: ${gameScore}`;
+            document.getElementById("overlaySubText").innerText = `Final Score: ${gameScore} (Wave ${waveLevel})`;
             
             if (gameScore > bestScore) {
                 bestScore = gameScore;
@@ -1821,47 +1868,110 @@
         function drawGame() {
             ctx.clearRect(0, 0, 600, 450);
             drawFootballField();
-            
-            ctx.fillStyle = BigJimPlayer.color;
-            ctx.fillRect(BigJimPlayer.x, BigJimPlayer.y, BigJimPlayer.width, BigJimPlayer.height);
-            
-            ctx.fillStyle = "#FFF";
-            ctx.fillRect(BigJimPlayer.x + 8, BigJimPlayer.y - 4, 16, 8);
-            ctx.fillStyle = "#000";
-            ctx.font = "bold 12px sans-serif";
-            ctx.fillText("77", BigJimPlayer.x + 8, BigJimPlayer.y + 20);
 
-            defenders.forEach(d => {
-                ctx.fillStyle = d.color;
-                ctx.fillRect(d.x, d.y, d.width, d.height);
-                ctx.fillStyle = "#FFF";
-                ctx.fillRect(d.x + 4, d.y - 4, 16, 8);
+            // Draw Speed Particles
+            particles.forEach(p => {
+                ctx.fillStyle = `rgba(255, 130, 0, ${p.alpha})`;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
             });
+
+            // Draw Big Jim (#77 Tennessee Orange Player)
+            let x = BigJimPlayer.x, y = BigJimPlayer.y;
+            ctx.fillStyle = "#FF8200"; // Jersey
+            ctx.fillRect(x + 4, y + 8, 24, 20);
+            ctx.fillStyle = "#FFFFFF"; // Pants
+            ctx.fillRect(x + 6, y + 22, 20, 10);
+            
+            // Power T Helmet
+            ctx.fillStyle = "#FFFFFF"; 
+            ctx.fillRect(x + 8, y, 18, 12);
+            ctx.fillStyle = "#FF8200"; // T-Stripe
+            ctx.fillRect(x + 15, y + 2, 4, 8);
+            ctx.fillRect(x + 12, y + 2, 10, 3);
+            
+            // Face Visor & Beard
+            ctx.fillStyle = "#111";
+            ctx.fillRect(x + 18, y + 5, 6, 3);
+            ctx.fillStyle = "#4A2E12"; // Beard
+            ctx.fillRect(x + 16, y + 8, 8, 5);
+
+            // Football
+            ctx.fillStyle = "#7A3D11";
+            ctx.beginPath();
+            ctx.ellipse(x + 24, y + 18, 6, 4, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = "#FFF";
+            ctx.fillRect(x + 23, y + 16, 2, 4);
+
+            // Number 77
+            ctx.fillStyle = "#000";
+            ctx.font = "bold 10px sans-serif";
+            ctx.fillText("77", x + 8, y + 20);
+
+            // Draw Crimson Defenders
+            defenders.forEach(d => {
+                ctx.fillStyle = "#990000"; // Crimson Jersey
+                ctx.fillRect(d.x + 2, d.y + 6, 22, 18);
+                ctx.fillStyle = "#FFFFFF"; // Pants
+                ctx.fillRect(d.x + 4, d.y + 18, 18, 8);
+                ctx.fillStyle = "#770000"; // Crimson Helmet
+                ctx.fillRect(d.x + 4, d.y, 18, 10);
+                ctx.fillStyle = "#000"; // Visor
+                ctx.fillRect(d.x + 2, d.y + 4, 6, 3);
+            });
+
+            // Draw Stamina Bar
+            ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
+            ctx.fillRect(15, 420, 120, 14);
+            ctx.fillStyle = BigJimPlayer.stamina > 25 ? "#FF8200" : "#E60000";
+            ctx.fillRect(17, 422, (BigJimPlayer.stamina / 100) * 116, 10);
+            ctx.fillStyle = "#FFF";
+            ctx.font = "bold 9px sans-serif";
+            ctx.fillText("TURBO STAMINA (SPACEBAR)", 20, 431);
         }
 
         function drawFootballField() {
-            ctx.fillStyle = "#1E7934";
-            ctx.fillRect(0, 0, 600, 450);
+            // Alternating Grass Lawn Stripes
+            for (let i = 0; i < 600; i += 40) {
+                ctx.fillStyle = (i / 40) % 2 === 0 ? "#1B6E2E" : "#228037";
+                ctx.fillRect(i, 0, 40, 450);
+            }
 
-            ctx.fillStyle = "#FF8200";
-            ctx.fillRect(520, 0, 80, 450);
-            
-            ctx.fillStyle = "#FFF";
-            ctx.font = "bold 24px 'Teko'";
-            ctx.save();
-            ctx.translate(565, 225);
-            ctx.rotate(Math.PI / 2);
-            ctx.fillText("VOLS", -30, 0);
-            ctx.restore();
-
-            ctx.strokeStyle = "rgba(255, 255, 255, 0.4)";
+            // White Yardlines
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.75)";
             ctx.lineWidth = 3;
-            for (let x = 50; x < 520; x += 80) {
+            for (let x = 50; x < 510; x += 50) {
                 ctx.beginPath();
                 ctx.moveTo(x, 0);
                 ctx.lineTo(x, 450);
                 ctx.stroke();
+
+                // Hash marks
+                ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
+                for (let y = 30; y < 420; y += 30) {
+                    ctx.fillRect(x - 5, y, 10, 2);
+                }
             }
+
+            // Checkerboard Endzone (Tennessee Orange & White)
+            let ezX = 510, ezW = 90;
+            for (let r = 0; r < 450; r += 30) {
+                for (let c = ezX; c < 600; c += 30) {
+                    ctx.fillStyle = ((r / 30) + (c / 30)) % 2 === 0 ? "#FF8200" : "#FFFFFF";
+                    ctx.fillRect(c, r, 30, 30);
+                }
+            }
+
+            // Endzone Text Overlay
+            ctx.fillStyle = "#000000";
+            ctx.font = "bold 26px 'Teko'";
+            ctx.save();
+            ctx.translate(562, 225);
+            ctx.rotate(Math.PI / 2);
+            ctx.fillText("VOLS", -25, 8);
+            ctx.restore();
         }
 
         function toggleGameWindow(show) {
