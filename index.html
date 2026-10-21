@@ -935,7 +935,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.88);
             backdrop-filter: blur(8px);
             z-index: 1000;
             justify-content: center;
@@ -952,7 +952,7 @@
             border: 2px solid #ff8800;
             border-radius: 16px;
             width: 100%;
-            max-width: 580px;
+            max-width: 650px;
             padding: 1.5rem;
             box-shadow: 0 0 35px rgba(255, 136, 0, 0.4);
             max-height: 90vh;
@@ -980,7 +980,7 @@
             background: none;
             border: none;
             color: #fff;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
         }
 
@@ -1033,10 +1033,10 @@
             background: linear-gradient(135deg, #ffcc00 0%, #ff8800 100%);
             color: #000;
             font-weight: 800;
-            padding: 0.8rem;
+            padding: 0.85rem;
             border: none;
             border-radius: 8px;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             text-transform: uppercase;
             cursor: pointer;
             margin-top: 1rem;
@@ -1311,7 +1311,7 @@
 
     </div>
 
-    <!-- Quiz Modal -->
+    <!-- Quiz Modal Overlay (10 Questions Official Exam) -->
     <div class="quiz-modal" id="quizModal">
         <div class="quiz-card">
             <div class="quiz-header">
@@ -1320,15 +1320,17 @@
             </div>
 
             <form id="quizForm">
-                <div id="quizContainer"></div>
+                <div id="quizContainer">
+                    <!-- Injected dynamically via JavaScript -->
+                </div>
                 
                 <div id="quizActionArea">
-                    <button type="button" class="quiz-submit-btn" onclick="submitQuiz()">SUBMIT EXAM</button>
+                    <button type="button" class="quiz-submit-btn" onclick="submitQuiz()">SUBMIT EXAM FOR CERTIFICATION</button>
                 </div>
 
                 <div class="quiz-result" id="quizResult">
                     <div class="quiz-result-title" id="resultTitle"></div>
-                    <p id="resultText" style="color: var(--text-muted); margin-bottom: 1.5rem;"></p>
+                    <p id="resultText" style="color: #d1d5db; margin-bottom: 1.5rem;"></p>
                     <button type="button" class="quiz-submit-btn" id="resultBtn" onclick="closeQuiz()">DONE</button>
                 </div>
             </form>
@@ -1340,32 +1342,6 @@
         <p>Big Jim's Pick Dog is a satirical birthday website created for James.</p>
         <p style="margin-top: 0.5rem; opacity: 0.6;">No real gambling advice is provided. Bet responsibly or don't bet at all! © 2026</p>
     </footer>
-
-    <!-- Quiz Modal Overlay -->
-    <div class="quiz-modal" id="quizModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(8px); z-index: 1000; justify-content: center; align-items: center; padding: 1rem;">
-        <div class="quiz-card" style="background: #14171f; border: 2px solid #ff8800; border-radius: 16px; width: 100%; max-width: 580px; padding: 1.5rem; box-shadow: 0 0 35px rgba(255, 136, 0, 0.4); max-height: 90vh; overflow-y: auto; position: relative;">
-            <div class="quiz-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid rgba(255, 204, 0, 0.2); padding-bottom: 0.5rem;">
-                <div class="quiz-title" style="font-family: 'Teko', sans-serif; font-size: 2rem; color: #ffcc00; text-transform: uppercase;">🤠 Redneck 101 Qualification Exam</div>
-                <button class="close-quiz" onclick="closeQuiz()" style="background: none; border: none; color: #fff; font-size: 1.8rem; cursor: pointer;">✕</button>
-            </div>
-
-            <form id="quizForm">
-                <div id="quizContainer">
-                    <!-- Injected dynamically via JavaScript -->
-                </div>
-                
-                <div id="quizActionArea">
-                    <button type="button" class="cta-btn" style="width: 100%; justify-content: center; margin-top: 1rem; border-radius: 8px;" onclick="submitQuiz()">SUBMIT EXAM FOR CERTIFICATION</button>
-                </div>
-
-                <div class="quiz-result" id="quizResult" style="display: none; text-align: center; padding: 1rem 0;">
-                    <div class="quiz-result-title" id="resultTitle" style="font-family: 'Teko', sans-serif; font-size: 2.8rem; line-height: 1; margin-bottom: 0.5rem;"></div>
-                    <p id="resultText" style="color: #d1d5db; margin-bottom: 1.5rem;"></p>
-                    <button type="button" class="cta-btn" id="resultBtn" onclick="closeQuiz()" style="margin: 0 auto; justify-content: center;">CONTINUE TO BETS</button>
-                </div>
-            </form>
-        </div>
-    </div>
 
     <!-- Interactive Scripts -->
     <script>
@@ -1534,7 +1510,6 @@
                 const parsed = parseLiveFanDuelOdds(liveGamesData, sportKey);
                 return parsed && parsed.length > 0 ? parsed : getDynamicGameSlate(sportKey);
             } catch (err) {
-                // Silently fallback to dynamic curated slate on CORS, sandbox, network, or quota error
                 return getDynamicGameSlate(sportKey);
             }
         }
@@ -1778,7 +1753,6 @@
                 const data = await response.json();
                 return JSON.parse(data.candidates[0].content.parts[0].text);
             } catch (err) {
-                console.error("Gemini AI API Error:", err);
                 return null;
             }
         }
@@ -1964,7 +1938,7 @@
                 jerseyColor: "#FF8200",
                 pantsColor: "#FFFFFF",
                 helmetColor: "#FFFFFF",
-                hairColor: "#4A2E12", // Full Beard
+                hairColor: "#4A2E12",
                 hasBeard: true,
                 hasPonytail: false,
                 trailColor: "#FF8200",
@@ -1981,10 +1955,10 @@
                 jerseyColor: "#FF8200",
                 pantsColor: "#FFFFFF",
                 helmetColor: "#FFFFFF",
-                hairColor: "#FFD700", // Blonde Ponytail
+                hairColor: "#FFD700",
                 hasBeard: false,
                 hasPonytail: true,
-                trailColor: "#00E64D", // Speed Flash
+                trailColor: "#00E64D",
                 quotes: { dash: "GO VOLS!", tackle: "HEY! WATCH IT!", td: "AMY FOR SIX! WOOO!" },
                 speech: "Let's go Tennessee! Clear the lane!"
             },
@@ -1995,9 +1969,9 @@
                 speedBase: 4.0,
                 dashSpeed: 6.5,
                 staminaCost: 1.2,
-                jerseyColor: "#111111", // Blackout Jersey
+                jerseyColor: "#111111",
                 pantsColor: "#FF8200",
-                helmetColor: "#FFCC00", // Gold Helmet
+                helmetColor: "#FFCC00",
                 hairColor: "#222222",
                 hasBeard: true,
                 hasPonytail: false,
@@ -2093,7 +2067,7 @@
                 updateArcadePhysics();
                 drawArcadeGameScene();
             } catch (err) {
-                console.error("Game loop error caught:", err);
+                console.error("Game loop error:", err);
             }
             if (gameRunning) {
                 animLoopId = requestAnimationFrame(gameLoop);
@@ -2219,7 +2193,7 @@
             ActivePlayer.x = 400;
             ActivePlayer.y = 410;
             ActivePlayer.stamina = 100;
-            invulnerabilityTimer = 60; // 1 second invulnerability flash
+            invulnerabilityTimer = 60;
 
             if (gameAttempts >= maxAttempts) {
                 endGame();
@@ -2355,7 +2329,7 @@
                 ctx.fill();
             });
 
-            // 4. DRAW ACTIVE CHARACTER SPRITE (Flashing if invulnerable)
+            // 4. DRAW ACTIVE CHARACTER SPRITE
             if (invulnerabilityTimer === 0 || Math.floor(invulnerabilityTimer / 6) % 2 === 0) {
                 const charData = CHARACTERS[selectedCharKey] || CHARACTERS.jim;
                 let jx = ActivePlayer.x;
@@ -2389,7 +2363,7 @@
                 ctx.fillRect(jx - 2, jy - 26, 4, 12);
 
                 // Hair / Beard Features
-                ctx.fillStyle = "#111"; // Visor
+                ctx.fillStyle = "#111";
                 ctx.fillRect(jx - 8, jy - 22, 16, 5);
 
                 if (charData.hasBeard) {
@@ -2483,7 +2457,9 @@
             }
         }
 
-        // REDNECK 101 QUIZ LOGIC
+        // =========================================================================
+        // REDNECK 101 OFFICIAL 10-QUESTION QUALIFICATION EXAM
+        // =========================================================================
         const quizQuestions = [
             {
                 q: "1. What is the official primary beverage of porch sitting?",
@@ -2504,6 +2480,36 @@
                 q: "4. Big Jim says: 'Lock it in bro!'. What are you betting?",
                 options: ["Your 401(k) retirement funds", "A polite $5 dinner wager", "Whatever cash is in your pocket", "Nothing, gamble responsibly"],
                 correct: 2
+            },
+            {
+                q: "5. What is the official state vegetable of a tailgate barbecue?",
+                options: ["Steamed Asparagus", "Deep Fried Okra", "Avocado Toast", "Kale Salad"],
+                correct: 1
+            },
+            {
+                q: "6. When is it acceptable to wear an orange hunting camo vest?",
+                options: ["Only during deer season in the woods", "Any day ending in 'Y', including church and weddings", "Only on Halloween", "Never, it clashes with fashion"],
+                correct: 1
+            },
+            {
+                q: "7. What belongs in the bed of your pickup truck at all times?",
+                options: ["A clean tonneau cover and groceries", "At least one spare tire, empty cooler, and tie-down straps", "An acoustic cello", "Organic compost bags"],
+                correct: 1
+            },
+            {
+                q: "8. What is the proper response when Rocky Top plays on the speakers?",
+                options: ["Politely applaud the acoustics", "Scream 'WOOO!' at maximum volume and slap the nearest tabletop", "Cover your ears", "Skip to the next song"],
+                correct: 1
+            },
+            {
+                q: "9. How do you officially fix a squeaking truck belt?",
+                options: ["Order OEM parts from Detroit", "Spray WD-40 or soap while it's idling", "Turn up the radio volume until you can't hear it", "Call AAA roadside assist"],
+                correct: 2
+            },
+            {
+                q: "10. What is a redneck's definition of fine dining?",
+                options: ["A Michelin 3-star tasting menu", "Waffle House at 2:00 AM with smothered and covered hashbrowns", "Subway footlong sandwich", "Charcuterie board with artisanal Brie"],
+                correct: 1
             }
         ];
 
@@ -2552,15 +2558,20 @@
             const titleEl = document.getElementById('resultTitle');
             const textEl = document.getElementById('resultText');
 
-            if (score >= 3) {
-                titleEl.textContent = "🤠 CERTIFIED REDNECK!";
+            if (score >= 8) {
+                titleEl.textContent = "🤠 CERTIFIED REDNECK LEGEND!";
                 titleEl.style.color = "#ffcc00";
-                textEl.textContent = `You scored ${score}/4! You are officially authorized for porch sitting, lawnmower deck kicking, and unconditional Tennessee loyalty!`;
+                textEl.textContent = `You scored ${score}/10! You have officially earned your porch sitting license, lawnmower deck-kicking clearance, and honorary Tennessee citizenship!`;
                 playSpeech("Woooo! Certified redneck baby! Lock it in!");
+            } else if (score >= 5) {
+                titleEl.textContent = "🌾 HONORARY PORCH SENDER";
+                titleEl.style.color = "#ff8200";
+                textEl.textContent = `You scored ${score}/10. Not bad! You're allowed on the tailgate, but keep practicing with the WD-40.`;
+                playSpeech("Not bad bro! Halfway to a true redneck!");
             } else {
                 titleEl.textContent = "🚫 CITIZEN STATUS: FAILED";
                 titleEl.style.color = "#ff4444";
-                textEl.textContent = `You scored ${score}/4. You might need to spend a weekend drinking sweet tea on the tailgate before trying again.`;
+                textEl.textContent = `You scored ${score}/10. You need to spend a full Saturday drinking sweet tea on a front porch before retaking this exam!`;
                 playSpeech("God damn! Better study up, bro!");
             }
 
