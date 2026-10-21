@@ -927,6 +927,134 @@
             margin-top: 0.2rem;
         }
 
+        /* Quiz Modal Overlay */
+        .quiz-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .quiz-modal.active {
+            display: flex;
+        }
+
+        .quiz-card {
+            background: #14171f;
+            border: 2px solid #ff8800;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 580px;
+            padding: 1.5rem;
+            box-shadow: 0 0 35px rgba(255, 136, 0, 0.4);
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 204, 0, 0.2);
+            padding-bottom: 0.5rem;
+        }
+
+        .quiz-title {
+            font-family: 'Teko', sans-serif;
+            font-size: 2rem;
+            color: #ffcc00;
+            text-transform: uppercase;
+        }
+
+        .close-quiz {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .quiz-q {
+            margin-bottom: 1.25rem;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .quiz-q-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #fff;
+            margin-bottom: 0.6rem;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 0.5rem 0.75rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .quiz-option:hover {
+            border-color: #ff8800;
+            color: #fff;
+        }
+
+        .quiz-option input {
+            accent-color: #ff8800;
+        }
+
+        .quiz-submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ffcc00 0%, #ff8800 100%);
+            color: #000;
+            font-weight: 800;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .quiz-result {
+            display: none;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .quiz-result-title {
+            font-family: 'Teko', sans-serif;
+            font-size: 2.8rem;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
         footer {
             text-align: center;
             padding: 2.5rem 1rem;
@@ -1183,11 +1311,61 @@
 
     </div>
 
+    <!-- Quiz Modal -->
+    <div class="quiz-modal" id="quizModal">
+        <div class="quiz-card">
+            <div class="quiz-header">
+                <div class="quiz-title">🤠 Redneck 101 Qualification Exam</div>
+                <button class="close-quiz" onclick="closeQuiz()">✕</button>
+            </div>
+
+            <form id="quizForm">
+                <div id="quizContainer"></div>
+                
+                <div id="quizActionArea">
+                    <button type="button" class="quiz-submit-btn" onclick="submitQuiz()">SUBMIT EXAM</button>
+                </div>
+
+                <div class="quiz-result" id="quizResult">
+                    <div class="quiz-result-title" id="resultTitle"></div>
+                    <p id="resultText" style="color: var(--text-muted); margin-bottom: 1.5rem;"></p>
+                    <button type="button" class="quiz-submit-btn" id="resultBtn" onclick="closeQuiz()">DONE</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <p>Big Jim's Pick Dog is a satirical birthday website created for James.</p>
         <p style="margin-top: 0.5rem; opacity: 0.6;">No real gambling advice is provided. Bet responsibly or don't bet at all! © 2026</p>
     </footer>
+
+    <!-- Quiz Modal Overlay -->
+    <div class="quiz-modal" id="quizModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(8px); z-index: 1000; justify-content: center; align-items: center; padding: 1rem;">
+        <div class="quiz-card" style="background: #14171f; border: 2px solid #ff8800; border-radius: 16px; width: 100%; max-width: 580px; padding: 1.5rem; box-shadow: 0 0 35px rgba(255, 136, 0, 0.4); max-height: 90vh; overflow-y: auto; position: relative;">
+            <div class="quiz-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid rgba(255, 204, 0, 0.2); padding-bottom: 0.5rem;">
+                <div class="quiz-title" style="font-family: 'Teko', sans-serif; font-size: 2rem; color: #ffcc00; text-transform: uppercase;">🤠 Redneck 101 Qualification Exam</div>
+                <button class="close-quiz" onclick="closeQuiz()" style="background: none; border: none; color: #fff; font-size: 1.8rem; cursor: pointer;">✕</button>
+            </div>
+
+            <form id="quizForm">
+                <div id="quizContainer">
+                    <!-- Injected dynamically via JavaScript -->
+                </div>
+                
+                <div id="quizActionArea">
+                    <button type="button" class="cta-btn" style="width: 100%; justify-content: center; margin-top: 1rem; border-radius: 8px;" onclick="submitQuiz()">SUBMIT EXAM FOR CERTIFICATION</button>
+                </div>
+
+                <div class="quiz-result" id="quizResult" style="display: none; text-align: center; padding: 1rem 0;">
+                    <div class="quiz-result-title" id="resultTitle" style="font-family: 'Teko', sans-serif; font-size: 2.8rem; line-height: 1; margin-bottom: 0.5rem;"></div>
+                    <p id="resultText" style="color: #d1d5db; margin-bottom: 1.5rem;"></p>
+                    <button type="button" class="cta-btn" id="resultBtn" onclick="closeQuiz()" style="margin: 0 auto; justify-content: center;">CONTINUE TO BETS</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Interactive Scripts -->
     <script>
@@ -1771,6 +1949,8 @@
         let waveLevel = 1;
         let speechBubbleText = "";
         let speechBubbleTimer = 0;
+        let invulnerabilityTimer = 0;
+        let animLoopId = null;
 
         // CHARACTER DEFINITIONS STATE
         const CHARACTERS = {
@@ -1860,15 +2040,23 @@
             
             window.addEventListener("keydown", (e) => { 
                 keyMap[e.key] = true;
-                if (e.key === " " || e.key === "Shift") e.preventDefault();
-            });
-            window.addEventListener("keyup", (e) => { keyMap[e.key] = false; });
+                if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " ", "Spacebar"].includes(e.key)) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+            window.addEventListener("keyup", (e) => { 
+                keyMap[e.key] = false; 
+                if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " ", "Spacebar"].includes(e.key)) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
             
             drawArcadeGameScene();
             document.getElementById("gameHighScoreSpan").innerText = bestScore;
         }
 
         function startFootballGame() {
+            if (animLoopId) cancelAnimationFrame(animLoopId);
             gameRunning = true;
             gameAttempts = 0;
             gameScore = 0;
@@ -1876,6 +2064,7 @@
             defenders = [];
             flameParticles = [];
             spawnTimer = 0;
+            invulnerabilityTimer = 0;
             
             const charData = CHARACTERS[selectedCharKey] || CHARACTERS.jim;
             ActivePlayer.x = 400;
@@ -1890,7 +2079,7 @@
             triggerSpeechBubble(charData.quotes.dash);
             playSpeech(charData.speech, null);
             
-            requestAnimationFrame(gameLoop);
+            animLoopId = requestAnimationFrame(gameLoop);
         }
 
         function triggerSpeechBubble(text) {
@@ -1900,13 +2089,23 @@
 
         function gameLoop() {
             if (!gameRunning) return;
-            updateArcadePhysics();
-            drawArcadeGameScene();
-            requestAnimationFrame(gameLoop);
+            try {
+                updateArcadePhysics();
+                drawArcadeGameScene();
+            } catch (err) {
+                console.error("Game loop error caught:", err);
+            }
+            if (gameRunning) {
+                animLoopId = requestAnimationFrame(gameLoop);
+            }
         }
 
         function updateArcadePhysics() {
             const charData = CHARACTERS[selectedCharKey] || CHARACTERS.jim;
+
+            if (invulnerabilityTimer > 0) {
+                invulnerabilityTimer--;
+            }
 
             // Turbo Dash Mechanic
             if ((keyMap[" "] || keyMap["Shift"]) && ActivePlayer.stamina > 5) {
@@ -1971,6 +2170,8 @@
             }
 
             // Chasing AI & Collision Detection
+            let wasTackledThisFrame = false;
+
             for (let i = defenders.length - 1; i >= 0; i--) {
                 let d = defenders[i];
                 d.y += d.speedY;
@@ -1981,10 +2182,9 @@
                     else if (d.x > ActivePlayer.x) d.x -= 1.1 + waveLevel * 0.15;
                 }
 
-                if (Math.abs(ActivePlayer.x - d.x) < 26 && Math.abs(ActivePlayer.y - d.y) < 24) {
-                    defenders.splice(i, 1);
-                    triggerTackleLoss();
-                    continue;
+                if (invulnerabilityTimer <= 0 && Math.abs(ActivePlayer.x - d.x) < 26 && Math.abs(ActivePlayer.y - d.y) < 24) {
+                    wasTackledThisFrame = true;
+                    break;
                 }
 
                 if (d.y > 470) {
@@ -1992,6 +2192,11 @@
                     gameScore += 150;
                     document.getElementById("gameScoreSpan").innerText = String(gameScore).padStart(6, '0');
                 }
+            }
+
+            if (wasTackledThisFrame) {
+                triggerTackleLoss();
+                return;
             }
 
             if (speechBubbleTimer > 0) speechBubbleTimer--;
@@ -2009,12 +2214,15 @@
             triggerSpeechBubble(charData.quotes.tackle);
             playSpeech(`Ouch! ${charData.quotes.tackle}`, null);
             
+            defenders = [];
+            flameParticles = [];
+            ActivePlayer.x = 400;
+            ActivePlayer.y = 410;
+            ActivePlayer.stamina = 100;
+            invulnerabilityTimer = 60; // 1 second invulnerability flash
+
             if (gameAttempts >= maxAttempts) {
                 endGame();
-            } else {
-                ActivePlayer.x = 400;
-                ActivePlayer.y = 410;
-                defenders = [];
             }
         }
 
@@ -2029,10 +2237,13 @@
             ActivePlayer.x = 400;
             ActivePlayer.y = 410;
             defenders = [];
+            flameParticles = [];
+            invulnerabilityTimer = 30;
         }
 
         function endGame() {
             gameRunning = false;
+            if (animLoopId) cancelAnimationFrame(animLoopId);
             document.getElementById("gameOverlayScreen").style.display = "flex";
             document.getElementById("overlayMainText").innerText = "GAME OVER";
             document.getElementById("overlaySubText").innerText = `Final Score: ${gameScore} (Wave ${waveLevel})`;
@@ -2144,66 +2355,92 @@
                 ctx.fill();
             });
 
-            // 4. DRAW ACTIVE CHARACTER SPRITE
-            const charData = CHARACTERS[selectedCharKey] || CHARACTERS.jim;
-            let jx = ActivePlayer.x;
-            let jy = ActivePlayer.y;
+            // 4. DRAW ACTIVE CHARACTER SPRITE (Flashing if invulnerable)
+            if (invulnerabilityTimer === 0 || Math.floor(invulnerabilityTimer / 6) % 2 === 0) {
+                const charData = CHARACTERS[selectedCharKey] || CHARACTERS.jim;
+                let jx = ActivePlayer.x;
+                let jy = ActivePlayer.y;
 
-            let legOffset = Math.sin(ActivePlayer.animTimer * 0.4) * 6;
+                let legOffset = Math.sin(ActivePlayer.animTimer * 0.4) * 6;
 
-            if (ActivePlayer.isDashing) {
-                ctx.fillStyle = "rgba(255, 130, 0, 0.35)";
+                if (ActivePlayer.isDashing) {
+                    ctx.fillStyle = "rgba(255, 130, 0, 0.35)";
+                    ctx.beginPath();
+                    ctx.arc(jx, jy + 10, 28, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                // Body Jersey
+                ctx.fillStyle = charData.jerseyColor;
+                ctx.fillRect(jx - 14, jy - 10, 28, 22);
+
+                // Legs
+                ctx.fillStyle = charData.pantsColor;
+                ctx.fillRect(jx - 12, jy + 12, 10, 12 + legOffset);
+                ctx.fillRect(jx + 2, jy + 12, 10, 12 - legOffset);
+                ctx.fillStyle = "#000";
+                ctx.fillRect(jx - 14, jy + 22 + legOffset, 12, 4);
+                ctx.fillRect(jx + 2, jy + 22 - legOffset, 12, 4);
+
+                // Helmet
+                ctx.fillStyle = charData.helmetColor;
+                ctx.fillRect(jx - 12, jy - 28, 24, 18);
+                ctx.fillStyle = "#FF8200";
+                ctx.fillRect(jx - 2, jy - 26, 4, 12);
+
+                // Hair / Beard Features
+                ctx.fillStyle = "#111"; // Visor
+                ctx.fillRect(jx - 8, jy - 22, 16, 5);
+
+                if (charData.hasBeard) {
+                    ctx.fillStyle = charData.hairColor;
+                    ctx.fillRect(jx - 10, jy - 16, 20, 8);
+                }
+
+                if (charData.hasPonytail) {
+                    ctx.fillStyle = charData.hairColor;
+                    ctx.beginPath();
+                    ctx.arc(jx - 14, jy - 18, 7, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                // Football
+                ctx.fillStyle = "#6E3811";
                 ctx.beginPath();
-                ctx.arc(jx, jy + 10, 28, 0, Math.PI * 2);
+                ctx.ellipse(jx + 12, jy - 2, 7, 5, 0.3, 0, Math.PI * 2);
                 ctx.fill();
+                ctx.fillStyle = "#FFF";
+                ctx.fillRect(jx + 11, jy - 4, 2, 5);
+
+                // Jersey Number
+                ctx.fillStyle = "#FFFFFF";
+                ctx.font = "bold 11px sans-serif";
+                ctx.fillText(charData.number, jx - 8, jy + 5);
+
+                // 6. SPEECH BUBBLE
+                if (speechBubbleTimer > 0 && speechBubbleText) {
+                    ctx.fillStyle = "#FFFFFF";
+                    ctx.strokeStyle = "#000000";
+                    ctx.lineWidth = 2;
+                    
+                    let bx = jx + 15, by = jy - 55;
+                    ctx.beginPath();
+                    ctx.roundRect(bx, by, 140, 32, 8);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.moveTo(bx + 10, by + 32);
+                    ctx.lineTo(jx + 5, jy - 25);
+                    ctx.lineTo(bx + 25, by + 32);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    ctx.fillStyle = "#E60000";
+                    ctx.font = "bold 15px 'Teko'";
+                    ctx.fillText(speechBubbleText, bx + 10, by + 21);
+                }
             }
-
-            // Body Jersey
-            ctx.fillStyle = charData.jerseyColor;
-            ctx.fillRect(jx - 14, jy - 10, 28, 22);
-
-            // Legs
-            ctx.fillStyle = charData.pantsColor;
-            ctx.fillRect(jx - 12, jy + 12, 10, 12 + legOffset);
-            ctx.fillRect(jx + 2, jy + 12, 10, 12 - legOffset);
-            ctx.fillStyle = "#000";
-            ctx.fillRect(jx - 14, jy + 22 + legOffset, 12, 4);
-            ctx.fillRect(jx + 2, jy + 22 - legOffset, 12, 4);
-
-            // Helmet
-            ctx.fillStyle = charData.helmetColor;
-            ctx.fillRect(jx - 12, jy - 28, 24, 18);
-            ctx.fillStyle = "#FF8200";
-            ctx.fillRect(jx - 2, jy - 26, 4, 12);
-
-            // Hair / Beard Features
-            ctx.fillStyle = "#111"; // Visor
-            ctx.fillRect(jx - 8, jy - 22, 16, 5);
-
-            if (charData.hasBeard) {
-                ctx.fillStyle = charData.hairColor;
-                ctx.fillRect(jx - 10, jy - 16, 20, 8);
-            }
-
-            if (charData.hasPonytail) {
-                ctx.fillStyle = charData.hairColor;
-                ctx.beginPath();
-                ctx.arc(jx - 14, jy - 18, 7, 0, Math.PI * 2);
-                ctx.fill();
-            }
-
-            // Football
-            ctx.fillStyle = "#6E3811";
-            ctx.beginPath();
-            ctx.ellipse(jx + 12, jy - 2, 7, 5, 0.3, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.fillStyle = "#FFF";
-            ctx.fillRect(jx + 11, jy - 4, 2, 5);
-
-            // Jersey Number
-            ctx.fillStyle = "#FFFFFF";
-            ctx.font = "bold 11px sans-serif";
-            ctx.fillText(charData.number, jx - 8, jy + 5);
 
             // 5. CRIMSON DEFENDERS
             defenders.forEach(d => {
@@ -2221,30 +2458,6 @@
                 ctx.fillStyle = "#000";
                 ctx.fillRect(dx - 6, dy - 18, 12, 4);
             });
-
-            // 6. SPEECH BUBBLE
-            if (speechBubbleTimer > 0 && speechBubbleText) {
-                ctx.fillStyle = "#FFFFFF";
-                ctx.strokeStyle = "#000000";
-                ctx.lineWidth = 2;
-                
-                let bx = jx + 15, by = jy - 55;
-                ctx.beginPath();
-                ctx.roundRect(bx, by, 140, 32, 8);
-                ctx.fill();
-                ctx.stroke();
-
-                ctx.beginPath();
-                ctx.moveTo(bx + 10, by + 32);
-                ctx.lineTo(jx + 5, jy - 25);
-                ctx.lineTo(bx + 25, by + 32);
-                ctx.fill();
-                ctx.stroke();
-
-                ctx.fillStyle = "#E60000";
-                ctx.font = "bold 15px 'Teko'";
-                ctx.fillText(speechBubbleText, bx + 10, by + 21);
-            }
 
             // 7. TURBO STAMINA GAUGE
             ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
@@ -2268,6 +2481,90 @@
                 if (!gameCanvas) initFootballGame();
                 card.scrollIntoView({ behavior: 'smooth' });
             }
+        }
+
+        // REDNECK 101 QUIZ LOGIC
+        const quizQuestions = [
+            {
+                q: "1. What is the official primary beverage of porch sitting?",
+                options: ["Cold Beer in a Koozie", "Sparkling Seltzer with Lime", "Tap Water", "Chardonnay"],
+                correct: 0
+            },
+            {
+                q: "2. Your lawn mower won't start on Sunday morning. What do you do?",
+                options: ["Call an authorized mechanic", "Spray starter fluid and kick the deck", "Leave it and buy a goat", "Read the user manual"],
+                correct: 1
+            },
+            {
+                q: "3. What is duct tape primarily used for?",
+                options: ["Tape arts & crafts", "Holding the truck bumper on", "Sealing air ducts", "Wrapping presents"],
+                correct: 1
+            },
+            {
+                q: "4. Big Jim says: 'Lock it in bro!'. What are you betting?",
+                options: ["Your 401(k) retirement funds", "A polite $5 dinner wager", "Whatever cash is in your pocket", "Nothing, gamble responsibly"],
+                correct: 2
+            }
+        ];
+
+        function openQuiz() {
+            const container = document.getElementById('quizContainer');
+            if (!container) return;
+            
+            let html = "";
+            quizQuestions.forEach((item, qIdx) => {
+                html += `
+                    <div class="quiz-q">
+                        <div class="quiz-q-title">${item.q}</div>
+                        <div class="quiz-options">
+                            ${item.options.map((opt, oIdx) => `
+                                <label class="quiz-option">
+                                    <input type="radio" name="q_${qIdx}" value="${oIdx}">
+                                    <span>${opt}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+            
+            document.getElementById('quizResult').style.display = 'none';
+            document.getElementById('quizActionArea').style.display = 'block';
+            document.getElementById('quizModal').classList.add('active');
+        }
+
+        function closeQuiz() {
+            document.getElementById('quizModal').classList.remove('active');
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            quizQuestions.forEach((item, qIdx) => {
+                const selected = document.querySelector(`input[name="q_${qIdx}"]:checked`);
+                if (selected && parseInt(selected.value, 10) === item.correct) {
+                    score++;
+                }
+            });
+
+            document.getElementById('quizActionArea').style.display = 'none';
+            const resultBox = document.getElementById('quizResult');
+            const titleEl = document.getElementById('resultTitle');
+            const textEl = document.getElementById('resultText');
+
+            if (score >= 3) {
+                titleEl.textContent = "🤠 CERTIFIED REDNECK!";
+                titleEl.style.color = "#ffcc00";
+                textEl.textContent = `You scored ${score}/4! You are officially authorized for porch sitting, lawnmower deck kicking, and unconditional Tennessee loyalty!`;
+                playSpeech("Woooo! Certified redneck baby! Lock it in!");
+            } else {
+                titleEl.textContent = "🚫 CITIZEN STATUS: FAILED";
+                titleEl.style.color = "#ff4444";
+                textEl.textContent = `You scored ${score}/4. You might need to spend a weekend drinking sweet tea on the tailgate before trying again.`;
+                playSpeech("God damn! Better study up, bro!");
+            }
+
+            resultBox.style.display = 'block';
         }
 
         // Native Merch Grid Renderer
