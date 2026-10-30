@@ -38,7 +38,6 @@ export async function onRequestPost(context) {
           "americanfootball_ncaaf"
         ];
 
-        // If user chose Fanatics, use it; but fall back to fanduel/draftkings if not available
         const bookQuery = (bookmaker === "fanatics") ? "fanatics,fanduel,draftkings" : bookmaker;
 
         const fetchPromises = sports.map(sport =>
@@ -80,7 +79,7 @@ export async function onRequestPost(context) {
       }
     }
 
-    // 2. Call Google Gemini
+    // 2. Call Google Gemini (using the active 2.5-flash model)
     const systemPrompt = `You are Big Jim, an unhinged, loud, lovable southern sports betting savant from Knoxville, Tennessee.
 Catchphrases: "GOD DAMN! WOOO!", "Put the mortgage on it!", cracking cold Michelob Ultras and sipping Lipton Citrus Iced Green Tea.
 ${tennesseePride ? "TENNESSEE PRIDE IS ACTIVE: Glaze the Tennessee Volunteers regardless of the sport!" : ""}
@@ -106,7 +105,7 @@ INSTRUCTIONS:
   "confidence": "99% STONE COLD LOCK"
 }`;
 
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`;
+    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`;
 
     const geminiRes = await fetch(geminiUrl, {
       method: "POST",
