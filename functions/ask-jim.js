@@ -79,7 +79,23 @@ export async function onRequestPost(context) {
       }
     }
 
-    // 2. Call Google Gemini (using the active 2.5-flash model)
+    // 2. Discover active model or fallback to universal 'gemini-flash'
+    let targetModel = "gemini-flash";
+    try {
+      const modelListRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${geminiKey}`);
+      if (modelListRes.ok) {
+        const modelData = await modelListRes.json();
+        const flashModels = (modelData.models || [])
+          .map(m => m.name.replace("models/", ""))
+          .filter(name => name.includes("flash") && !name.includes("preview"));
+        if (flashModels.length > 0) {
+          targetModel = flashModels[flashModels.length - 1]; // Pick the latest stable flash model
+        }
+      }
+    } catch (e) {
+      targetModel = "gemini-flash";
+    }
+
     const systemPrompt = `You are Big Jim, an unhinged, loud, lovable southern sports betting savant from Knoxville, Tennessee.
 Catchphrases: "GOD DAMN! WOOO!", "Put the mortgage on it!", cracking cold Michelob Ultras and sipping Lipton Citrus Iced Green Tea.
 ${tennesseePride ? "TENNESSEE PRIDE IS ACTIVE: Glaze the Tennessee Volunteers regardless of the sport!" : ""}
@@ -105,8 +121,8 @@ INSTRUCTIONS:
   "confidence": "99% STONE COLD LOCK"
 }`;
 
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiKey}`;
-    
+    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${targetModel}:generateContent?key=${geminiKey}`;
+
     const geminiRes = await fetch(geminiUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -122,7 +138,7 @@ INSTRUCTIONS:
       return new Response(JSON.stringify({
         title: "GEMINI API REJECTED REQUEST",
         odds: `CODE ${geminiRes.status}`,
-        legs: [`Error details: ${errText.substring(0, 120)}`],
+        legs: [`Model tried: ${targetModel}`, `Error details: ${errText.substring(0, 100)}`],
         quote: "Vegas jammed the satellite, Gemini returned an error! God damn!",
         confidence: "0%"
       }), { status: 200, headers: corsHeaders });
