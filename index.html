@@ -1181,7 +1181,7 @@
                     <button class="ask-jim-btn" onclick="askBigJim()">ASK JIM ➔</button>
                 </div>
 
-                <div id="askJimResponse" class="ask-jim-response">
+<div id="askJimResponse" class="ask-jim-response">
                     <div class="pick-header">
                         <span class="pick-title" id="aiResponseTitle">CUSTOM PARLAY</span>
                         <span class="pick-odds" id="aiResponseOdds">+180 UNHINGED</span>
@@ -1195,8 +1195,15 @@
                     <div class="confidence-meter">
                         <div class="confidence-fill" id="aiResponseMeter" style="width: 95%;"></div>
                     </div>
+
+                    <!-- Interactive Bet Curation Options -->
+                    <div id="curateOptionsArea" style="margin-top: 1rem; padding-top: 0.8rem; border-top: 1px dashed rgba(255, 204, 0, 0.3); display: none;">
+                        <span style="font-family: 'Teko', sans-serif; font-size: 1.2rem; color: var(--accent-gold); display: block; margin-bottom: 0.4rem;">
+                            👇 CURATE OR CUSTOMIZE THIS TICKET:
+                        </span>
+                        <div id="curateButtonsList" style="display: flex; gap: 0.5rem; flex-wrap: wrap;"></div>
+                    </div>
                 </div>
-            </div>
 
             <p id="scheduleNoticeText" style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;">
                 Daily multi-leg slips dynamically retrieved from live sportsbook markets.
