@@ -1056,7 +1056,7 @@
             </div>
             <h1 class="hero-title">BIG JIM'S PICK DOG</h1>
             <p class="hero-subtitle">"GOD DAMN! WOOO!" — Unreliable Betting Tips & High Energy</p>
-            <p class="hero-tagline">Big Jim lays down lines on basketball, hockey, baseball, or whatever is playing tonight... but FOOTBALL IS WHERE THE REAL DOGS EAT!</p>
+            <p class="hero-tagline">Big Jim can lay lines down on basketball, hockey, or whatever else is playing tonight... but FOOTBALL IS WHERE THE REAL DOGS EAT!</p>
             
             <a href="#tips" class="cta-btn">
                 <span>🔒 GET TODAY'S LOCKS</span>
@@ -1164,6 +1164,7 @@
                         <select id="bookmakerSelect" class="bookmaker-select" onchange="changeSportsbook(this.value)">
                             <option value="fanduel">🎯 FanDuel</option>
                             <option value="draftkings">👑 DraftKings</option>
+                            <option value="fanatics">⚡ Fanatics</option>
                             <option value="betmgm">🦁 BetMGM</option>
                             <option value="bovada">🎲 Bovada</option>
                         </select>
@@ -1176,7 +1177,7 @@
                     Got a question, bankroll constraint ($1 bet), or team in mind? Ask Big Jim below for real-time analysis:
                 </p>
                 <div class="ask-jim-input-group">
-                    <input type="text" id="askJimInput" class="ask-jim-input" placeholder="e.g. i have $1 in my account what should i bet tonight?" onkeypress="if(event.key==='Enter') askBigJim()">
+                    <input type="text" id="askJimInput" class="ask-jim-input" placeholder="e.g. are there games on tonight that i can bet on? I only have $1" onkeypress="if(event.key==='Enter') askBigJim()">
                     <button class="ask-jim-btn" onclick="askBigJim()">ASK JIM ➔</button>
                 </div>
 
@@ -1198,7 +1199,7 @@
             </div>
 
             <p id="scheduleNoticeText" style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;">
-                Daily slips fetched directly from real-time sportsbook market boards.
+                Daily multi-leg slips dynamically retrieved from live sportsbook markets.
             </p>
             
             <div id="dynamicPicksContainer">
@@ -1376,13 +1377,13 @@
             generateLiveDayBets();
         }
 
-        async function fetchLiveSportsbookOdds(sportKey = "basketball_nba") {
+        async function fetchLiveSportsbookOdds(sportKey) {
             let preferredBook = window.userBookmaker || "fanduel";
             const url = `https://api.the-odds-api.com/v4/sports/${sportKey}/odds/?apiKey=${ODDS_API_KEY}&regions=${REGIONS}&markets=${MARKETS}&bookmakers=${preferredBook}`;
 
             try {
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 3500);
+                const timeoutId = setTimeout(() => controller.abort(), 4000);
                 const response = await fetch(url, { signal: controller.signal });
                 clearTimeout(timeoutId);
                 
@@ -1401,15 +1402,10 @@
             return rawGames.map(game => {
                 const homeTeam = game.home_team;
                 const awayTeam = game.away_team;
-                let league = "LIVE";
-                if (sportKey.includes("nba")) league = "NBA";
-                else if (sportKey.includes("nfl")) league = "NFL";
-                else if (sportKey.includes("ncaaf")) league = "NCAAF";
-                else if (sportKey.includes("nhl")) league = "NHL";
-                else if (sportKey.includes("mlb")) league = "MLB";
+                let league = sportKey.toUpperCase().replace("_", " ");
 
                 let spread = `${homeTeam} Cover Spread (-110)`;
-                let moneyline = `${homeTeam} ML`;
+                let moneyline = `${homeTeam} ML (-110)`;
                 let total = "Total OVER Points (-110)";
 
                 const bookie = game.bookmakers?.find(b => b.key === preferredBook) || game.bookmakers?.[0];
@@ -1446,24 +1442,23 @@
                     commenceTime: game.commence_time,
                     odds: spread,
                     safeProps: [moneyline, spread, total],
-                    comment: `Real-time ${preferredBook.toUpperCase()} board for tonight!`
+                    comment: `Live lines from ${preferredBook.toUpperCase()}!`
                 };
             });
         }
 
         async function getAllLiveSportsGames() {
-            const sports = ["basketball_nba", "icehockey_nhl", "americanfootball_nfl", "americanfootball_ncaaf"];
+            const sports = [
+                "basketball_nba",
+                "icehockey_nhl",
+                "baseball_mlb",
+                "americanfootball_nfl",
+                "americanfootball_ncaaf"
+            ];
+
             const results = await Promise.all(sports.map(s => fetchLiveSportsbookOdds(s)));
             let all = results.flat();
-            
-            // Filter to games occurring today or next 24 hours
-            let now = Date.now();
-            let soon = all.filter(g => {
-                let t = new Date(g.commenceTime).getTime();
-                return t >= now - (3 * 3600000) && t <= now + (36 * 3600000);
-            });
-
-            return soon.length > 0 ? soon : all;
+            return all;
         }
 
         async function generateLiveDayBets() {
@@ -1472,7 +1467,7 @@
             document.getElementById("currentDateBanner").innerText = `🔴 LIVE TODAY'S PARLAY SLIPS — ${dateStr}`;
 
             const container = document.getElementById("dynamicPicksContainer");
-            container.innerHTML = `<div style="text-align: center; padding: 2rem; color: var(--text-muted);">🔄 Loading live board from Vegas & sportsbooks...</div>`;
+            container.innerHTML = `<div style="text-align: center; padding: 2rem; color: var(--text-muted);">🔄 Connecting to Sportsbooks & Live Schedules...</div>`;
 
             let liveGames = await getAllLiveSportsGames();
             cachedLiveGames = liveGames;
@@ -1481,10 +1476,10 @@
                 container.innerHTML = `
                     <div class="pick-card">
                         <div class="pick-header">
-                            <span class="pick-title">NO ACTIVE GAMES RIGHT THIS SECOND</span>
-                            <span class="pick-odds">BOARD RESTING</span>
+                            <span class="pick-title">NO ACTIVE LINES POSTED RIGHT NOW</span>
+                            <span class="pick-odds">OFF-BOARD</span>
                         </div>
-                        <p class="pick-quote">"All lines are between slates right now! Crack an iced tea or ask Jim in the AI box above!"</p>
+                        <p class="pick-quote">"The bookmakers are resetting the board or games haven't opened yet! Ask Big Jim in the box above for a custom breakdown!"</p>
                     </div>
                 `;
                 return;
@@ -1534,13 +1529,12 @@
             const quoteEl = document.getElementById('aiResponseQuote');
             const confEl = document.getElementById('aiResponseConfidence');
 
-            titleEl.textContent = "CONSULTING LIVE SPORTSBOOK LINES...";
-            oddsEl.textContent = "AI ANALYZING";
-            legsEl.innerHTML = `<li><span class="leg-icon">⚡</span> Big Jim is cross-referencing real-time games with Gemini AI...</li>`;
+            titleEl.textContent = "CONSULTING GEMINI & SPORTSBOOKS...";
+            oddsEl.textContent = "AI THINKING";
+            legsEl.innerHTML = `<li><span class="leg-icon">⚡</span> Big Jim is analyzing your question...</li>`;
             quoteEl.innerText = "";
             responseBox.style.display = 'block';
 
-            // Attempt backend Cloudflare Pages function first
             try {
                 const response = await fetch('/ask-jim', {
                     method: 'POST',
@@ -1554,24 +1548,23 @@
 
                 if (response.ok) {
                     const aiResult = await response.json();
-                    if (aiResult && aiResult.title) {
+                    if (aiResult && aiResult.title && !aiResult.error) {
                         renderSlipUI(aiResult);
                         playSpeech(aiResult.quote || "Lock it in!");
                         return;
                     }
                 }
             } catch (err) {
-                console.warn("Cloudflare function endpoint unavailable, falling back to smart client engine.");
+                console.warn("Backend /ask-jim not accessible. Falling back to dynamic live generator.");
             }
 
-            // Real-Time Client Fallback Engine (Answers question using live pulled board)
-            if (cachedLiveGames.length === 0) {
+            if (!cachedLiveGames || cachedLiveGames.length === 0) {
                 cachedLiveGames = await getAllLiveSportsGames();
             }
 
-            const clientResult = buildSmartRealTimeSlip(rawInput, cachedLiveGames);
-            renderSlipUI(clientResult);
-            playSpeech(clientResult.quote);
+            const dynamicResult = buildDynamicJimAnswer(rawInput, cachedLiveGames);
+            renderSlipUI(dynamicResult);
+            playSpeech(dynamicResult.quote);
         }
 
         function renderSlipUI(data) {
@@ -1589,62 +1582,58 @@
             }
         }
 
-        function buildSmartRealTimeSlip(query, games) {
+        function buildDynamicJimAnswer(query, games) {
             const q = query.toLowerCase();
-            let selectedGame = games.find(g => 
-                g.matchup.toLowerCase().includes(q) || 
-                g.teamA.toLowerCase().includes(q) || 
-                g.teamB.toLowerCase().includes(q)
-            );
+            let matched = null;
 
-            if (!selectedGame && games.length > 0) {
-                selectedGame = games[0];
+            if (games && games.length > 0) {
+                matched = games.find(g => 
+                    q.includes(g.teamA.toLowerCase()) || 
+                    q.includes(g.teamB.toLowerCase())
+                ) || games[0];
             }
 
-            const team = window.isTennesseePrideActive ? "Tennessee Volunteers" : (selectedGame ? selectedGame.teamB : "Home Favorite");
-            const opponent = selectedGame ? selectedGame.teamA : "Visiting Underdog";
+            if (matched) {
+                let teamPick = window.isTennesseePrideActive ? "Tennessee Volunteers" : matched.teamB;
+                let awayTeam = matched.teamA;
 
-            let title = `${team.toUpperCase()} CASH LOCK`;
-            let odds = "-110 SAFE MONEY";
-            let legs = [];
-            let quote = "";
+                if (q.includes("1") || q.includes("dollar") || q.includes("safe")) {
+                    return {
+                        title: `THE $1 "${teamPick.toUpperCase()}" SAFE HARBOR SLIP`,
+                        odds: "-125 HIGH PROBABILITY",
+                        legs: [
+                            `${teamPick} to Cover Alternative Spread (+3.5)`,
+                            `Game Total OVER 205.5 Points (-120)`,
+                            `Double Chance / In-Game Margin`
+                        ],
+                        quote: `"You got $1 in your account? Don't blow that single greenback on a 12-leg prayer! Lay it down on ${teamPick} against ${awayTeam}, collect your profit, and crack a cold Michelob Ultra! God damn, play it smart!"`,
+                        confidence: "95% DISCIPLINED VALUE"
+                    };
+                }
 
-            if (q.includes("1") || q.includes("dollar") || q.includes("safe")) {
-                title = `THE $1 "LIPTON TEA" BANKROLL BUILDER`;
-                odds = "+140 LOCK IT IN";
-                legs = [
-                    `${team} Moneyline Outright Win (-135)`,
-                    `${selectedGame ? selectedGame.safeProps[1] : 'Game Total OVER (-110)'}`,
-                    `Alternative Spread ${team} +4.5 (-210)`
-                ];
-                quote = `"You got $1 in your FanDuel account? Turn that solitary Washington into a cold 6-pack of Michelob Ultra and a large Citrus Green Tea! God damn! Don't get greedy, cash the safe ticket!"`;
-            } else if (q.includes("crazy") || q.includes("unhinged") || q.includes("parlay")) {
-                title = `UNHINGED 4-LEG MOONSHOT`;
-                odds = "+840 DEGEN SPECIAL";
-                legs = [
-                    `${team} to Win by 1-10 Points (+195)`,
-                    `${selectedGame ? selectedGame.safeProps[2] : 'First Half Total OVER'} (+115)`,
-                    `${opponent} Team Total UNDER (-115)`,
-                    `Anytime Scorer / High Points Prop (+180)`
-                ];
-                quote = `"Vegas built those shiny hotels because people bet scared! Put the mortgage on it, wooo! We eat steak or we eat ramen tonight!"`;
-            } else {
-                title = `${team.toUpperCase()} SMASH TICKET`;
-                odds = "+185 LIVE EDGE";
-                legs = [
-                    `${team} Moneyline Outright Win`,
-                    `${selectedGame ? selectedGame.safeProps[1] : 'Game Spread Cover'}`,
-                    `Total Points OVER`
-                ];
-                quote = `"I woke up, checked the board, and this exact line jumped out at me like a hound dog on a porch! Lock it in!"`;
+                return {
+                    title: `${teamPick.toUpperCase()} SMASH LOCK`,
+                    odds: "+165 VALUE LOCK",
+                    legs: [
+                        `${teamPick} Moneyline Win Outright`,
+                        `${matched.matchup} - Spread Cover`,
+                        `Total Points OVER`
+                    ],
+                    quote: `"I checked tonight's board against ${awayTeam} and felt it right in my spine! Put the dollar on it, lock it in, wooo!"`,
+                    confidence: "105% OVERCONFIDENT"
+                };
             }
 
             return {
-                title: title,
-                odds: odds,
-                legs: legs,
-                quote: quote,
-                confidence: "110% OVERCONFIDENT"
+                title: "THE BOARD IS RESTING: BANKROLL PRESERVATION",
+                odds: "EVEN MONEY",
+                legs: [
+                    "Wait for tonight's game slates to unlock",
+                    "Do NOT blow your $1 on random off-board events",
+                    "Grab a Lipton Citrus Green Tea and wait for tip-off"
+                ],
+                quote: `"Right this second, the sportsbooks are refreshing lines! Hold on to that dollar until tonight's prime-time games drop! Don't donate to Vegas for free, God damn!"`,
+                confidence: "100% SMART MONEY"
             };
         }
 
