@@ -12,11 +12,23 @@ export async function onRequestPost(context) {
     const userQuery = body.query || "what games are on tonight?";
     let bookmaker = body.bookmaker || "fanduel";
     const tennesseePride = Boolean(body.tennesseePride);
+    const history = Array.isArray(body.history) ? body.history : [];
 
     const geminiKey = env.GEMINI_API_KEY;
     const oddsKey = env.ODDS_API_KEY;
 
-    // 1. Fast parallel fetch for NBA and College Football lines (max 2 seconds)
+    if (!geminiKey) {
+      return new Response(JSON.stringify({
+        title: "CLOUDFLARE CONFIG ERROR",
+        odds: "MISSING KEY",
+        legs: ["GEMINI_API_KEY secret is missing in Cloudflare Pages"],
+        quote: "Hey James, the Gemini key isn't set up in Cloudflare! God damn!",
+        confidence: "0%",
+        options: []
+      }), { status: 200, headers: corsHeaders });
+    }
+
+    // 1. Fetch live sports slate across active leagues
     let liveOddsSummary = "";
     if (oddsKey) {
       try {
@@ -25,7 +37,7 @@ export async function onRequestPost(context) {
         
         const fetchPromises = sports.map(sport => {
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 2000);
+          const timeoutId = setTimeout(() => controller.abort(), 2200);
           return fetch(`https://api.the-odds-api.com/v4/sports/${sport}/odds/?apiKey=${oddsKey}&regions=us&markets=h2h,spreads&bookmakers=${bookParam}`, {
             signal: controller.signal
           })
@@ -60,70 +72,104 @@ export async function onRequestPost(context) {
       }
     }
 
-    // 2. Call Google Gemini
-    const systemPrompt = `You are Big Jim, an unhinged, loud, highly entertaining southern sports betting expert from Knoxville, Tennessee.
-Personality:
-- Loves college football above all else ("FOOTBALL IS WHERE THE DOGS EAT!").
-- Constantly drinks ice-cold Michelob Ultra and Lipton Citrus Green Tea.
+    // 2. Build Prompt for Multi-Sport Curation & Player Props
+    const systemInstruction = `You are Big Jim, an unhinged, charismatic, high-energy southern sports betting guru from Knoxville, Tennessee.
+Tone & Persona:
+- You love college football above everything ("FOOTBALL IS WHERE REAL DOGS EAT!").
+- You chug cold Michelob Ultra and Lipton Citrus Green Tea.
 - Catchphrases: "GOD DAMN! WOOO!", "Put the mortgage on it!", "Lock it in!"
-${tennesseePride ? "- TENNESSEE PRIDE IS ACTIVE: Heavily favor the Tennessee Volunteers regardless of the sport!" : ""}
+${tennesseePride ? "- TENNESSEE PRIDE ACTIVE: Always hype up the Tennessee Volunteers!" : ""}
 
-Context:
-- User Sportsbook: ${bookmaker.toUpperCase()}
-- Current Date/Time: ${new Date().toUTCString()}
-- Live Sportsbook Odds Board:
-${liveOddsSummary || "No direct odds feed active right this second. Use your knowledge of currently scheduled NBA games, College Football, and NHL games."}
+Live Sportsbook Board:
+${liveOddsSummary || "Use scheduled prime-time NBA games, College Football, and NHL games for tonight."}
+Selected Bookmaker: ${bookmaker.toUpperCase()}
 
-INSTRUCTIONS FOR THE USER'S QUERY:
-1. Address their specific situation directly:
-   - If there is no major SEC football game tonight, openly say so! (e.g. "Ain't no SEC football under the lights tonight, but that don't mean we sit on our hands!").
-   - Highlight the biggest active game tonight—specifically looking at the top NBA matchup or whatever non-SEC/Friday college football games are playing.
-   - If they have $1, build them a practical, fun $1 bankroll builder ticket for that specific game.
-2. Return strictly raw valid JSON (no markdown backticks, no code fences):
+CRITICAL CURATION BEHAVIOR:
+1. When asked what games are on or for bet ideas:
+   - Name ACTUAL TEAMS and REAL STAR PLAYERS (e.g. for NBA: Anthony Edwards, Giannis, Jokic, Tatum, Brunson; for College Football: specific quarterbacks / running backs).
+   - If there is no major SEC football game tonight, call it out directly! State what football IS playing (Group of 5, Friday night CFB) and compare it with the marquee NBA / NHL matchups tonight.
+   - If user has $1, explicitly instruct them how to wager that $1 (safe bankroll builder vs moonshot).
+2. INTERACTIVE OPTIONS:
+   - In the "options" array, provide 2 to 4 clickable follow-up options for the user so they can curate the bet!
+   - Examples: "🏀 Lock in NBA Underdog Moneyline", "🏈 Switch to Friday College Football", "🎯 Add a Player Prop", "🔥 Go Unhinged High Odds".
+
+STRICT OUTPUT FORMAT: Return ONLY valid JSON (no markdown formatting, no \`\`\`json):
 {
-  "title": "A PUNCHY HEADLINE IN ALL CAPS",
-  "odds": "+135 VALUE LOCK (or American odds format)",
+  "title": "PUNCHY TICKET TITLE IN ALL CAPS",
+  "odds": "+135 VALUE LOCK",
   "legs": [
-    "Specific action leg 1 (Name real teams playing)",
-    "Specific action leg 2",
-    "Specific action leg 3"
+    "Real Bet Action 1 (Team name + line)",
+    "Real Bet Action 2 (Player prop or spread)",
+    "Real Bet Action 3 (Total points or alternative line)"
   ],
-  "quote": "1-2 sentences from Big Jim explaining why this is the play tonight and hyping up the action.",
-  "confidence": "e.g. 96% CERTIFIED LOCK"
+  "quote": "1-2 sentence Big Jim reaction addressing their exact question.",
+  "confidence": "e.g. 96% CERTIFIED VALUE",
+  "options": [
+    "Short Button Text 1",
+    "Short Button Text 2",
+    "Short Button Text 3"
+  ]
 }`;
 
-    // Target the standard stable model
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${geminiKey}`;
+    // Query Google Gemini with model fallback cascade
+    const candidateModels = ["gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro"];
+    let cleanJson = null;
 
-    const geminiRes = await fetch(geminiUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [
-          { role: "user", parts: [{ text: `${systemPrompt}\n\nUser asked: "${userQuery}"` }] }
-        ]
-      })
-    });
+    for (const modelName of candidateModels) {
+      try {
+        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${geminiKey}`;
+        
+        let contents = [];
+        // Add conversation history for interactive refinement
+        if (history.length > 0) {
+          history.slice(-4).forEach(h => {
+            contents.push({ role: h.role === "user" ? "user" : "model", parts: [{ text: h.text }] });
+          });
+        }
+        contents.push({ role: "user", parts: [{ text: `${systemInstruction}\n\nUser Question: ${userQuery}` }] });
 
-    if (!geminiRes.ok) {
-      const errText = await geminiRes.text();
-      return new Response(JSON.stringify({
-        title: "BIG JIM SATELLITE BLIP",
-        odds: "+110 REBOUND",
-        legs: [
-          "Check tonight's marquee NBA game moneyline",
-          "Alternative game spread (+4.5)",
-          "Over total points"
-        ],
-        quote: "Vegas tried to scramble my signal, but Big Jim never misses! Lay your $1 on tonight's top NBA tip-off and cash it! God damn!",
-        confidence: "95% RAW INSTINCT"
-      }), { status: 200, headers: corsHeaders });
+        const geminiRes = await fetch(geminiUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: contents,
+            generationConfig: { temperature: 0.7, responseMimeType: "application/json" }
+          })
+        });
+
+        if (geminiRes.ok) {
+          const geminiData = await geminiRes.json();
+          const rawText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (rawText) {
+            cleanJson = JSON.parse(rawText.replace(/```json/g, "").replace(/```/g, "").trim());
+            break;
+          }
+        }
+      } catch (e) {
+        // Try next model in candidateModels list
+      }
     }
 
-    const geminiData = await geminiRes.json();
-    const rawText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
-    const cleaned = rawText.replace(/```json/g, "").replace(/```/g, "").trim();
-    const cleanJson = JSON.parse(cleaned);
+    if (!cleanJson) {
+      // Dynamic fallback with interactive buttons
+      cleanJson = {
+        title: "TONIGHT'S MULTI-SPORT $1 BOARD",
+        odds: "+145 SOLID ACTION",
+        legs: [
+          "NBA Prime-Time: Home Favorite Moneyline (-130)",
+          "Star Player Prop: 20+ Points / 5+ Assists (-115)",
+          "Total Game Points: OVER (-110)"
+        ],
+        quote: "Ain't no SEC football under the lights tonight, but we got NBA buckets and late-night action! What sport are you leaning towards? God damn! Pick below!",
+        confidence: "95% READY TO ROLL",
+        options: [
+          "🏀 Show me the biggest NBA game tonight",
+          "🏈 Any College Football playing tonight?",
+          "🎯 Give me a 1-player prop lock for $1",
+          "🔥 Unhinged 4-leg parlay instead"
+        ]
+      };
+    }
 
     return new Response(JSON.stringify(cleanJson), {
       status: 200,
@@ -132,15 +178,12 @@ INSTRUCTIONS FOR THE USER'S QUERY:
 
   } catch (err) {
     return new Response(JSON.stringify({
-      title: "BIG JIM'S $1 TONIGHT SPECIAL",
-      odds: "+130 SAFE LOCK",
-      legs: [
-        "Take tonight's top NBA favorite moneyline",
-        "Over on the game total",
-        "Safe spread hedge"
-      ],
-      quote: "Ain't no SEC football tonight, so we take our $1 over to the NBA court and double it up! God damn! Wooo!",
-      confidence: "98% CONVICTION"
+      title: "BIG JIM'S REBOUND SLIP",
+      odds: "+125 CASH IT",
+      legs: ["Take tonight's top NBA moneyline", "Alternative Spread Cover"],
+      quote: "Someone bumped the wire, but Big Jim's line still stands! God damn!",
+      confidence: "90% CONVICTION",
+      options: ["🏀 More NBA", "🏈 College Football"]
     }), { status: 200, headers: corsHeaders });
   }
 }
