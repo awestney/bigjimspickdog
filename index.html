@@ -41,7 +41,6 @@
                 radial-gradient(circle at 80% 50%, rgba(255, 204, 0, 0.05) 0%, transparent 50%);
         }
 
-        /* Top Navigation Bar */
         header {
             position: sticky;
             top: 0;
@@ -290,7 +289,6 @@
             background: linear-gradient(90deg, var(--primary-red), var(--accent-gold));
         }
 
-        /* Soundboard Grid */
         .soundboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -318,10 +316,7 @@
             transform: translateY(-2px);
         }
 
-        .sound-btn .icon {
-            font-size: 1.5rem;
-        }
-
+        .sound-btn .icon { font-size: 1.5rem; }
         .sound-btn .label {
             font-family: 'Teko', sans-serif;
             font-size: 1.3rem;
@@ -345,7 +340,6 @@
             transition: width 0.1s linear;
         }
 
-        /* RETRO ARCADE CABINET STYLES */
         .arcade-cabinet {
             background: #0d0f14;
             border: 6px solid #222;
@@ -416,7 +410,6 @@
             image-rendering: pixelated;
         }
 
-        /* Mobile Controller Pad */
         .mobile-dpad-container {
             display: none;
             margin-top: 1rem;
@@ -429,9 +422,7 @@
         }
 
         @media (max-width: 768px) {
-            .mobile-dpad-container {
-                display: flex;
-            }
+            .mobile-dpad-container { display: flex; }
         }
 
         .dpad-grid {
@@ -455,9 +446,7 @@
             user-select: none;
         }
 
-        .dpad-btn:active {
-            background: var(--tn-orange);
-        }
+        .dpad-btn:active { background: var(--tn-orange); }
 
         .mobile-action-btn {
             width: 80px;
@@ -477,11 +466,8 @@
             user-select: none;
         }
 
-        .mobile-action-btn:active {
-            transform: scale(0.95);
-        }
+        .mobile-action-btn:active { transform: scale(0.95); }
 
-        /* ASK BIG JIM AI WIDGET STYLING */
         .ask-jim-container {
             background: linear-gradient(135deg, rgba(230, 0, 0, 0.15) 0%, rgba(20, 23, 31, 0.95) 100%);
             border: 1.5px solid var(--accent-gold);
@@ -518,6 +504,7 @@
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
+            align-items: center;
         }
 
         .high-prob-btn {
@@ -535,10 +522,7 @@
             text-transform: uppercase;
         }
 
-        .high-prob-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 18px rgba(0, 230, 77, 0.6);
-        }
+        .high-prob-btn:hover { transform: scale(1.05); }
 
         .random-parlay-btn {
             background: linear-gradient(135deg, #e60000 0%, #ff4444 100%);
@@ -555,10 +539,7 @@
             text-transform: uppercase;
         }
 
-        .random-parlay-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 18px rgba(230, 0, 0, 0.8);
-        }
+        .random-parlay-btn:hover { transform: scale(1.05); }
 
         .tn-pride-btn {
             background: linear-gradient(135deg, #ff8200 0%, #ff5500 100%);
@@ -617,9 +598,7 @@
             transition: border-color 0.2s;
         }
 
-        .ask-jim-input:focus {
-            border-color: var(--accent-gold);
-        }
+        .ask-jim-input:focus { border-color: var(--accent-gold); }
 
         .ask-jim-btn {
             background: linear-gradient(135deg, #ffcc00 0%, #ff8800 100%);
@@ -652,7 +631,6 @@
             animation: fadeIn 0.3s ease-in;
         }
 
-        /* Betting Tips Card Styling */
         .pick-card {
             background: rgba(15, 17, 23, 0.8);
             border: 1px solid var(--border-glow);
@@ -687,15 +665,8 @@
             white-space: nowrap;
         }
 
-        .pick-tag.parlay {
-            background: #ffaa00;
-            color: #000;
-        }
-
-        .pick-tag.live-highlight {
-            background: #ffcc00;
-            color: #000;
-        }
+        .pick-tag.parlay { background: #ffaa00; color: #000; }
+        .pick-tag.live-highlight { background: #ffcc00; color: #000; }
 
         .pick-title {
             font-family: 'Teko', sans-serif;
@@ -734,13 +705,8 @@
             word-break: break-word;
         }
 
-        .parlay-legs-list li:last-child {
-            border-bottom: none;
-        }
-
-        .parlay-legs-list li span.leg-icon {
-            color: var(--accent-gold);
-        }
+        .parlay-legs-list li:last-child { border-bottom: none; }
+        .parlay-legs-list li span.leg-icon { color: var(--accent-gold); }
 
         .pick-quote {
             font-style: italic;
@@ -764,7 +730,6 @@
             background: linear-gradient(90deg, #ffcc00, #e60000);
         }
 
-        /* Redneck 101 Ad Banner */
         .ad-banner {
             background: linear-gradient(135deg, #2b1700 0%, #1a0c00 100%);
             border: 2px dashed #ff8800;
@@ -787,10 +752,7 @@
             line-height: 1;
         }
 
-        .ad-content p {
-            color: #d1b89d;
-            font-size: 0.9rem;
-        }
+        .ad-content p { color: #d1b89d; font-size: 0.9rem; }
 
         .ad-cta {
             background: #ff8800;
@@ -805,11 +767,8 @@
             border: none;
         }
 
-        .ad-cta:hover {
-            background: #ffaa00;
-        }
+        .ad-cta:hover { background: #ffaa00; }
 
-        /* Native Merch Grid */
         .merch-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
@@ -848,11 +807,7 @@
             margin-bottom: 0.75rem;
         }
 
-        .merch-img-box img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
+        .merch-img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
         .merch-card-title {
             font-family: 'Teko', sans-serif;
@@ -909,11 +864,7 @@
             margin-bottom: 0.25rem;
         }
 
-        .store-banner-cta p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-        }
+        .store-banner-cta p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem; }
 
         .main-store-btn {
             display: inline-block;
@@ -934,7 +885,6 @@
             box-shadow: 0 0 25px rgba(255, 204, 0, 0.6);
         }
 
-        /* Quiz Modal Overlay */
         .quiz-modal {
             display: none;
             position: fixed;
@@ -950,9 +900,7 @@
             padding: 1rem;
         }
 
-        .quiz-modal.active {
-            display: flex;
-        }
+        .quiz-modal.active { display: flex; }
 
         .quiz-card {
             background: #14171f;
@@ -1026,14 +974,8 @@
             transition: all 0.2s;
         }
 
-        .quiz-option:hover {
-            border-color: #ff8800;
-            color: #fff;
-        }
-
-        .quiz-option input {
-            accent-color: #ff8800;
-        }
+        .quiz-option:hover { border-color: #ff8800; color: #fff; }
+        .quiz-option input { accent-color: #ff8800; }
 
         .quiz-submit-btn {
             width: 100%;
@@ -1049,12 +991,7 @@
             margin-top: 1rem;
         }
 
-        .quiz-result {
-            display: none;
-            text-align: center;
-            padding: 1rem 0;
-        }
-
+        .quiz-result { display: none; text-align: center; padding: 1rem 0; }
         .quiz-result-title {
             font-family: 'Teko', sans-serif;
             font-size: 2.8rem;
@@ -1070,6 +1007,11 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @media (max-width: 768px) {
             .nav-container {
                 flex-direction: column;
@@ -1083,24 +1025,14 @@
                 width: 100%;
             }
 
-            .ad-banner { 
-                flex-direction: column; 
-                text-align: center; 
-            }
-
-            .soundboard-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .ask-jim-btn {
-                width: 100%;
-            }
+            .ad-banner { flex-direction: column; text-align: center; }
+            .soundboard-grid { grid-template-columns: repeat(2, 1fr); }
+            .ask-jim-btn { width: 100%; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Navigation Bar -->
     <header>
         <div class="nav-container">
             <a href="#" class="logo-text">BIG JIM'S <span>PICK DOG</span></a>
@@ -1118,7 +1050,6 @@
 
     <div class="container">
         
-        <!-- Hero Section -->
         <section class="hero">
             <div class="logo-wrapper" onclick="handleLogoClick()">
                 <img src="logo.png" alt="Big Jim's Pick Dog Logo" class="hero-logo" id="mainLogo">
@@ -1132,7 +1063,6 @@
             </a>
         </section>
 
-        <!-- Soundboard Section -->
         <section id="soundboard" class="card">
             <h2 class="section-title">🔊 Big Jim Soundboard</h2>
             <p style="color: var(--text-muted); margin-bottom: 1rem;">Press to activate Big Jim's highest frequency audio clips:</p>
@@ -1164,7 +1094,6 @@
             </div>
         </section>
 
-        <!-- 16-BIT RETRO ARCADE MULTI-CHARACTER GAME CABINET -->
         <section id="secretGameCard" class="card arcade-cabinet" style="display: none; max-width: 840px; margin: 2rem auto;">
             <div class="arcade-header-marq">
                 <h2 style="font-family: 'Teko', sans-serif; font-size: 2.2rem; color: var(--accent-gold); margin: 0; letter-spacing: 1px;">
@@ -1173,7 +1102,6 @@
                 <button onclick="toggleGameWindow(false)" style="background: none; border: none; color: #fff; font-size: 1.6rem; cursor: pointer;">✕</button>
             </div>
 
-            <!-- Character Select Screen -->
             <div class="char-select-bar">
                 <span style="font-family: 'Teko', sans-serif; font-size: 1.3rem; color: #aaa; margin-right: 0.5rem; align-self: center;">SELECT RUNNER:</span>
                 <button class="char-btn active" id="charBtn_jim" onclick="chooseCharacter('jim')">
@@ -1191,7 +1119,6 @@
                 Use <strong>ARROW KEYS / WASD</strong> (or on-screen D-Pad). <strong>SPACEBAR / SHIFT</strong> for Turbo Dash! 4 Attempts to score!
             </div>
 
-            <!-- Canvas Container Frame -->
             <div class="canvas-frame">
                 <canvas id="footballGameCanvas" width="600" height="450"></canvas>
                 <div id="gameOverlayScreen" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 1.5rem;">
@@ -1201,7 +1128,6 @@
                 </div>
             </div>
 
-            <!-- Mobile Controls -->
             <div class="mobile-dpad-container">
                 <div class="dpad-grid">
                     <div></div>
@@ -1224,12 +1150,10 @@
             </div>
         </section>
 
-        <!-- Daily Betting Tips Section -->
         <section id="tips" class="card">
             <div class="live-banner" id="currentDateBanner">🔴 LIVE TODAY'S PARLAY SLIPS</div>
             <h2 class="section-title" style="margin-top: 0.2rem;">📊 Big Jim's Unreliable Parlays & Locks</h2>
             
-            <!-- ASK BIG JIM AI QUESTION WIDGET -->
             <div class="ask-jim-container">
                 <div class="ask-jim-header">
                     <div class="ask-jim-title-group">
@@ -1252,19 +1176,16 @@
                     Got a specific matchup or prop bet in mind? Type any team or game below for Big Jim's instantaneous analysis:
                 </p>
                 <div class="ask-jim-input-group">
-                    <input type="text" id="askJimInput" class="ask-jim-input" placeholder="e.g. thursday night football" onkeypress="if(event.key==='Enter') askBigJim()">
+                    <input type="text" id="askJimInput" class="ask-jim-input" placeholder="e.g. saturday, chiefs, tennessee, lakers..." onkeypress="if(event.key==='Enter') askBigJim()">
                     <button class="ask-jim-btn" onclick="askBigJim()">ASK JIM ➔</button>
                 </div>
 
-                <!-- Interactive Response Card -->
                 <div id="askJimResponse" class="ask-jim-response">
                     <div class="pick-header">
                         <span class="pick-title" id="aiResponseTitle">CUSTOM PARLAY</span>
                         <span class="pick-odds" id="aiResponseOdds">+180 UNHINGED</span>
                     </div>
-                    <ul class="parlay-legs-list" id="aiResponseLegs">
-                        <!-- Injected via JS -->
-                    </ul>
+                    <ul class="parlay-legs-list" id="aiResponseLegs"></ul>
                     <p class="pick-quote" id="aiResponseQuote"></p>
                     <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--accent-gold); font-weight: 700; margin-top: 0.8rem;">
                         <span>JIM'S CONFIDENCE</span>
@@ -1287,7 +1208,6 @@
             </div>
         </section>
 
-        <!-- Redneck 101 Advertisement Banner -->
         <section id="redneck101" class="ad-banner">
             <div class="ad-content">
                 <h3>SPONSORED: HOW TO BE A REDNECK 101</h3>
@@ -1296,14 +1216,11 @@
             <button class="ad-cta" onclick="openQuiz()">TAKE ELIGIBILITY QUIZ</button>
         </section>
 
-        <!-- Native Merch Showcase Section -->
         <section id="merch" class="card">
             <h2 class="section-title">🧢 Official Pick Dog Merch</h2>
             <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Featured gear directly from the shop:</p>
 
-            <div class="merch-grid" id="merchGrid">
-                <!-- Products rendered dynamically -->
-            </div>
+            <div class="merch-grid" id="merchGrid"></div>
 
             <div class="store-banner-cta">
                 <h4>🔥 WANT TO SEE THE ENTIRE STORE?</h4>
@@ -1314,7 +1231,6 @@
 
     </div>
 
-    <!-- Quiz Modal -->
     <div class="quiz-modal" id="quizModal">
         <div class="quiz-card">
             <div class="quiz-header">
@@ -1324,11 +1240,9 @@
 
             <form id="quizForm">
                 <div id="quizContainer"></div>
-                
                 <div id="quizActionArea">
                     <button type="button" class="quiz-submit-btn" onclick="submitQuiz()">SUBMIT EXAM</button>
                 </div>
-
                 <div class="quiz-result" id="quizResult">
                     <div class="quiz-result-title" id="resultTitle"></div>
                     <p id="resultText" style="color: var(--text-muted); margin-bottom: 1.5rem;"></p>
@@ -1338,24 +1252,18 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer>
         <p>Big Jim's Pick Dog is a satirical birthday website created for James.</p>
         <p style="margin-top: 0.5rem; opacity: 0.6;">No real gambling advice is provided. Bet responsibly or don't bet at all! © 2026</p>
     </footer>
 
-    <!-- Interactive Scripts -->
     <script>
-        // API CONFIGURATION (SAFE FOR GITHUB SECRET SCANNING)
         const ODDS_API_KEY = "57b9481e4fcd8904ef704b783418f87b"; 
-        const GEMINI_API_KEY = localStorage.getItem("GEMINI_KEY") || "";
         const REGIONS = "us";
         const MARKETS = "h2h,spreads,totals";
 
-        // GLOBAL STATE
         window.activeParlayMode = "SAFE";
         window.isTennesseePrideActive = false;
-        window.currentSearchGames = [];
         window.userBookmaker = "fanduel";
         let logoClickCounter = 0;
 
@@ -1376,7 +1284,6 @@
             }
         }
 
-        // ODDS CONVERTOR
         function convertDecimalToAmerican(decimalOdds) {
             let num = parseFloat(decimalOdds);
             if (isNaN(num) || num <= 1.0) return "-110";
@@ -1387,20 +1294,6 @@
             }
         }
 
-        function parseAmericanToDecimal(americanStr) {
-            let str = String(americanStr).trim();
-            if (str.startsWith('+')) {
-                let num = parseFloat(str.replace('+', ''));
-                return 1 + (num / 100);
-            } else if (str.startsWith('-')) {
-                let num = parseFloat(str.replace('-', ''));
-                return 1 + (100 / num);
-            }
-            let directNum = parseFloat(str);
-            return isNaN(directNum) ? 1.909 : directNum;
-        }
-
-        // SOUNDBOARD AUDIO ENGINE
         let currentAudio = null;
 
         function animateEq(btn, durationMs = 2000) {
@@ -1482,7 +1375,6 @@
             generateLiveDayBets();
         }
 
-        // REAL-TIME DYNAMIC SPORTSBOOK FETCH (WITH SAFE TIMEOUT & FALLBACK)
         async function fetchLiveSportsbookOdds(sportKey = "americanfootball_ncaaf") {
             let preferredBook = window.userBookmaker || "fanduel";
             const url = `https://api.the-odds-api.com/v4/sports/${sportKey}/odds/?apiKey=${ODDS_API_KEY}&regions=${REGIONS}&markets=${MARKETS}&bookmakers=${preferredBook}`;
@@ -1512,6 +1404,8 @@
                 return [{
                     league: "NBA",
                     matchup: "[NBA] Philadelphia 76ers at New York Knicks",
+                    teamA: "Philadelphia 76ers",
+                    teamB: "New York Knicks",
                     odds: "New York Knicks -4.5 (-110)",
                     safeProps: ["Knicks -4.5 Spread (-110)", "Total OVER 218.5 (-110)", "Starting PG 20+ Pts (-120)"],
                     comment: "NBA Action at Madison Square Garden!"
@@ -1520,6 +1414,8 @@
                 return [{
                     league: "NFL",
                     matchup: "[NFL] New England Patriots at Chicago Bears",
+                    teamA: "New England Patriots",
+                    teamB: "Chicago Bears",
                     odds: "Chicago Bears -3 (-105)",
                     safeProps: ["Bears -3 Spread (-105)", "Total OVER 43.5 (-110)", "Passing Yards 225+ (-115)"],
                     comment: "Thursday Night Football under the lights!"
@@ -1528,6 +1424,8 @@
                 return [{
                     league: "NCAAF",
                     matchup: `[NCAAF] Tennessee Volunteers vs Alabama Crimson Tide (Sat ${satStr})`,
+                    teamA: "Tennessee Volunteers",
+                    teamB: "Alabama Crimson Tide",
                     odds: "Tennessee Volunteers +8.5 (-108)",
                     safeProps: ["Tennessee +8.5 Spread (-108)", "Game Total OVER 51.5 (-110)", "Anytime TD Scorer (+110)"],
                     comment: "Third Saturday in October Rivalry!"
@@ -1560,6 +1458,8 @@
                 return {
                     league: leagueTitle,
                     matchup: `[${leagueTitle}] ${awayTeam} at ${homeTeam}`,
+                    teamA: awayTeam,
+                    teamB: homeTeam,
                     odds: spread,
                     safeProps: [spread, `Game Total OVER Points (-110)`, `${homeTeam} Team Total OVER (-115)`],
                     comment: `Real-time sportsbook line actively fetched for ${homeTeam}!`
@@ -1610,6 +1510,48 @@
             });
         }
 
+        function generateLocalJimSlip(query, schedule) {
+            const q = query.toLowerCase();
+            let matchedGame = schedule.find(g => 
+                (g.matchup && g.matchup.toLowerCase().includes(q)) ||
+                (g.teamA && g.teamA.toLowerCase().includes(q)) ||
+                (g.teamB && g.teamB.toLowerCase().includes(q))
+            );
+
+            if (!matchedGame) {
+                if (q.includes("sat") || q.includes("ncaa") || q.includes("college") || q.includes("vol") || q.includes("tenn")) {
+                    matchedGame = schedule.find(g => g.league === "NCAAF") || schedule[0];
+                } else if (q.includes("nfl") || q.includes("thurs") || q.includes("sun") || q.includes("chief")) {
+                    matchedGame = schedule.find(g => g.league === "NFL") || schedule[0];
+                } else if (q.includes("nba") || q.includes("basket") || q.includes("laker") || q.includes("knick")) {
+                    matchedGame = schedule.find(g => g.league === "NBA") || schedule[0];
+                } else {
+                    matchedGame = schedule[Math.floor(Math.random() * schedule.length)];
+                }
+            }
+
+            const team = window.isTennesseePrideActive ? "Tennessee Volunteers" : (matchedGame.teamA || "The Favorite");
+
+            const quotes = [
+                `"I woke up at 4:30 AM, downed a Lipton Citrus Green Tea, and felt this exact line in my marrow! God damn!"`,
+                `"Defense is a myth invented by people who hate cold Michelob Ultra! Put the mortgage on it, wooo!"`,
+                `"The books don't want you to see this line. Lock it in before Vegas wakes up and fixes the glitch!"`,
+                `"They got ref bias, home cooking, and divine intervention. Easiest cash of the weekend!"`
+            ];
+
+            return {
+                title: `${team.toUpperCase()} SMASH LOCK`,
+                odds: "+285 UNHINGED",
+                legs: [
+                    `${team} Moneyline Outright Win (+125)`,
+                    `Game Total OVER ${q.includes("basket") ? "224.5" : "48.5"} Points (-110)`,
+                    `${team} Team Total OVER Points (-115)`
+                ],
+                quote: quotes[Math.floor(Math.random() * quotes.length)],
+                confidence: "110% OVERCONFIDENT"
+            };
+        }
+
         async function askBigJim() {
             const rawInput = document.getElementById('askJimInput').value.trim();
             if (!rawInput) return;
@@ -1619,25 +1561,68 @@
             const oddsEl = document.getElementById('aiResponseOdds');
             const legsEl = document.getElementById('aiResponseLegs');
             const quoteEl = document.getElementById('aiResponseQuote');
+            const confEl = document.getElementById('aiResponseConfidence');
 
-            titleEl.textContent = "BIG JIM SAYS:";
-            oddsEl.textContent = "+240 LOCK";
-            legsEl.innerHTML = `<li><span class="leg-icon">⚡</span> <strong>Action</strong>: Tennessee Volunteers Over Total Points</li>`;
-            quoteEl.innerText = `"Smash that lock right now and don't think twice! God damn!"`;
+            titleEl.textContent = "CONSULTING LIVE SPORTSBOOK LINES...";
+            oddsEl.textContent = "AI ANALYZING";
+            legsEl.innerHTML = `<li><span class="leg-icon">⚡</span> Big Jim is cross-referencing real odds with Gemini AI...</li>`;
+            quoteEl.innerText = "";
             responseBox.style.display = 'block';
+
+            try {
+                const response = await fetch('/ask-jim', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        query: rawInput,
+                        bookmaker: window.userBookmaker || "fanduel",
+                        tennesseePride: window.isTennesseePrideActive
+                    })
+                });
+
+                if (!response.ok) throw new Error("API call failed");
+                const aiResult = await response.json();
+
+                titleEl.textContent = aiResult.title || "BIG JIM'S LIVE LOCK";
+                oddsEl.textContent = aiResult.odds || "+240 LOCK";
+
+                let legsHtml = "";
+                (aiResult.legs || []).forEach(leg => {
+                    legsHtml += `<li><span class="leg-icon">⚡</span> <strong>Action</strong>: ${leg}</li>`;
+                });
+                legsEl.innerHTML = legsHtml;
+
+                quoteEl.innerText = aiResult.quote || `"Lock it in right now! God damn!"`;
+                if (confEl) confEl.textContent = aiResult.confidence || "110% OVERCONFIDENT";
+
+                playSpeech(aiResult.quote || "Lock it in!");
+            } catch (err) {
+                console.warn("Cloudflare function endpoint error, using local engine fallback:", err);
+                let schedule = getDynamicGameSlate("americanfootball_nfl");
+                let fallback = generateLocalJimSlip(rawInput, schedule);
+                titleEl.textContent = fallback.title;
+                oddsEl.textContent = fallback.odds;
+                let fallbackHtml = "";
+                fallback.legs.forEach(leg => {
+                    fallbackHtml += `<li><span class="leg-icon">⚡</span> <strong>Action</strong>: ${leg}</li>`;
+                });
+                legsEl.innerHTML = fallbackHtml;
+                quoteEl.innerText = fallback.quote;
+                if (confEl) confEl.textContent = fallback.confidence;
+                playSpeech(fallback.quote);
+            }
         }
 
         function generateHighProbabilitySlip() {
-            document.getElementById('askJimInput').value = "high probability lock";
+            document.getElementById('askJimInput').value = "high probability winner lock";
             askBigJim();
         }
 
         function generateCrazyParlay() {
-            document.getElementById('askJimInput').value = "crazy unhinged parlay";
+            document.getElementById('askJimInput').value = "crazy unhinged 4-leg parlay";
             askBigJim();
         }
 
-        // 16-BIT MULTI-CHARACTER ARCADE RETRO FOOTBALL ENGINE
         let gameCanvas, ctx;
         let gameRunning = false;
         let gameAttempts = 0;
@@ -1734,9 +1719,7 @@
                 keyMap[e.key] = false;
             });
 
-            // Mobile button handlers
             setupMobileControls();
-
             drawFootballField();
             document.getElementById("gameHighScoreSpan").innerText = bestScore;
         }
@@ -1806,7 +1789,6 @@
         function updateGame() {
             const charObj = CHARACTERS[selectedCharKey];
 
-            // Turbo Stamina Mechanic
             if ((keyMap[" "] || keyMap["Shift"]) && ActivePlayer.stamina > 4) {
                 ActivePlayer.speed = charObj.dashSpeed;
                 ActivePlayer.isDashing = true;
@@ -1826,7 +1808,6 @@
                 if (ActivePlayer.stamina < 100) ActivePlayer.stamina += 0.35;
             }
 
-            // Player Movement (Vertical Run Up Field)
             let isMoving = false;
             if (keyMap["ArrowUp"] || keyMap["w"] || keyMap["W"]) { ActivePlayer.y = Math.max(90, ActivePlayer.y - ActivePlayer.speed); isMoving = true; }
             if (keyMap["ArrowDown"] || keyMap["s"] || keyMap["S"]) { ActivePlayer.y = Math.min(390, ActivePlayer.y + ActivePlayer.speed); isMoving = true; }
@@ -1835,7 +1816,6 @@
 
             if (isMoving) ActivePlayer.runFrame += 0.25;
 
-            // Particles Update
             for (let i = particles.length - 1; i >= 0; i--) {
                 let p = particles[i];
                 p.y += p.vy;
@@ -1843,7 +1823,6 @@
                 if (p.alpha <= 0) particles.splice(i, 1);
             }
 
-            // Speech Bubble Timer
             if (speechBubble) {
                 speechBubble.timer--;
                 if (speechBubble.timer <= 0) speechBubble = null;
@@ -1851,7 +1830,6 @@
 
             if (invulnerableTimer > 0) invulnerableTimer--;
 
-            // Spawn Aggressive Defenders
             if (Math.random() < (0.035 + waveLevel * 0.008) && defenders.length < 6) {
                 defenders.push({
                     x: 120 + Math.random() * 360,
@@ -1864,19 +1842,16 @@
                 });
             }
 
-            // Update Defenders
             let wasTackledThisFrame = false;
             for (let i = defenders.length - 1; i >= 0; i--) {
                 let d = defenders[i];
                 d.y += d.speed;
 
-                // Tracking
                 if (d.tracking && d.y < ActivePlayer.y) {
                     if (d.x < ActivePlayer.x - 4) d.x += 1.4;
                     else if (d.x > ActivePlayer.x + 4) d.x -= 1.4;
                 }
 
-                // Check Tackle Collision
                 if (invulnerableTimer === 0 &&
                     ActivePlayer.x < d.x + d.width - 6 &&
                     ActivePlayer.x + ActivePlayer.width - 6 > d.x &&
@@ -1887,7 +1862,6 @@
                     break;
                 }
 
-                // Passed Runner
                 if (d.y > 450) {
                     defenders.splice(i, 1);
                     gameScore += 120;
@@ -1900,7 +1874,6 @@
                 return;
             }
 
-            // Touchdown! (Reached endzone at top)
             if (ActivePlayer.y <= 95) {
                 triggerTouchdownWin();
             }
@@ -1951,7 +1924,6 @@
             ctx.clearRect(0, 0, 600, 450);
             drawFootballField();
 
-            // Draw Flame Dash Particles
             particles.forEach(p => {
                 ctx.fillStyle = `rgba(255, 130, 0, ${p.alpha})`;
                 ctx.beginPath();
@@ -1959,24 +1931,21 @@
                 ctx.fill();
             });
 
-            // Draw Defenders (Crimson Dive Tacklers)
             defenders.forEach(d => {
-                ctx.fillStyle = "#800000"; // Jersey
+                ctx.fillStyle = "#800000";
                 ctx.fillRect(d.x + 4, d.y + 10, 22, 16);
-                ctx.fillStyle = "#FFFFFF"; // Pants
+                ctx.fillStyle = "#FFFFFF";
                 ctx.fillRect(d.x + 6, d.y + 24, 18, 10);
-                ctx.fillStyle = "#600000"; // Helmet
+                ctx.fillStyle = "#600000";
                 ctx.fillRect(d.x + 6, d.y + 2, 18, 11);
-                ctx.fillStyle = "#000000"; // Visor
+                ctx.fillStyle = "#000000";
                 ctx.fillRect(d.x + 8, d.y + 7, 14, 4);
             });
 
-            // Draw Active Player (if invulnerable, flash)
             if (invulnerableTimer % 6 < 3) {
                 drawPlayerSprite();
             }
 
-            // Draw Comic Speech Bubble
             if (speechBubble) {
                 ctx.fillStyle = "#FFFFFF";
                 ctx.strokeStyle = "#000000";
@@ -1992,7 +1961,6 @@
                 ctx.fillText(speechBubble.text, bx + 6, by + 16);
             }
 
-            // Turbo Stamina Meter
             ctx.fillStyle = "rgba(0,0,0,0.7)";
             ctx.fillRect(15, 415, 130, 16);
             ctx.fillStyle = ActivePlayer.stamina > 20 ? "#FF8200" : "#E60000";
@@ -2007,22 +1975,18 @@
             let px = ActivePlayer.x, py = ActivePlayer.y;
             let legOffset = Math.sin(ActivePlayer.runFrame) * 4;
 
-            // Jersey
             ctx.fillStyle = charObj.color;
             ctx.fillRect(px + 4, py + 10, 24, 18);
 
-            // Pants & Cleats
             ctx.fillStyle = charObj.pants;
             ctx.fillRect(px + 5, py + 26, 9, 10 + legOffset);
             ctx.fillRect(px + 18, py + 26, 9, 10 - legOffset);
 
-            // Helmet
             ctx.fillStyle = charObj.helmet;
             ctx.fillRect(px + 6, py, 20, 13);
             ctx.fillStyle = charObj.accent;
-            ctx.fillRect(px + 14, py + 1, 4, 8); // Stripe
+            ctx.fillRect(px + 14, py + 1, 4, 8);
 
-            // Hair / Beard
             if (charObj.hasBeard) {
                 ctx.fillStyle = charObj.hair;
                 ctx.fillRect(px + 8, py + 8, 16, 6);
@@ -2031,12 +1995,10 @@
                 ctx.fillRect(px + 4, py + 2, 4, 10);
             }
 
-            // Jersey Number
             ctx.fillStyle = "#000";
             ctx.font = "bold 10px sans-serif";
             ctx.fillText(charObj.num, px + 8, py + 22);
 
-            // Football
             ctx.fillStyle = "#7A3D11";
             ctx.beginPath();
             ctx.ellipse(px + 26, py + 18, 5, 4, 0, 0, Math.PI * 2);
@@ -2044,11 +2006,9 @@
         }
 
         function drawFootballField() {
-            // Perspective Grass Field
             ctx.fillStyle = "#1E7934";
             ctx.fillRect(0, 0, 600, 450);
 
-            // Crowd Bleachers (Top)
             for (let y = 0; y < 65; y += 12) {
                 for (let x = 0; x < 600; x += 14) {
                     ctx.fillStyle = ((x + y) % 3 === 0) ? "#FF8200" : (((x + y) % 3 === 1) ? "#FFFFFF" : "#111111");
@@ -2056,14 +2016,12 @@
                 }
             }
 
-            // Endzone (Top)
             ctx.fillStyle = "#FF8200";
             ctx.fillRect(80, 65, 440, 30);
             ctx.fillStyle = "#FFFFFF";
             ctx.font = "bold 22px 'Teko'";
             ctx.fillText("TENNESSEE TOUCHDOWN", 215, 87);
 
-            // Perspective Field Yard Lines
             ctx.strokeStyle = "rgba(255, 255, 255, 0.75)";
             ctx.lineWidth = 2;
             const yardYs = [95, 145, 205, 275, 355];
@@ -2081,7 +2039,6 @@
                 ctx.fillText(yardLabels[idx], 495, yy - 3);
             });
 
-            // Sideline Borders
             ctx.strokeStyle = "#FFFFFF";
             ctx.lineWidth = 4;
             ctx.beginPath();
@@ -2104,7 +2061,6 @@
             }
         }
 
-        // REDNECK 101 MASTER QUESTION BANK & EXAM LOGIC
         const questionBank = [
             {
                 q: "1. You make eye contact with a Sam's Club employee while looking at bulk protein powder. What do you do?",
@@ -2301,7 +2257,6 @@
             }
         }
 
-        // Native Merch Grid Data
         const shopProducts = [
             {
                 title: "God Damn, Woo! Tank Top",
